@@ -237,6 +237,270 @@ server <- function(input, output) {
         educdist
     })
 
+    output$hisp_plot <- renderPlot({
+      hispdist <- reportsetup %>%
+        group_by(predict, hisp) %>%
+        summarise(n = sum(weight) # weight variable) 
+        ) %>%
+        mutate(prop = prop.table(n))
+      
+      gg_prop1 <- ggplot(data = data.frame(),
+                         aes(x = predict, y = prop, fill = hisp)) +
+        geom_bar(stat = 'identity', position = 'dodge') +
+        geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                  position = position_dodge(width = 0.9),
+                  vjust = -0.25) +
+        scale_y_continuous(labels = percent) +
+        labs(
+          x = 'Factor',
+          y = NULL,
+          fill = 'Hispanic/Non-Hispanic',
+          title = 'Hispanic/Non-Hispanic by Factor'
+        )
+      gg_prop1 %+%
+        hispdist
+    })
+    
+    output$race_plot <- renderPlot({
+      racedist <- reportsetup %>%
+        group_by(predict, race) %>%
+        summarise(n = sum(weight) # weight variable) 
+        ) %>%
+        mutate(prop = prop.table(n))
+      
+      gg_prop1 <- ggplot(data = data.frame(),
+                         aes(x = predict, y = prop, fill = race)) +
+        geom_bar(stat = 'identity', position = 'dodge') +
+        geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                  position = position_dodge(width = 0.9),
+                  vjust = -0.25) +
+        scale_y_continuous(labels = percent) +
+        labs(
+          x = 'Factor',
+          y = NULL,
+          fill = 'Race',
+          title = 'Race by Factor'
+        )
+      gg_prop1 %+%
+        racedist
+    })
+
+    output$marital_plot <- renderPlot({
+      maritaldist <- reportsetup %>%
+        group_by(predict, marital) %>%
+        summarise(n = sum(weight) # weight variable) 
+        ) %>%
+        mutate(prop = prop.table(n))
+      
+      gg_prop1 <- ggplot(data = data.frame(),
+                         aes(x = predict, y = prop, fill = marital)) +
+        geom_bar(stat = 'identity', position = 'dodge') +
+        geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                  position = position_dodge(width = 0.9),
+                  vjust = -0.25) +
+        scale_y_continuous(labels = percent) +
+        labs(
+          x = 'Factor',
+          y = NULL,
+          fill = 'Marital Status',
+          title = 'Marital Status by Factor'
+        )
+      gg_prop1 %+%
+        maritaldist
+    })
+    
+    output$parent_plot <- renderPlot({
+      parentdist <- reportsetup %>%
+        group_by(predict, parent) %>%
+        summarise(n = sum(weight) # weight variable) 
+        ) %>%
+        mutate(prop = prop.table(n))
+      
+      gg_prop1 <- ggplot(data = data.frame(),
+                         aes(x = predict, y = prop, fill = parent)) +
+        geom_bar(stat = 'identity', position = 'dodge') +
+        geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                  position = position_dodge(width = 0.9),
+                  vjust = -0.25) +
+        scale_y_continuous(labels = percent) +
+        labs(
+          x = 'Factor',
+          y = NULL,
+          fill = 'Parent Status',
+          title = 'Parent Status by Factor'
+        )
+      gg_prop1 %+%
+        parentdist
+    })
+    
+    output$citizen_plot <- renderPlot({
+      citizendist <- reportsetup %>%
+        group_by(predict, citizen) %>%
+        summarise(n = sum(weight) # weight variable) 
+        ) %>%
+        mutate(prop = prop.table(n))
+      
+      gg_prop1 <- ggplot(data = data.frame(),
+                         aes(x = predict, y = prop, fill = citizen)) +
+        geom_bar(stat = 'identity', position = 'dodge') +
+        geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                  position = position_dodge(width = 0.9),
+                  vjust = -0.25) +
+        scale_y_continuous(labels = percent) +
+        labs(
+          x = 'Factor',
+          y = NULL,
+          fill = 'Citizenship Status',
+          title = 'Citizenship Status by Factor'
+        )
+      gg_prop1 %+%
+        citizendist
+    })
+    
+    output$relig_plot <- renderPlot({
+      religdist <- reportsetup %>%
+        group_by(predict, relig) %>%
+        summarise(n = sum(weight) # weight variable) 
+        ) %>%
+        mutate(prop = prop.table(n))
+      
+      gg_prop1 <- ggplot(data = data.frame(),
+                         aes(x = predict, y = prop, fill = relig)) +
+        geom_bar(stat = 'identity', position = 'dodge') +
+        geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                  position = position_dodge(width = 0.9),
+                  vjust = -0.25) +
+        scale_y_continuous(labels = percent) +
+        labs(
+          x = 'Factor',
+          y = NULL,
+          fill = 'Religion',
+          title = 'Religion by Factor'
+        )
+      gg_prop1 %+%
+        religdist
+    })
+    
+    output$attend_plot <- renderPlot({
+      attenddist <- reportsetup %>%
+        group_by(predict, attend) %>%
+        summarise(n = sum(weight) # weight variable) 
+        ) %>%
+        mutate(prop = prop.table(n))
+      
+      gg_prop1 <- ggplot(data = data.frame(),
+                         aes(x = predict, y = prop, fill = attend)) +
+        geom_bar(stat = 'identity', position = 'dodge') +
+        geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                  position = position_dodge(width = 0.9),
+                  vjust = -0.25) +
+        scale_y_continuous(labels = percent) +
+        labs(
+          x = 'Factor',
+          y = NULL,
+          fill = 'Church Attendance',
+          title = 'Church Attendance by Factor'
+        )
+      gg_prop1 %+%
+        attenddist
+    })
+    
+    output$income_plot <- renderPlot({
+      incomedist <- reportsetup %>%
+        group_by(predict, income) %>%
+        summarise(n = sum(weight) # weight variable) 
+        ) %>%
+        mutate(prop = prop.table(n))
+      
+      gg_prop1 <- ggplot(data = data.frame(),
+                         aes(x = predict, y = prop, fill = income)) +
+        geom_bar(stat = 'identity', position = 'dodge') +
+        geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                  position = position_dodge(width = 0.9),
+                  vjust = -0.25) +
+        scale_y_continuous(labels = percent) +
+        labs(
+          x = 'Factor',
+          y = NULL,
+          fill = 'Income',
+          title = 'Income by Factor'
+        )
+      gg_prop1 %+%
+        incomedist
+    })
+    
+    output$reg_plot <- renderPlot({
+      regdist <- reportsetup %>%
+        group_by(predict, reg) %>%
+        summarise(n = sum(weight) # weight variable) 
+        ) %>%
+        mutate(prop = prop.table(n))
+      
+      gg_prop1 <- ggplot(data = data.frame(),
+                         aes(x = predict, y = prop, fill = reg)) +
+        geom_bar(stat = 'identity', position = 'dodge') +
+        geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                  position = position_dodge(width = 0.9),
+                  vjust = -0.25) +
+        scale_y_continuous(labels = percent) +
+        labs(
+          x = 'Factor',
+          y = NULL,
+          fill = 'Voter Registration',
+          title = 'Voter Registration by Factor'
+        )
+      gg_prop1 %+%
+        regdist
+    })
+    
+    output$party_plot <- renderPlot({
+      partydist <- reportsetup %>%
+        group_by(predict, party) %>%
+        summarise(n = sum(weight) # weight variable) 
+        ) %>%
+        mutate(prop = prop.table(n))
+      
+      gg_prop1 <- ggplot(data = data.frame(),
+                         aes(x = predict, y = prop, fill = party)) +
+        geom_bar(stat = 'identity', position = 'dodge') +
+        geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                  position = position_dodge(width = 0.9),
+                  vjust = -0.25) +
+        scale_y_continuous(labels = percent) +
+        labs(
+          x = 'Factor',
+          y = NULL,
+          fill = 'Party',
+          title = 'Party by Factor'
+        )
+      gg_prop1 %+%
+        partydist
+    })
+    
+    output$ideo_plot <- renderPlot({
+      ideodist <- reportsetup %>%
+        group_by(predict, ideo) %>%
+        summarise(n = sum(weight) # weight variable) 
+        ) %>%
+        mutate(prop = prop.table(n))
+      
+      gg_prop1 <- ggplot(data = data.frame(),
+                         aes(x = predict, y = prop, fill = ideo)) +
+        geom_bar(stat = 'identity', position = 'dodge') +
+        geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                  position = position_dodge(width = 0.9),
+                  vjust = -0.25) +
+        scale_y_continuous(labels = percent) +
+        labs(
+          x = 'Factor',
+          y = NULL,
+          fill = 'Ideology',
+          title = 'Ideology by Factor'
+        )
+      gg_prop1 %+%
+        ideodist
+    })
+    
     statedist <- reportsetup[which(is.na(reportsetup$predict)==FALSE), ] %>%
       group_by(state, predict) %>%
       summarise(
