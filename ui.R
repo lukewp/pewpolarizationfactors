@@ -2,6 +2,7 @@
 # This is the user-interface definition of a Shiny web application.
 
 library(shiny)
+library(shinydashboard)
 
 # Define UI for application that draws a histogram
 
@@ -334,107 +335,79 @@ ui <- dashboardPage(
      <p>&nbsp;</p>
      <ol>
      <li>Government is almost always wasteful and inefficient [OR]</li>
-     </ol>
      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Government often does a better job than people give it credit for</p>"),
                            plotOutput("q25a_plot", height = 350),
                            HTML("
      <p>&nbsp;</p>
      <p>&nbsp;</p>
-     <ol>
      <li>Government regulation of business is necessary to protect the public interest [OR]</li>
-     </ol>
      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Government regulation of business usually does more harm than good</p>"),
                            plotOutput("q25b_plot", height = 350),
                            HTML("
      <p>&nbsp;</p>
-     <ol>
      <li>Poor people today have it easy because they can get government benefits without doing anything in return [OR]</li>
-     </ol>
      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Poor people have hard lives because government benefits don't go far enough to help them live decently</p>"),
                            plotOutput("q25c_plot", height = 350),
                            HTML("
      <p>&nbsp;</p>
-     <ol>
      <li>The government should do more to help needy Americans, even if it means going deeper into debt [OR]</li>
-     </ol>
      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The government today can't afford to do much more to help the needy</p>"),
                            plotOutput("q25d_plot", height = 350),
                            HTML("
      <p>&nbsp;</p>
-     <p><strong>NO ITEM e</strong></p>
+     <li><strong>NO ITEM e</strong></li>
      <p>&nbsp;</p>
-     <ol>
      <li>Racial discrimination is the main reason why many black people can't get ahead these days [OR]</li>
-     </ol>
      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Blacks who can't get ahead in this country are mostly responsible for their own condition</p>"),
                            plotOutput("q25f_plot", height = 350),
                            HTML("
      <p>&nbsp;</p>
-     <ol>
      <li>Immigrants today strengthen our country because of their hard work and talents [OR]</li>
-     </ol>
      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Immigrants today are a burden on our country because they take our jobs, housing and health care</p>"),
                            plotOutput("q25g_plot", height = 350),
                            HTML("
      <p>&nbsp;</p>
-     <ol>
      <li>Society is better off if people make marriage and having children a priority [OR]</li>
-     </ol>
      <p>Society is just as well off if people have priorities other than marriage and children</p>"),
                            plotOutput("q25h_plot", height = 350),
                            HTML("
      <p>&nbsp;</p>
-     <ol>
      <li>The best way to ensure peace is through military strength [OR]</li>
-     </ol>
      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Good diplomacy is the best way to ensure peace</p>"),
                            plotOutput("q25i_plot", height = 350),
                            HTML("
      <p><strong>&nbsp;</strong></p>
-     <ol>
      <li>U.S. efforts to solve problems around the world usually end up making things worse [OR] Problems in the world would be even worse without U.S. involvement</li>"),
                            plotOutput("q25j_plot", height = 350),
                            HTML("
-     </ol>
      <p>&nbsp;</p>
-     <ol>
      <li>Most people who want to get ahead can make it if they're willing to work hard [OR]</li>
-     </ol>
      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hard work and determination are no guarantee of success for most people</p>"),
                            plotOutput("q25k_plot", height = 350),
                            HTML("
      <p>&nbsp;</p>
-     <ol>
      <li>Success in life is pretty much determined by forces outside of our control [OR]</li>
-     </ol>
      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Everyone has it in their own power to succeed</p>"),
                            plotOutput("q25l_plot", height = 350),
                            HTML("
      <p>&nbsp;</p>
-     <ol>
      <li>Too much power is concentrated in the hands of a few large companies [OR]</li>
-     </ol>
      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The largest companies do NOT have too much power</p>"),
                            plotOutput("q25m_plot", height = 350),
                            HTML("
      <p>&nbsp;</p>
-     <ol>
      <li>Business corporations make too much profit [OR]</li>
-     </ol>
      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Most corporations make a fair and reasonable amount of profit</p>"),
                            plotOutput("q25n_plot", height = 350),
                            HTML("
      <p>&nbsp;</p>
      <p><strong>ASK ALL PHASE B:</strong></p>
-     <ol>
      <li>Elected officials in Washington lose touch with the people pretty quickly [OR]</li>
-     </ol>
      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Elected officials in Washington try hard to stay in touch with voters back home</p>"),
                            plotOutput("q25o_plot", height = 350),
                            HTML("
      <p><strong>&nbsp;</strong></p>
      <p><strong>ASK ALL PHASE C:</strong></p>
-     <ol>
      <li>Most elected officials care what people like me think [OR]</li>
      </ol>
      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Most elected officials don't care what people like me think</p>"),
