@@ -3,6 +3,12 @@
 
 library(shiny)
 library(shinydashboard)
+library(DT)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(ggthemes)
+library(scales)
 
 # Define UI for application that draws a histogram
 
