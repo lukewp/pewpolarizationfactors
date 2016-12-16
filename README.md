@@ -21,4 +21,5 @@ In 2016, the coalition was an "orange" coalition -- that is, a combination of th
 
 A "purple" coalition may also be possible, one that finds common ground between the Blue and Red constituencies at the expense of the Traditional Values factor.
 
-More to follow.
+See the visualization here:
+https://lwp-viz.shinyapps.io/usfactors/
