@@ -10,18 +10,22 @@ library(tidyr)
 library(ggthemes)
 library(scales)
 
+## TODO: Implement loading page: https://github.com/daattali/advanced-shiny/blob/master/loading-screen/app.R
+
 # Define UI for application that draws a histogram
 
 ui <- dashboardPage(
-  dashboardHeader(title = "Pew Polarization 2014"),
+  dashboardHeader(
+    title = "Pew Political Polarization Survey 2014: Please be patient as pages load",
+    titleWidth = 700),
   dashboardSidebar(
     width = 140,
     sidebarMenu(
+      menuItem("Introduction", tabName = "intro", icon = icon("file-text"), selected = TRUE),
       menuItem(
         "Demographics",
         tabName = "demographics",
-        icon = icon("bar-chart"),
-        selected = TRUE
+        icon = icon("bar-chart")
       ),
       menuItem("States", tabName = "map", icon = icon("globe")),
       menuItem(
@@ -38,73 +42,109 @@ ui <- dashboardPage(
         "Survey Q.53-",
         tabName = "survey3",
         icon = icon("file-text")
-      )
+      ),
+      menuItem("Factor Coefs", tabName = "coefs_table", icon = icon("file-text"))
     )
   ),
-  dashboardBody(tabItems(
-    tabItem(
-      tabName = "demographics",
-      # Boxes need to be put in a row (or column)
-      fluidRow(box(
-        width = 12, plotOutput("usr_plot", height = 250)
-      )),
-      fluidRow(box(
-        width = 12, plotOutput("density_plot", height = 250)
-      )),
-      fluidRow(box(
-        width = 12, plotOutput("sex_plot", height = 250)
-      )),
-      fluidRow(box(
-        width = 12, plotOutput("age_plot", height = 250)
-      )),
-      fluidRow(box(
-        width = 12, plotOutput("educ_plot", height = 500)
-      )),
-      fluidRow(box(
-        width = 12, plotOutput("hisp_plot", height = 250)
-      )),
-      fluidRow(box(
-        width = 12, plotOutput("race_plot", height = 250)
-      )),
-      fluidRow(box(
-        width = 12, plotOutput("marital_plot", height = 250)
-      )),
-      fluidRow(box(
-        width = 12, plotOutput("parent_plot", height = 250)
-      )),
-      fluidRow(box(
-        width = 12, plotOutput("citizen_plot", height = 250)
-      )),
-      fluidRow(box(
-        width = 12, plotOutput("relig_plot", height = 600)
-      )),
-      fluidRow(box(
-        width = 12, plotOutput("attend_plot", height = 250)
-      )),
-      fluidRow(box(
-        width = 12, plotOutput("income_plot", height = 250)
-      )),
-      fluidRow(box(
-        width = 12, plotOutput("reg_plot", height = 350)
-      )),
-      fluidRow(box(
-        width = 12, plotOutput("party_plot", height = 250)
-      )),
-      fluidRow(box(
-        width = 12, plotOutput("ideo_plot", height = 250)
-      ))
-    ),
-    tabItem(tabName = "map",
-            h2("Factor Concentration by State"),
-            fluidRow(box(
-              width = 12, dataTableOutput("state_table")
-            ))),
-    tabItem(tabName = "survey1",
-            fluidPage(fluidRow(
-              box(
-                width = 12,
-                HTML(
-                  "
+  dashboardBody(
+    # Also add some custom CSS to make the title background area the same
+    # color as the rest of the header.
+    tags$head(tags$style(HTML('
+                              .skin-blue .main-header .logo {
+                              background-color: #3c8dbc;
+                              }
+                              .skin-blue .main-header .logo:hover {
+                              background-color: #3c8dbc;
+                              }
+                              '))),
+    tabItems(
+      tabItem(
+        tabName = "intro",
+        h2("Introduction"),
+        fluidRow(box(
+          width = 12, 
+          HTML("
+               <p>Study of the 2014 Pew Political Polarization Survey</p>
+               <p>This approach and visualization dashboard require acquisition of the Pew Political Polarization Dataset from 2014, available at http://www.people-press.org/2014/03/16/2014-political-polarization-survey/</p>
+               <p>The analysis reveals 3 dominant factors in US political life, to help explain some American political dynamics. </p>
+               <p>Instead of thinking of America's electorate as right, left, and in the middle, it's better to think of a triangle with a major (equally-sized) constituency at each point.</p>
+               <p>In order to build a majority coalition, any two of these points must align behind an issue or a candidate.</p>
+               <ul>
+               <li>Factor 1: Human Rights and Equality -- Blue, highly correlated with the Democratic Party</li>
+               <li>Factor 2: Traditional Values -- Yellow, split between the two mainstream American political parties</li>
+               <li>Factor 3: Free Market Capitalism -- Red, highly correlated with the Republican Party</li>
+               </ul>
+               <p>In terms of electoral votes, different coalitions offer promise of delivering majorities in different states. </p>
+               <p>In the 2008 election, the coalition was a 'green' coalition -- that is, a combination of the blue and yellow factor constituencies.
+               In 2016, the coalition was an 'orange' coalition -- that is, a combination of the red and yellow factor constituencies.</p>
+               <p>A 'purple' coalition may also be possible, one that finds common ground between the Blue and Red constituencies at the expense of the Traditional Values factor.</p>
+               <p>And of course, a new party could emerge that more perfectly captures the values of the Traditional Values factor, which would introduce entirely new dynamics to the American political landscape, and appear a very viable possibility based on this analysis.</p>
+               <p>Explore the 2014 Pew survey in terms of these factors with this visualization, code for which is available here: https://github.com/lukewp/pewpolarizationfactors.</p>
+               ")
+        ))),
+      tabItem(
+        tabName = "demographics",
+        # Boxes need to be put in a row (or column)
+        fluidRow(box(
+          width = 12, plotOutput("usr_plot", height = 250)
+        )),
+        fluidRow(box(
+          width = 12, plotOutput("density_plot", height = 250)
+        )),
+        fluidRow(box(
+          width = 12, plotOutput("sex_plot", height = 250)
+        )),
+        fluidRow(box(
+          width = 12, plotOutput("age_plot", height = 250)
+        )),
+        fluidRow(box(
+          width = 12, plotOutput("educ_plot", height = 500)
+        )),
+        fluidRow(box(
+          width = 12, plotOutput("hisp_plot", height = 250)
+        )),
+        fluidRow(box(
+          width = 12, plotOutput("race_plot", height = 250)
+        )),
+        fluidRow(box(
+          width = 12, plotOutput("marital_plot", height = 250)
+        )),
+        fluidRow(box(
+          width = 12, plotOutput("parent_plot", height = 250)
+        )),
+        fluidRow(box(
+          width = 12, plotOutput("citizen_plot", height = 250)
+        )),
+        fluidRow(box(
+          width = 12, plotOutput("relig_plot", height = 600)
+        )),
+        fluidRow(box(
+          width = 12, plotOutput("attend_plot", height = 250)
+        )),
+        fluidRow(box(
+          width = 12, plotOutput("income_plot", height = 250)
+        )),
+        fluidRow(box(
+          width = 12, plotOutput("reg_plot", height = 350)
+        )),
+        fluidRow(box(
+          width = 12, plotOutput("party_plot", height = 250)
+        )),
+        fluidRow(box(
+          width = 12, plotOutput("ideo_plot", height = 250)
+        ))
+      ),
+      tabItem(tabName = "map",
+              h2("Factor Concentration by State"),
+              fluidRow(box(
+                width = 12, dataTableOutput("state_table")
+              ))),
+      tabItem(tabName = "survey1",
+              fluidPage(fluidRow(
+                box(
+                  width = 12,
+                  HTML(
+                    "
                   <p><strong>PEW RESEARCH CENTER</strong></p>
                   <p><strong>POLITICAL TYPOLOGY/POLARIZATION </strong></p>
                   <p><strong>FINAL QUESTIONNAIRE</strong></p>
@@ -172,10 +212,10 @@ ui <- dashboardPage(
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pretty happy</p>
                   <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Not too happy</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don&rsquo;t know/Refused <strong>(VOL.)</strong></p>"
-                ),
-                plotOutput("qa1_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("qa1_plot", height = 250),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK ALL PHASE C:</strong></p>
                   <p>Q.C1&nbsp;&nbsp; Do you approve or disapprove of the way Barack Obama is handling his job as President? <strong>[IF DK ENTER AS DK. IF DEPENDS PROBE ONCE WITH:</strong> Overall do you approve or disapprove of the way Barack Obama is handling his job as President? <strong>IF STILL DEPENDS ENTER AS DK] </strong></p>
@@ -183,10 +223,10 @@ ui <- dashboardPage(
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Approve</p>
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Disapprove</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
-                ),
-                plotOutput("qc1_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("qc1_plot", height = 250),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK IF AND APPROVE OR DISAPPROVE (Q.C1=1,2):</strong></p>
                   <p>Q.C1a Do you <strong>[</strong>approve/disapprove<strong>]</strong> very strongly, or not so strongly?</p>
@@ -194,10 +234,10 @@ ui <- dashboardPage(
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Very strongly</p>
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Not so strongly</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don&rsquo;t know/Refused <strong>(VOL.)</strong></p>"
-                ),
-                plotOutput("qc1a_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("qc1a_plot", height = 250),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK ALL PHASE B:</strong></p>
                   <p>Q.B2&nbsp;&nbsp; All in all, are you satisfied or dissatisfied with the way things are going in this country today?</p>
@@ -205,10 +245,10 @@ ui <- dashboardPage(
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Satisfied</p>
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dissatisfied</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don&rsquo;t know/Refused <strong>(VOL.)</strong></p>"
-                ),
-                plotOutput("qb2_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("qb2_plot", height = 250),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK ALL PHASE B:</strong></p>
                   <p>Q.B3&nbsp;&nbsp; And thinking about the local community where you live, are you satisfied or dissatisfied with the way things are going in your local community today?</p>
@@ -216,10 +256,10 @@ ui <- dashboardPage(
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Satisfied</p>
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dissatisfied</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
-                ),
-                plotOutput("qb3_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("qb3_plot", height = 250),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK ALL PHASE B:</strong></p>
                   <p>Q.B4&nbsp;&nbsp; <strong>Thinking about the future of the United States, do you think the country's best years are ahead of us or behind us?</strong></p>
@@ -227,10 +267,10 @@ ui <- dashboardPage(
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ahead of us</p>
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Behind us</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don&rsquo;t know/Refused <strong>(VOL.)</strong></p>"
-                ),
-                plotOutput("qb4_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("qb4_plot", height = 250),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>ASK ALL PHASE B:</strong></p>
                   <p>Q.B5&nbsp;&nbsp; Thinking about the Democratic and Republican parties, would you say there is a great deal of difference in what they stand for, a fair amount of difference, or hardly any difference at all?</p>
@@ -239,10 +279,10 @@ ui <- dashboardPage(
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A fair amount</p>
                   <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hardly any</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don&rsquo;t know/Refused <strong>(VOL.)</strong></p>"
-                ),
-                plotOutput("qb5_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("qb5_plot", height = 250),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK ALL PHASE A:</strong></p>
@@ -252,10 +292,10 @@ ui <- dashboardPage(
                   <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Small town</p>
                   <p>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rural area</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
-                ),
-                plotOutput("qa6_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("qa6_plot", height = 250),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>NO QUESTION 7</strong></p>
                   <p><strong>&nbsp;</strong></p>
@@ -267,44 +307,44 @@ ui <- dashboardPage(
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A community where the houses are larger and farther apart, but schools, stores, and restaurants are several miles away [OR]</p>
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A community where the houses are smaller and closer to each other, but schools, stores, and restaurants are within walking distance</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ]</strong> Don't know/Refused</p>"
-                ),
-                plotOutput("qa8_plot", height = 400),
-                HTML(
-                  "
+                  ),
+                  plotOutput("qa8_plot", height = 400),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK ALL PHASE A:</strong></p>
                   <p>Q.A9 &nbsp; Still imagining that you are moving to another community. In deciding where to live, would each of the following be important, or not too important to you. First, would <strong>[INSERT ITEM; RANDOMIZE] </strong>be important, or not too important? What about<strong> [NEXT ITEM]</strong>?</p>
                   <p>&nbsp;</p>
                   <ol>
                   <li>Living in a place where most people share your political views</li>"
-                ),
-                plotOutput("qa9a_plot", height = 250),
-                HTML("
+                  ),
+                  plotOutput("qa9a_plot", height = 250),
+                  HTML("
                      <li>Having high quality public schools</li>"),
-                plotOutput("qa9b_plot", height = 250),
-                HTML(
-                  "
+                  plotOutput("qa9b_plot", height = 250),
+                  HTML(
+                    "
                   <li>Living in a place with a mix of people from different racial and ethnic backgrounds</li>"
-                ),
-                plotOutput("qa9c_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("qa9c_plot", height = 250),
+                  HTML(
+                    "
                   <li>Living in a place with many people who share your religious faith</li>"
-                ),
-                plotOutput("qa9d_plot", height = 250),
-                HTML("
+                  ),
+                  plotOutput("qa9d_plot", height = 250),
+                  HTML("
                      <li>Being near art museums and theaters</li>"),
-                plotOutput("qa9e_plot", height = 250),
-                HTML(
-                  "
+                  plotOutput("qa9e_plot", height = 250),
+                  HTML(
+                    "
                   <li>Having easy access to the outdoors for things like hiking, fishing, and camping</li>"
-                ),
-                plotOutput("qa9f_plot", height = 250),
-                HTML("
+                  ),
+                  plotOutput("qa9f_plot", height = 250),
+                  HTML("
                      <li>Being near your extended family</li>"),
-                plotOutput("qa9g_plot", height = 250),
-                HTML(
-                  "
+                  plotOutput("qa9g_plot", height = 250),
+                  HTML(
+                    "
                   </ol>
                   <p>&nbsp;</p>
                   <p><strong>RESPONSE CATEGORIES:</strong></p>
@@ -320,47 +360,47 @@ ui <- dashboardPage(
                   <p>&nbsp;</p>
                   <ol>
                   <li>The Republican Party</li></ol>"
-                ),
-                plotOutput("q11a_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q11a_plot", height = 250),
+                  HTML(
+                    "
                   <ol>
                   <li>The Democratic Party</li>
                   </ol>
                   <p><strong><br /> </strong></p>"
-                ),
-                plotOutput("q11b_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q11b_plot", height = 250),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK PHASE B ONLY:</strong></p>
                   <p>c.B&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Congress</p>"
-                ),
-                plotOutput("q11c_b_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q11c_b_plot", height = 250),
+                  HTML(
+                    "
                   <p><strong>NO ITEM d</strong></p>
                   <p>e.B&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Labor unions</p>"
-                ),
-                plotOutput("q11e_b_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q11e_b_plot", height = 250),
+                  HTML(
+                    "
                   <p><strong>NO ITEMS f AND g</strong></p>
                   <p>h.B&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The National Rifle Association</p>"
-                ),
-                plotOutput("q11h_b_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q11h_b_plot", height = 250),
+                  HTML(
+                    "
                   <p>i.B &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Federal Reserve</p>"
-                ),
-                plotOutput("q11i_b_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q11i_b_plot", height = 250),
+                  HTML(
+                    "
                   <p>j.B&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Environmental Protection Agency, the EPA</p>"
-                ),
-                plotOutput("q11j_b_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q11j_b_plot", height = 250),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>RESPONSE CATEGORIES:</strong></p>
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Very favorable</p>
@@ -377,10 +417,10 @@ ui <- dashboardPage(
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes, Republican Party&rsquo;s policies pose a threat to the nation&rsquo;s well-being [OR]</p>
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No, wouldn&rsquo;t go that far</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don&rsquo;t know/Refused <strong>(VOL.)</strong></p>"
-                ),
-                plotOutput("q11at_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q11at_plot", height = 250),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK PHASE C IF VERY UNFAVORABLE VIEW OF DEM PARTY (Q11b=4):</strong></p>
                   <p>Q.11bt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Would you say the Democratic Party&rsquo;s policies are so misguided that they threaten the nation&rsquo;s well-being, or wouldn&rsquo;t you go that far?</p>
@@ -388,20 +428,20 @@ ui <- dashboardPage(
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes, Democratic Party&rsquo;s policies pose a threat to the nation&rsquo;s well-being [OR]</p>
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No, wouldn&rsquo;t go that far</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don&rsquo;t know/Refused <strong>(VOL.)</strong></p>"
-                ),
-                plotOutput("q11bt_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q11bt_plot", height = 250),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK ALL PHASE B:</strong></p>
                   <p>Q.B12 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Thinking about elected officials in Washington who share your positions on the most important issues facing the nation. <strong>[READ AND RANDOMIZE]</strong></p>
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Should they work with elected officials they disagree with, even if it results in some policies you don&rsquo;t like [OR]</p>
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Should they stand up for their positions, even if that means little gets done in Washington</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don't know/Refused</p>"
-                ),
-                plotOutput("qb12_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("qb12_plot", height = 350),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>NO QUESTIONS 13-24</strong></p>
                   <p><strong>&nbsp;</strong></p>
@@ -411,113 +451,113 @@ ui <- dashboardPage(
                   <ol>
                   <li>Government is almost always wasteful and inefficient [OR]</li>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Government often does a better job than people give it credit for</p>"
-                ),
-                plotOutput("q25a_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q25a_plot", height = 350),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p>&nbsp;</p>
                   <li>Government regulation of business is necessary to protect the public interest [OR]</li>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Government regulation of business usually does more harm than good</p>"
-                ),
-                plotOutput("q25b_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q25b_plot", height = 350),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <li>Poor people today have it easy because they can get government benefits without doing anything in return [OR]</li>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Poor people have hard lives because government benefits don't go far enough to help them live decently</p>"
-                ),
-                plotOutput("q25c_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q25c_plot", height = 350),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <li>The government should do more to help needy Americans, even if it means going deeper into debt [OR]</li>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The government today can't afford to do much more to help the needy</p>"
-                ),
-                plotOutput("q25d_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q25d_plot", height = 350),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <li><strong>NO ITEM e</strong></li>
                   <p>&nbsp;</p>
                   <li>Racial discrimination is the main reason why many black people can't get ahead these days [OR]</li>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Blacks who can't get ahead in this country are mostly responsible for their own condition</p>"
-                ),
-                plotOutput("q25f_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q25f_plot", height = 350),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <li>Immigrants today strengthen our country because of their hard work and talents [OR]</li>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Immigrants today are a burden on our country because they take our jobs, housing and health care</p>"
-                ),
-                plotOutput("q25g_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q25g_plot", height = 350),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <li>Society is better off if people make marriage and having children a priority [OR]</li>
                   <p>Society is just as well off if people have priorities other than marriage and children</p>"
-                ),
-                plotOutput("q25h_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q25h_plot", height = 350),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <li>The best way to ensure peace is through military strength [OR]</li>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Good diplomacy is the best way to ensure peace</p>"
-                ),
-                plotOutput("q25i_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q25i_plot", height = 350),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <li>U.S. efforts to solve problems around the world usually end up making things worse [OR] Problems in the world would be even worse without U.S. involvement</li>"
-                ),
-                plotOutput("q25j_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q25j_plot", height = 350),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <li>Most people who want to get ahead can make it if they're willing to work hard [OR]</li>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hard work and determination are no guarantee of success for most people</p>"
-                ),
-                plotOutput("q25k_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q25k_plot", height = 350),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <li>Success in life is pretty much determined by forces outside of our control [OR]</li>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Everyone has it in their own power to succeed</p>"
-                ),
-                plotOutput("q25l_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q25l_plot", height = 350),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <li>Too much power is concentrated in the hands of a few large companies [OR]</li>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The largest companies do NOT have too much power</p>"
-                ),
-                plotOutput("q25m_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q25m_plot", height = 350),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <li>Business corporations make too much profit [OR]</li>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Most corporations make a fair and reasonable amount of profit</p>"
-                ),
-                plotOutput("q25n_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q25n_plot", height = 350),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>ASK ALL PHASE B:</strong></p>
                   <li>Elected officials in Washington lose touch with the people pretty quickly [OR]</li>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Elected officials in Washington try hard to stay in touch with voters back home</p>"
-                ),
-                plotOutput("q25o_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q25o_plot", height = 350),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK ALL PHASE C:</strong></p>
                   <li>Most elected officials care what people like me think [OR]</li>
                   </ol>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Most elected officials don't care what people like me think</p>"
-                ),
-                plotOutput("q25p_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q25p_plot", height = 350),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>RESPONSE CATEGORIES:</strong></p>
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Statement #1</p>
@@ -533,10 +573,10 @@ ui <- dashboardPage(
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ability to change [OR]</p>
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Reliance on long-standing principles</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don't know/Refused</p>"
-                ),
-                plotOutput("qb26_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("qb26_plot", height = 350),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK ALL PHASE C:</strong></p>
                   <p>Q.C26 Next, <strong>[READ AND RANDOMIZE] </strong></p>
@@ -544,10 +584,10 @@ ui <- dashboardPage(
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Americans are united and in agreement about the most important values </strong>[OR]</p>
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Americans are greatly divided when it comes to the most important values</strong></p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don't know/Refused</p>"
-                ),
-                plotOutput("qc26_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("qc26_plot", height = 350),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK ALL:</strong></p>
                   <p>OFTVOTE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; How often would you say you vote...<strong>[READ IN ORDER]?</strong></p>
@@ -559,10 +599,10 @@ ui <- dashboardPage(
                   <p>5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ]</strong> Never vote</p>
                   <p>6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ]</strong> Other</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don't know/Refused</p>"
-                ),
-                plotOutput("oftvote_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("oftvote_plot", height = 350),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>ASK PHASE A FORM 1:</strong></p>
                   <p>Now a different kind of question,</p>
@@ -570,10 +610,10 @@ ui <- dashboardPage(
                   <p>&nbsp;</p>
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[ENTER NUMBER 0-100]</strong></p>
                   <p>999&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don't know/Refused</p>"
-                ),
-                plotOutput("q26f1_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q26f1_plot", height = 350),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong><br /> </strong></p>
                   <p><strong>&nbsp;</strong></p>
@@ -583,10 +623,10 @@ ui <- dashboardPage(
                   <p>&nbsp;</p>
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[ENTER NUMBER 0-100]</strong></p>
                   <p>999&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don't know/Refused</p>"
-                ),
-                plotOutput("q26f2_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q26f2_plot", height = 350),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK ALL PHASE B:</strong></p>
                   <p>The next congressional elections will be coming up later this year&hellip;</p>
@@ -596,10 +636,10 @@ ui <- dashboardPage(
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Democratic Party&rsquo;s candidate</p>
                   <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Other<strong> (VOL.)</strong></p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don&rsquo;t know/Refused <strong>(VOL.)</strong></p>"
-                ),
-                plotOutput("qb27_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("qb27_plot", height = 350),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK IF &lsquo;OTHER&rsquo; &lsquo;DON&rsquo;T KNOW/REFUSED&rsquo; (Q.B27=3,9):</strong></p>
                   <p>Q.B27a&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; As of TODAY, would you LEAN more to the Republican or the Democrat?</p>
@@ -608,10 +648,10 @@ ui <- dashboardPage(
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Democratic Party&rsquo;s candidate</p>
                   <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Other<strong> (VOL.)</strong></p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don&rsquo;t know/Refused <strong>(VOL.)</strong></p>"
-                ),
-                plotOutput("qb27a_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("qb27a_plot", height = 350),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>ASK ALL:</strong></p>
                   <p>Next,</p>
@@ -622,10 +662,10 @@ ui <- dashboardPage(
                   <li>No</li>
                   </ul>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don&rsquo;t Know/Refused <strong>(VOL.)</strong></p>"
-                ),
-                plotOutput("int1_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("int1_plot", height = 350),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>ASK IF DOES NOT USE THE INTERNET (INT1=2,9):</strong></p>
                   <p>INT2&nbsp;&nbsp; Do you send or receive email, at least occasionally?</p>
@@ -635,10 +675,10 @@ ui <- dashboardPage(
                   <li>No</li>
                   </ul>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don&rsquo;t Know/Refused <strong>(VOL.)</strong></p>"
-                ),
-                plotOutput("int2_plot", height = 350),
-                HTML(
-                  "
+                  ),
+                  plotOutput("int2_plot", height = 350),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK IF DOES NOT USE THE INTERNET OR EMAIL (INT2=2,9):</strong></p>
                   <p>INT3M&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Do you access the internet on a cell phone, tablet or other mobile handheld device, at least occasionally?</p>
@@ -646,16 +686,16 @@ ui <- dashboardPage(
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes</p>
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don&rsquo;t know/Refused <strong>(VOL.)</strong></p>"
-                ),
-                plotOutput("int3m_plot", height = 350)
+                  ),
+                  plotOutput("int3m_plot", height = 350)
                 )
-                ))),
-    tabItem(tabName = "survey2",
-            fluidPage(fluidRow(
-              box(
-                width = 12,
-                HTML(
-                  "
+              ))),
+      tabItem(tabName = "survey2",
+              fluidPage(fluidRow(
+                box(
+                  width = 12,
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>ASK ALL PHASE C:</strong></p>
                   <p>Now, I have a short set of questions on marriage and family.</p>
@@ -663,31 +703,31 @@ ui <- dashboardPage(
                   <p>&nbsp;</p>
                   <ol>
                   <li>A Republican</li>"
-                ),
-                plotOutput("qc28a_plot", height = 250),
-                HTML("
+                  ),
+                  plotOutput("qc28a_plot", height = 250),
+                  HTML("
                      <li>A Democrat</li>"),
-                plotOutput("qc28b_plot", height = 250),
-                HTML("
+                  plotOutput("qc28b_plot", height = 250),
+                  HTML("
                      <li>Someone who didn&rsquo;t go to college</li>"),
-                plotOutput("qc28c_plot", height = 250),
-                HTML("
+                  plotOutput("qc28c_plot", height = 250),
+                  HTML("
                      <li>Someone born and raised outside the U.S.</li>"),
-                plotOutput("qc28d_plot", height = 250),
-                HTML("
+                  plotOutput("qc28d_plot", height = 250),
+                  HTML("
                      <li>Someone who does not believe in God</li>"),
-                plotOutput("qc28e_plot", height = 250),
-                HTML("
+                  plotOutput("qc28e_plot", height = 250),
+                  HTML("
                      <li>A &ldquo;born again&rdquo; Christian</li>"),
-                plotOutput("qc28f_plot", height = 250),
-                HTML("
+                  plotOutput("qc28f_plot", height = 250),
+                  HTML("
                      <li>A gun owner</li>"),
-                plotOutput("qc28g_plot", height = 250),
-                HTML("
+                  plotOutput("qc28g_plot", height = 250),
+                  HTML("
                      <li>Someone of a different race</li>"),
-                plotOutput("qc28h_plot", height = 250),
-                HTML(
-                  "
+                  plotOutput("qc28h_plot", height = 250),
+                  HTML(
+                    "
                   </ol>
                   <p>&nbsp;</p>
                   <p><strong>RESPONSE CATEGORIES:</strong></p>
@@ -701,13 +741,13 @@ ui <- dashboardPage(
                   <p>&nbsp;</p>
                   <ol>
                   <li>MSNBC cable news</li>"
-                ),
-                plotOutput("qa29a_plot", height = 250),
-                HTML("
+                  ),
+                  plotOutput("qa29a_plot", height = 250),
+                  HTML("
                      <li>The Fox News Cable Channel</li>"),
-                plotOutput("qa29b_plot", height = 250),
-                HTML(
-                  "
+                  plotOutput("qa29b_plot", height = 250),
+                  HTML(
+                    "
                   </ol>
                   <p>&nbsp;</p>
                   <p><strong>RESPONSE CATEGORIES:</strong></p>
@@ -726,10 +766,10 @@ ui <- dashboardPage(
                   <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Only now and then [OR]</p>
                   <p>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hardly at all</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don't know/Refused</p>"
-                ),
-                plotOutput("q40_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q40_plot", height = 250),
+                  HTML(
+                    "
                   <p><strong>ASK ALL PHASE B:</strong></p>
                   <p>Q.B40a&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Some people say they are basically content with the federal government, others say they are frustrated, and others say they are angry. Which of these best describes how you feel?</p>
                   <p>&nbsp;</p>
@@ -737,10 +777,10 @@ ui <- dashboardPage(
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Frustrated</p>
                   <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angry</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don&rsquo;t know/Refused <strong>(VOL.)</strong></p>"
-                ),
-                plotOutput("qb40a_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("qb40a_plot", height = 250),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK ALL PHASE B:</strong></p>
                   <p>Q.B40b&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; How much of the time do you think you can trust the government in Washington to do what is right? Just about always, most of the time, or only some of the time?</p>
@@ -750,10 +790,10 @@ ui <- dashboardPage(
                   <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Only some of the time</p>
                   <p>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Never <strong>(VOL.)</strong></p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don&rsquo;t know/Refused <strong>(VOL.)</strong></p>"
-                ),
-                plotOutput("qb40b_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("qb40b_plot", height = 250),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>ASK ALL:</strong></p>
                   <p>Just as far as you know&hellip;</p>
@@ -762,10 +802,10 @@ ui <- dashboardPage(
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Republican Party [OR]</p>
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Democratic Party</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ]</strong> Don&rsquo;t know/Refused</p>"
-                ),
-                plotOutput("q41_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q41_plot", height = 250),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>ASK ALL:</strong></p>
                   <p>Q.42&nbsp;&nbsp; Which political party, has a majority in the U.S. Senate<strong> [READ AND RANDOMIZE]</strong>?<strong> [INTERVIEWER INSTRUCTION: DO NOT PROBE, PUNCH 9 IF RESPONDENT SAYS THEY DON&rsquo;T KNOW]</strong></p>
@@ -773,10 +813,10 @@ ui <- dashboardPage(
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Republican Party [OR]</p>
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Democratic Party</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ]</strong> Don&rsquo;t know/Refused</p>"
-                ),
-                plotOutput("q42_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q42_plot", height = 250),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>ASK ALL PHASE A:</strong></p>
                   <p>Q.43&nbsp;&nbsp; Which political party is more in favor of raising taxes on higher income people <strong>[READ AND RANDOMIZE]</strong>? <strong>[IF NECESSARY:</strong> Just as far as you know<strong>] [INTERVIEWER INSTRUCTION: DO NOT PROBE, PUNCH 9 IF RESPONDENT SAYS THEY DON&rsquo;T KNOW]</strong></p>
@@ -784,10 +824,10 @@ ui <- dashboardPage(
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Republican Party [OR]</p>
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Democratic Party</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don't know/Refused</p>"
-                ),
-                plotOutput("q43_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q43_plot", height = 250),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>NO QUESTIONS 44-47</strong></p>
                   <p><strong>&nbsp;</strong></p>
@@ -798,18 +838,18 @@ ui <- dashboardPage(
                   <p>&nbsp;</p>
                   <ol>
                   <li>Is too extreme</li>"
-                ),
-                plotOutput("qc48a_plot", height = 250),
-                HTML("
+                  ),
+                  plotOutput("qc48a_plot", height = 250),
+                  HTML("
                      <li>Cares about the middle class</li>"),
-                plotOutput("qc48b_plot", height = 250),
-                HTML(
-                  "
+                  plotOutput("qc48b_plot", height = 250),
+                  HTML(
+                    "
                   <li>Is too willing to cut government programs, even when they work</li>"
-                ),
-                plotOutput("qc48c_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("qc48c_plot", height = 250),
+                  HTML(
+                    "
                   </ol>
                   <p>&nbsp;</p>
                   <p><strong>RESPONSE CATEGORIES:</strong></p>
@@ -824,17 +864,17 @@ ui <- dashboardPage(
                   <p>&nbsp;</p>
                   <ol>
                   <li>Is too extreme</li>"
-                ),
-                plotOutput("qc49a_plot", height = 250),
-                HTML("<li>Cares about the middle class</li>"),
-                plotOutput("qc49b_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("qc49a_plot", height = 250),
+                  HTML("<li>Cares about the middle class</li>"),
+                  plotOutput("qc49b_plot", height = 250),
+                  HTML(
+                    "
                   <li>Too often sees government as the only way to solve problems</li>"
-                ),
-                plotOutput("qc49c_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("qc49c_plot", height = 250),
+                  HTML(
+                    "
                   </ol>
                   <p>&nbsp;</p>
                   <p><strong>RESPONSE CATEGORIES:</strong></p>
@@ -849,69 +889,69 @@ ui <- dashboardPage(
                   <li>This country should do whatever it takes to protect the environment [OR]</li>
                   </ol>
                   <p>This country has gone too far in its efforts to protect the environment</p>"
-                ),
-                plotOutput("q50q_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q50q_plot", height = 250),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <ol>
                   <li>Stricter environmental laws and regulations cost too many jobs and hurt the economy [OR]</li>
                   </ol>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Stricter environmental laws and regulations are worth the cost</p>"
-                ),
-                plotOutput("q50r_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q50r_plot", height = 250),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>ASK ALL PHASE B:</strong></p>
                   <ol>
                   <li>There are no real limits to growth in this country today [OR]</li>
                   </ol>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; People in this country should learn to live with less</p>"
-                ),
-                plotOutput("q50s_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q50s_plot", height = 250),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK ALL PHASE C:</strong></p>
                   <ol>
                   <li>As Americans, we can always find ways to solve our problems and get what we want [OR]</li>
                   </ol>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This country can't solve many of its important problems</p>"
-                ),
-                plotOutput("q50t_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q50t_plot", height = 250),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>ASK ALL:</strong></p>
                   <ol>
                   <li>Homosexuality should be accepted by society [OR]</li>
                   </ol>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Homosexuality should be discouraged by society</p>"
-                ),
-                plotOutput("q50u_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q50u_plot", height = 250),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>ASK ALL PHASE C:</strong></p>
                   <ol>
                   <li>It&rsquo;s not the government&rsquo;s job to protect people from themselves [OR]</li>
                   </ol>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sometimes laws to protect people from themselves are necessary</p>"
-                ),
-                plotOutput("q50v_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q50v_plot", height = 250),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>ASK ALL PHASE A:</strong></p>
                   <ol>
                   <li>Religion is a very important part of my life [OR]</li>
                   </ol>
                   <p>Religion is not that important to me</p>"
-                ),
-                plotOutput("q50w_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q50w_plot", height = 250),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>NO ITEM x</strong></p>
                   <p>&nbsp;</p>
@@ -920,37 +960,37 @@ ui <- dashboardPage(
                   <li>I'm generally satisfied with the way things are going for me financially [OR]</li>
                   </ol>
                   <p>I'm not very satisfied with my financial situation</p>"
-                ),
-                plotOutput("q50y_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q50y_plot", height = 250),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <ol>
                   <li>I often don't have enough money to make ends meet [OR]</li>
                   </ol>
                   <p>Paying the bills is generally not a problem for me</p>"
-                ),
-                plotOutput("q50z_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q50z_plot", height = 250),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <ol>
                   <li>It IS NOT necessary to believe in God in order to be moral and have good values [OR]</li>
                   </ol>
                   <p>It IS necessary to believe in God in order to be moral and have good values</p>"
-                ),
-                plotOutput("q50aa_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q50aa_plot", height = 250),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <ol>
                   <li>Using overwhelming military force is the best way to defeat terrorism around the world [OR]</li>
                   </ol>
                   <p>Relying too much on military force to defeat terrorism creates hatred that leads to more terrorism</p>"
-                ),
-                plotOutput("q50bb_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q50bb_plot", height = 250),
+                  HTML(
+                    "
                   <p><em>&nbsp;</em></p>
                   <p><strong>NO ITEM cc</strong></p>
                   <p>&nbsp;</p>
@@ -958,26 +998,26 @@ ui <- dashboardPage(
                   <li>The growing number of newcomers from other countries threatens traditional American customs and values [OR]</li>
                   </ol>
                   <p>The growing number of newcomers from other countries strengthens American society</p>"
-                ),
-                plotOutput("q50dd_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q50dd_plot", height = 250),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <ol>
                   <li>It&rsquo;s best for the future of our country to be active in world affairs [OR]</li>
                   </ol>
                   <p>We should pay less attention to problems overseas and concentrate on problems here at home</p>"
-                ),
-                plotOutput("q50ee_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q50ee_plot", height = 250),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <ol>
                   <li>Americans need to be willing to give up privacy and freedom in order to be safe from terrorism [OR] Americans shouldn&rsquo;t have to give up privacy and freedom in order to be safe from terrorism</li>"
-                ),
-                plotOutput("q50ff_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q50ff_plot", height = 250),
+                  HTML(
+                    "
                   </ol>
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK ALL PHASE B:</strong></p>
@@ -985,19 +1025,19 @@ ui <- dashboardPage(
                   <li>The government should do more to protect morality in society [OR]</li>
                   </ol>
                   <p>I worry the government is getting too involved in the issue of morality</p>"
-                ),
-                plotOutput("q50gg_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q50gg_plot", height = 250),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <ol>
                   <li>Our country has made the changes needed to give blacks equal rights with whites [OR]</li>
                   </ol>
                   <p>Our country needs to continue making changes to give blacks equal rights with whites</p>"
-                ),
-                plotOutput("q50hh_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q50hh_plot", height = 250),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>RESPONSE CATEGORIES:</strong></p>
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Statement #1</p>
@@ -1013,50 +1053,50 @@ ui <- dashboardPage(
                   <li>Government should do more to solve problems [OR]</li>
                   </ol>
                   <p>Government is doing too many things better left to businesses and individuals</p>"
-                ),
-                plotOutput("q51ii_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q51ii_plot", height = 250),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>ASK ALL PHASE A:</strong></p>
                   <ol>
                   <li>Children are better off when a parent stays home to focus on the family</li>
                   </ol>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Children are just as well off when their parents work outside the home</p>"
-                ),
-                plotOutput("q51jj_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q51jj_plot", height = 250),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>ASK ALL:</strong></p>
                   <ol>
                   <li>Government aid to the poor does more harm than good, by making people too dependent on government assistance [OR]</li>
                   </ol>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Government aid to the poor does more good than harm, because people can&rsquo;t get out of poverty until their basic needs are met</p>"
-                ),
-                plotOutput("q51kk_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q51kk_plot", height = 250),
+                  HTML(
+                    "
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK ALL PHASE A:</strong></p>
                   <ol>
                   <li>The economic system in this country unfairly favors powerful interests [OR]</li>
                   </ol>
                   <p>The economic system in this country is generally fair to most Americans</p>"
-                ),
-                plotOutput("q51ll_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q51ll_plot", height = 250),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>ASK ALL PHASE A:</strong></p>
                   <ol>
                   <li>I like elected officials who make compromises with people they disagree with [OR]</li>
                   </ol>
                   <p>I like elected officials who stick to their positions</p>"
-                ),
-                plotOutput("q51mm_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q51mm_plot", height = 250),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>NO ITEM nn</strong></p>
                   <p>&nbsp;</p>
@@ -1065,19 +1105,19 @@ ui <- dashboardPage(
                   <li>The police should be allowed to stop and search anyone who fits the general description of a crime suspect [OR]</li>
                   </ol>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The police should not be able to search people just because they think they look suspicious</p>"
-                ),
-                plotOutput("q51oo_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q51oo_plot", height = 250),
+                  HTML(
+                    "
                   <p><strong>ASK ALL PHASE C:</strong></p>
                   <ol>
                   <li>Wall Street HELPS the American economy more than it hurts [OR]</li>
                   </ol>
                   <p>Wall Street HURTS the American economy more than it helps</p>"
-                ),
-                plotOutput("q51pp_plot", height = 250),
-                HTML(
-                  "
+                  ),
+                  plotOutput("q51pp_plot", height = 250),
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>RESPONSE CATEGORIES:</strong></p>
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Statement #1</p>
@@ -1086,15 +1126,15 @@ ui <- dashboardPage(
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>
                   <p>&nbsp;</p>
                   <p><strong>NO QUESTION 52</strong></p>"
+                  )
                 )
-                )
-                ))),
-    tabItem(tabName = "survey3",
-            fluidPage(fluidRow(
-              box(
-                width = 12,
-                HTML(
-                  "
+              ))),
+      tabItem(tabName = "survey3",
+              fluidPage(fluidRow(
+                box(
+                  width = 12,
+                  HTML(
+                    "
                   <p>&nbsp;</p>
                   <p><strong>ASK ALL PHASE A:</strong></p>
                   <p>Q.53&nbsp;&nbsp; In your opinion, which is generally more often to blame if a person is poor? Lack of effort on his or her own part, or circumstances beyond his or her control?</p>
@@ -1907,8 +1947,18 @@ ui <- dashboardPage(
                   <p><strong>[PLEASE MAKE THE FOLLOWING TEXT AVAILABLE TO INTERVIEWERS ANYTIME A RESPONDENT ASKS ABOUT THE NATURE OF THE PEW RESEARCH CENTER]</strong>The Pew Research Center is an independent nonpartisan public opinion research organization that studies attitudes toward politics, the press and issues facing the nation. The Center has no connection to the government, political parties, or any campaigns. Reports about its surveys are made available free of charge on their website pewresearch <em>dot </em>ORG.</p>
                   <p><strong>&nbsp;</strong></p>
                   "
+                  )
                 )
-                )
-                )))
-                ))
-                )
+              ))),
+      tabItem(tabName = "coefs_table",
+              h2("Factor Coefficients by Variable"),
+              fluidRow(box(
+                width = 12, 
+                HTML("
+                   <p>The 51 variables below, corresponding to survey questions, were used to determine factors. A row.name can be translated easily into a survey question -- for example, 'q25k.c1' = 'Q.25, sub-question K, statement #1'</p>
+                   <p>'predict' indicates the factor number predicted by a particular variable, and 'prob' indicates the probability of assignment to that factor for positive correlation to the variable.</p>
+                   <p>X1, X2, and X3 correspond to the factors 1, 2, and 3 respectively. A higher coefficient means a variable is highly-correlated. Some variables are related to multiple factors.</p>"),
+                dataTableOutput("coefs_table")
+              )))
+    ))
+)

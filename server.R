@@ -43,7 +43,7 @@ reportsetup <- explanation %>%
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
-   
+  
   ## Histograms
   output$usr_plot <- renderPlot({
     usrdist <- reportsetup %>%
@@ -460,7 +460,7 @@ shinyServer(function(input, output) {
   statedisttable <- spread(statedist[c("state","predict","prop")], key = predict, value = prop)
   
   output$state_table <- renderDataTable({
-    datatable(statedisttable) %>%
+    datatable(statedisttable, options = list(pageLength = 100)) %>%
       formatPercentage(names(statedisttable[c(2:4)]), 1) %>%
       formatStyle(names(statedisttable[c(2:4)]),
                   background = styleColorBar(range(statedisttable[c(2:4)], na.rm = TRUE), 'lightblue'),
@@ -925,7 +925,7 @@ shinyServer(function(input, output) {
       summarise(n = sum(weight) # weight variable)
       ) %>%
       mutate(prop = prop.table(n))
-
+    
     gg_prop1 <- ggplot(data = data.frame(),
                        aes(x = predict, y = prop, fill = q11c_b)) +
       geom_bar(stat = 'identity', position = 'dodge') +
@@ -1493,14 +1493,14 @@ shinyServer(function(input, output) {
     gg_prop1 %+%
       q25pdist
   })
-
+  
   output$qb26_plot <- renderPlot({
     qb26dist <- reportsetup[which(is.na(reportsetup$qb26)==FALSE), ] %>%
       group_by(predict, qb26) %>%
       summarise(n = sum(weight) # weight variable)
       ) %>%
       mutate(prop = prop.table(n))
-
+    
     gg_prop1 <- ggplot(data = data.frame(),
                        aes(x = predict, y = prop, fill = qb26)) +
       geom_bar(stat = 'identity', position = 'dodge') +
@@ -1518,14 +1518,14 @@ shinyServer(function(input, output) {
     gg_prop1 %+%
       qb26dist
   })
-
+  
   output$qc26_plot <- renderPlot({
     qc26dist <- reportsetup[which(is.na(reportsetup$qc26)==FALSE), ] %>%
       group_by(predict, qc26) %>%
       summarise(n = sum(weight) # weight variable)
       ) %>%
       mutate(prop = prop.table(n))
-
+    
     gg_prop1 <- ggplot(data = data.frame(),
                        aes(x = predict, y = prop, fill = qc26)) +
       geom_bar(stat = 'identity', position = 'dodge') +
@@ -1543,14 +1543,14 @@ shinyServer(function(input, output) {
     gg_prop1 %+%
       qc26dist
   })
-
+  
   output$oftvote_plot <- renderPlot({
     oftvotedist <- reportsetup %>%
       group_by(predict, oftvote) %>%
       summarise(n = sum(weight) # weight variable)
       ) %>%
       mutate(prop = prop.table(n))
-
+    
     gg_prop1 <- ggplot(data = data.frame(),
                        aes(x = predict, y = prop, fill = oftvote)) +
       geom_bar(stat = 'identity', position = 'dodge') +
@@ -1568,14 +1568,14 @@ shinyServer(function(input, output) {
     gg_prop1 %+%
       oftvotedist
   })
-
+  
   output$q26f1_plot <- renderPlot({
     q26f1dist <- reportsetup[which(is.na(reportsetup$q26f1.r)==FALSE), ] %>%
       group_by(predict, q26f1.r) %>%
       summarise(n = sum(weight) # weight variable)
       ) %>%
       mutate(prop = prop.table(n))
-
+    
     gg_prop1 <- ggplot(data = data.frame(),
                        aes(x = predict, y = prop, fill = q26f1.r)) +
       geom_bar(stat = 'identity', position = 'dodge') +
@@ -1593,14 +1593,14 @@ shinyServer(function(input, output) {
     gg_prop1 %+%
       q26f1dist
   })
-
+  
   output$q26f2_plot <- renderPlot({
     q26f2dist <- reportsetup[which(is.na(reportsetup$q26f2.r)==FALSE), ] %>%
       group_by(predict, q26f2.r) %>%
       summarise(n = sum(weight) # weight variable)
       ) %>%
       mutate(prop = prop.table(n))
-
+    
     gg_prop1 <- ggplot(data = data.frame(),
                        aes(x = predict, y = prop, fill = q26f2.r)) +
       geom_bar(stat = 'identity', position = 'dodge') +
@@ -1618,14 +1618,14 @@ shinyServer(function(input, output) {
     gg_prop1 %+%
       q26f2dist
   })
-
+  
   output$qb27_plot <- renderPlot({
     qb27dist <- reportsetup[which(is.na(reportsetup$qb27)==FALSE), ] %>%
       group_by(predict, qb27) %>%
       summarise(n = sum(weight) # weight variable)
       ) %>%
       mutate(prop = prop.table(n))
-
+    
     gg_prop1 <- ggplot(data = data.frame(),
                        aes(x = predict, y = prop, fill = qb27)) +
       geom_bar(stat = 'identity', position = 'dodge') +
@@ -1643,14 +1643,14 @@ shinyServer(function(input, output) {
     gg_prop1 %+%
       qb27dist
   })
-
+  
   output$qb27a_plot <- renderPlot({
     qb27adist <- reportsetup[which(is.na(reportsetup$qb27a)==FALSE), ] %>%
       group_by(predict, qb27a) %>%
       summarise(n = sum(weight) # weight variable)
       ) %>%
       mutate(prop = prop.table(n))
-
+    
     gg_prop1 <- ggplot(data = data.frame(),
                        aes(x = predict, y = prop, fill = qb27a)) +
       geom_bar(stat = 'identity', position = 'dodge') +
@@ -1668,14 +1668,14 @@ shinyServer(function(input, output) {
     gg_prop1 %+%
       qb27adist
   })
-
+  
   output$int1_plot <- renderPlot({
     int1dist <- reportsetup %>%
       group_by(predict, int1) %>%
       summarise(n = sum(weight) # weight variable)
       ) %>%
       mutate(prop = prop.table(n))
-
+    
     gg_prop1 <- ggplot(data = data.frame(),
                        aes(x = predict, y = prop, fill = int1)) +
       geom_bar(stat = 'identity', position = 'dodge') +
@@ -1693,14 +1693,14 @@ shinyServer(function(input, output) {
     gg_prop1 %+%
       int1dist
   })
-
+  
   output$int2_plot <- renderPlot({
     int2dist <- reportsetup[which(is.na(reportsetup$int2)==FALSE), ] %>%
       group_by(predict, int2) %>%
       summarise(n = sum(weight) # weight variable)
       ) %>%
       mutate(prop = prop.table(n))
-
+    
     gg_prop1 <- ggplot(data = data.frame(),
                        aes(x = predict, y = prop, fill = int2)) +
       geom_bar(stat = 'identity', position = 'dodge') +
@@ -1718,14 +1718,14 @@ shinyServer(function(input, output) {
     gg_prop1 %+%
       int2dist
   })
-
+  
   output$int3m_plot <- renderPlot({
     int3mdist <- reportsetup[which(is.na(reportsetup$int3m)==FALSE), ] %>%
       group_by(predict, int3m) %>%
       summarise(n = sum(weight) # weight variable)
       ) %>%
       mutate(prop = prop.table(n))
-
+    
     gg_prop1 <- ggplot(data = data.frame(),
                        aes(x = predict, y = prop, fill = int3m)) +
       geom_bar(stat = 'identity', position = 'dodge') +
@@ -2143,7 +2143,7 @@ shinyServer(function(input, output) {
     gg_prop1 %+%
       q43dist
   })
-    
+  
   output$qc48a_plot <- renderPlot({
     qc48adist <- reportsetup[which(is.na(reportsetup$qc48a)==FALSE), ] %>%
       group_by(predict, qc48a) %>%
@@ -2869,4 +2869,22 @@ shinyServer(function(input, output) {
       q51ppdist
   })
   
+  output$coefs_table <- renderDataTable({
+    datatable(model.rank.coefs, options = list(pageLength = 100)) %>%
+    formatPercentage('prob', 1) %>%
+    formatStyle('prob',
+                background = styleColorBar(range(model.rank.coefs['prob'], na.rm = TRUE), 'lightblue'),
+                backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center') %>%
+    formatRound(c('X1', 'X2', 'X3'), 3) %>%
+    formatStyle('X1',
+                background = styleColorBar(range(model.rank.coefs['X1'], na.rm = TRUE), 'lightgreen'),
+                backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center') %>%
+    formatStyle('X2',
+                background = styleColorBar(range(model.rank.coefs['X2'], na.rm = TRUE), 'lightgreen'),
+                backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center') %>%
+    formatStyle('X3',
+                background = styleColorBar(range(model.rank.coefs['X3'], na.rm = TRUE), 'lightgreen'),
+                backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center')
+  })
+
 })

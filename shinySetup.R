@@ -13,5 +13,8 @@ explanation <- merge(rawinput, model.rank.predictions, value=row.id, all.x=TRUE)
 explanation <- merge(explanation, model.rank.basis, value=row.id, all.x=TRUE)
 
 ## To CSV:
-write.csv(explanation, "./outputs/polarization_2014_explanation.csv", na="", row.names = FALSE)
-write.csv(names(explanation), "./outputs/polarization_2014_explanation_header.csv")
+# write.csv(explanation, "./outputs/polarization_2014_explanation.csv", na="", row.names = FALSE)
+# write.csv(names(explanation), "./outputs/polarization_2014_explanation_header.csv")
+
+model.rank.coefs <- data.frame(t(coef(model.rank)))
+model.rank.coefs <- merge(data.frame(predict(model.rank, prob=TRUE)), model.rank.coefs, by=0)
