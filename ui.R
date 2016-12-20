@@ -2,6 +2,7 @@
 # This is the user-interface definition of a Shiny web application.
 
 library(shiny)
+library(shinyjs)
 library(shinydashboard)
 library(DT)
 library(ggplot2)
@@ -10,14 +11,11 @@ library(tidyr)
 library(ggthemes)
 library(scales)
 
-## TODO: Implement loading page: https://github.com/daattali/advanced-shiny/blob/master/loading-screen/app.R
-
-# Define UI for application that draws a histogram
-
+## Define UI
 ui <- dashboardPage(
   dashboardHeader(
-    title = "Pew Political Polarization Survey 2014: Please be patient as pages load",
-    titleWidth = 700),
+    title = "3-Factors Analysis of Pew Political Polarization Survey 2014",
+    titleWidth = 500),
   dashboardSidebar(
     width = 140,
     sidebarMenu(
@@ -28,6 +26,7 @@ ui <- dashboardPage(
         icon = icon("bar-chart")
       ),
       menuItem("States", tabName = "map", icon = icon("globe")),
+      ## Breaking into different sections to ease render speed
       menuItem(
         "Survey Q.1-27",
         tabName = "survey1",
@@ -47,7 +46,8 @@ ui <- dashboardPage(
     )
   ),
   dashboardBody(
-    # Also add some custom CSS to make the title background area the same
+
+    # Add some custom CSS to make the title background area the same
     # color as the rest of the header.
     tags$head(tags$style(HTML('
                               .skin-blue .main-header .logo {
@@ -60,18 +60,18 @@ ui <- dashboardPage(
     tabItems(
       tabItem(
         tabName = "intro",
-        h2("Introduction"),
-        fluidRow(box(
-          width = 12, 
-          HTML("
+            h2("Introduction"),
+            fluidRow(box(
+              width = 12, 
+              HTML("
                <p>Study of the 2014 Pew Political Polarization Survey</p>
-               <p>This approach and visualization dashboard require acquisition of the Pew Political Polarization Dataset from 2014, available at http://www.people-press.org/2014/03/16/2014-political-polarization-survey/</p>
+               <p>This visualization and analysis is based on the Pew Political Polarization Dataset from 2014, available at http://www.people-press.org/2014/03/16/2014-political-polarization-survey/</p>
                <p>The analysis reveals 3 dominant factors in US political life, to help explain some American political dynamics. </p>
                <p>Instead of thinking of America's electorate as right, left, and in the middle, it's better to think of a triangle with a major (equally-sized) constituency at each point.</p>
                <p>In order to build a majority coalition, any two of these points must align behind an issue or a candidate.</p>
                <ul>
                <li>Factor 1: Human Rights and Equality -- Blue, highly correlated with the Democratic Party</li>
-               <li>Factor 2: Traditional Values -- Yellow, split between the two mainstream American political parties</li>
+               <li>Factor 2: Traditional Values -- Yellow, split between the two mainstream American political parties, like neither party is consistent with their values</li>
                <li>Factor 3: Free Market Capitalism -- Red, highly correlated with the Republican Party</li>
                </ul>
                <p>In terms of electoral votes, different coalitions offer promise of delivering majorities in different states. </p>
@@ -134,12 +134,14 @@ ui <- dashboardPage(
           width = 12, plotOutput("ideo_plot", height = 250)
         ))
       ),
-      tabItem(tabName = "map",
+      tabItem(
+        tabName = "map",
               h2("Factor Concentration by State"),
               fluidRow(box(
                 width = 12, dataTableOutput("state_table")
-              ))),
-      tabItem(tabName = "survey1",
+          ))),
+      tabItem(
+        tabName = "survey1",
               fluidPage(fluidRow(
                 box(
                   width = 12,
@@ -689,8 +691,9 @@ ui <- dashboardPage(
                   ),
                   plotOutput("int3m_plot", height = 350)
                 )
-              ))),
-      tabItem(tabName = "survey2",
+          ))),
+      tabItem(
+        tabName = "survey2",
               fluidPage(fluidRow(
                 box(
                   width = 12,
@@ -1128,8 +1131,9 @@ ui <- dashboardPage(
                   <p><strong>NO QUESTION 52</strong></p>"
                   )
                 )
-              ))),
-      tabItem(tabName = "survey3",
+          ))),
+      tabItem(
+        tabName = "survey3",
               fluidPage(fluidRow(
                 box(
                   width = 12,
@@ -1949,16 +1953,20 @@ ui <- dashboardPage(
                   "
                   )
                 )
-              ))),
-      tabItem(tabName = "coefs_table",
+          ))),
+      tabItem(
+        tabName = "coefs_table",
               h2("Factor Coefficients by Variable"),
               fluidRow(box(
                 width = 12, 
                 HTML("
-                   <p>The 51 variables below, corresponding to survey questions, were used to determine factors. A row.name can be translated easily into a survey question -- for example, 'q25k.c1' = 'Q.25, sub-question K, statement #1'</p>
+                   <p>The 51 variables below, corresponding to survey questions, were used to determine factors. These were picked because they were asked of all respondents, but specifically don't ask about partisan identity or demographics -- as these survey questions were reserved as independent variables and not part of a complex DV distilled via factorization.</p>
+                   <p>A row.name can be translated easily into a survey question -- for example, 'q25k.c1' = 'Q.25, sub-question K, statement #1'</p>
+                   <p>A row.name ending in .ca or .cd indicate an agree/disagree question that was recoded into two variables with positive response ranges from 0.0-1.0 for inclusion in NMF.</p>
                    <p>'predict' indicates the factor number predicted by a particular variable, and 'prob' indicates the probability of assignment to that factor for positive correlation to the variable.</p>
                    <p>X1, X2, and X3 correspond to the factors 1, 2, and 3 respectively. A higher coefficient means a variable is highly-correlated. Some variables are related to multiple factors.</p>"),
                 dataTableOutput("coefs_table")
               )))
     ))
 )
+
