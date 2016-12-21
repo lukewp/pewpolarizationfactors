@@ -47,7 +47,7 @@ shinyServer(function(input, output) {
   
   ## Histograms
   withProgress(message = 'All demographics plots ...', value = 0, {
-
+    
     output$usr_plot <- renderPlot({
       withProgress(message = 'Location Type plot ...', value = 0, {
         for (i in 1:15) {
@@ -2154,1136 +2154,3464 @@ shinyServer(function(input, output) {
     incProgress(1/51)
     
   })
-  ## Next Tab:
-  output$qc28a_plot <- renderPlot({
-    qc28adist <- reportsetup[which(is.na(reportsetup$qc28a)==FALSE), ] %>%
-      group_by(predict, qc28a) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+  
+  ## Tab survey2:
+  withProgress(message = 'All survey2 plots ...', value = 0, {
+    output$qc28a_plot <- renderPlot({
+      withProgress(message = 'Q.C28a plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc28adist <- reportsetup[which(is.na(reportsetup$qc28a)==FALSE), ] %>%
+          group_by(predict, qc28a) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc28a)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C28a',
+            title = 'Q.C28a by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc28adist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = qc28a)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.C28a',
-        title = 'Q.C28a by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      qc28adist
+    output$qc28b_plot <- renderPlot({
+      withProgress(message = 'Q.C28b plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc28bdist <- reportsetup[which(is.na(reportsetup$qc28b)==FALSE), ] %>%
+          group_by(predict, qc28b) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc28b)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C28b',
+            title = 'Q.C28b by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc28bdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc28c_plot <- renderPlot({
+      withProgress(message = 'Q.C28c plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc28cdist <- reportsetup[which(is.na(reportsetup$qc28c)==FALSE), ] %>%
+          group_by(predict, qc28c) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc28c)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C28c',
+            title = 'Q.C28c by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc28cdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc28d_plot <- renderPlot({
+      withProgress(message = 'Q.C28d plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc28ddist <- reportsetup[which(is.na(reportsetup$qc28d)==FALSE), ] %>%
+          group_by(predict, qc28d) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc28d)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C28d',
+            title = 'Q.C28d by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc28ddist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc28e_plot <- renderPlot({
+      withProgress(message = 'Q.C28e plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc28edist <- reportsetup[which(is.na(reportsetup$qc28e)==FALSE), ] %>%
+          group_by(predict, qc28e) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc28e)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C28e',
+            title = 'Q.C28e by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc28edist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc28f_plot <- renderPlot({
+      withProgress(message = 'Q.C28f plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc28fdist <- reportsetup[which(is.na(reportsetup$qc28f)==FALSE), ] %>%
+          group_by(predict, qc28f) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc28f)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C28f',
+            title = 'Q.C28f by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc28fdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc28g_plot <- renderPlot({
+      withProgress(message = 'Q.C28g plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc28gdist <- reportsetup[which(is.na(reportsetup$qc28g)==FALSE), ] %>%
+          group_by(predict, qc28g) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc28g)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C28g',
+            title = 'Q.C28g by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc28gdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc28h_plot <- renderPlot({
+      withProgress(message = 'Q.C28h plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc28hdist <- reportsetup[which(is.na(reportsetup$qc28h)==FALSE), ] %>%
+          group_by(predict, qc28h) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc28h)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C28h',
+            title = 'Q.C28h by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc28hdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qa29a_plot <- renderPlot({
+      withProgress(message = 'Q.A29a plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qa29adist <- reportsetup[which(is.na(reportsetup$qa29a)==FALSE), ] %>%
+          group_by(predict, qa29a) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qa29a)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.A29a',
+            title = 'Q.A29a by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qa29adist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qa29b_plot <- renderPlot({
+      withProgress(message = 'Q.A29b plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qa29bdist <- reportsetup[which(is.na(reportsetup$qa29b)==FALSE), ] %>%
+          group_by(predict, qa29b) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qa29b)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.A29b',
+            title = 'Q.A29b by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qa29bdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q40_plot <- renderPlot({
+      withProgress(message = 'Q.40 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q40dist <- reportsetup %>%
+          group_by(predict, q40) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q40)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.40',
+            title = 'Q.40 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q40dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qb40a_plot <- renderPlot({
+      withProgress(message = 'Q.B40.a plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qb40adist <- reportsetup[which(is.na(reportsetup$qb40a)==FALSE), ] %>%
+          group_by(predict, qb40a) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qb40a)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.B40.a',
+            title = 'Q.B40.a by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qb40adist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qb40b_plot <- renderPlot({
+      withProgress(message = 'Q.B40.b plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qb40bdist <- reportsetup[which(is.na(reportsetup$qb40b)==FALSE), ] %>%
+          group_by(predict, qb40b) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qb40b)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.B40.b',
+            title = 'Q.B40.b by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qb40bdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q41_plot <- renderPlot({
+      withProgress(message = 'Q.41 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q41dist <- reportsetup %>%
+          group_by(predict, q41) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q41)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.41',
+            title = 'Q.41 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q41dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q42_plot <- renderPlot({
+      withProgress(message = 'Q.42 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q42dist <- reportsetup %>%
+          group_by(predict, q42) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q42)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.42',
+            title = 'Q.42 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q42dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q43_plot <- renderPlot({
+      withProgress(message = 'Q.43 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q43dist <- reportsetup[which(is.na(reportsetup$q43)==FALSE), ] %>%
+          group_by(predict, q43) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q43)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.43',
+            title = 'Q.43 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q43dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc48a_plot <- renderPlot({
+      withProgress(message = 'Q.C48.a plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc48adist <- reportsetup[which(is.na(reportsetup$qc48a)==FALSE), ] %>%
+          group_by(predict, qc48a) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc48a)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C48.a',
+            title = 'Q.C48.a by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc48adist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc48b_plot <- renderPlot({
+      withProgress(message = 'Q.C48.a plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc48bdist <- reportsetup[which(is.na(reportsetup$qc48b)==FALSE), ] %>%
+          group_by(predict, qc48b) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc48b)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C48.b',
+            title = 'Q.C48.b by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc48bdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc48c_plot <- renderPlot({
+      withProgress(message = 'Q.C48.c plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc48cdist <- reportsetup[which(is.na(reportsetup$qc48c)==FALSE), ] %>%
+          group_by(predict, qc48c) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc48c)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C48.c',
+            title = 'Q.C48.c by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc48cdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc49a_plot <- renderPlot({
+      withProgress(message = 'Q.C49.a plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc49adist <- reportsetup[which(is.na(reportsetup$qc49a)==FALSE), ] %>%
+          group_by(predict, qc49a) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc49a)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C49.a',
+            title = 'Q.C49.a by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc49adist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc49b_plot <- renderPlot({
+      withProgress(message = 'Q.C49.b plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc49bdist <- reportsetup[which(is.na(reportsetup$qc49b)==FALSE), ] %>%
+          group_by(predict, qc49b) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc49b)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C49.b',
+            title = 'Q.C49.b by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc49bdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc49c_plot <- renderPlot({
+      withProgress(message = 'Q.C49.c plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc49cdist <- reportsetup[which(is.na(reportsetup$qc49c)==FALSE), ] %>%
+          group_by(predict, qc49c) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc49c)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C49.c',
+            title = 'Q.C49.c by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc49cdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q50q_plot <- renderPlot({
+      withProgress(message = 'Q.50.q plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q50qdist <- reportsetup[which(is.na(reportsetup$q50q)==FALSE), ] %>%
+          group_by(predict, q50q) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q50q)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.50.q',
+            title = 'Q.50.q by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q50qdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q50r_plot <- renderPlot({
+      withProgress(message = 'Q.50.r plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q50rdist <- reportsetup[which(is.na(reportsetup$q50r)==FALSE), ] %>%
+          group_by(predict, q50r) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q50r)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.50.r',
+            title = 'Q.50.r by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q50rdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q50s_plot <- renderPlot({
+      withProgress(message = 'Q.50.s plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q50sdist <- reportsetup[which(is.na(reportsetup$q50s)==FALSE), ] %>%
+          group_by(predict, q50s) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q50s)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.50.s',
+            title = 'Q.50.s by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q50sdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q50t_plot <- renderPlot({
+      withProgress(message = 'Q.50.t plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q50tdist <- reportsetup[which(is.na(reportsetup$q50t)==FALSE), ] %>%
+          group_by(predict, q50t) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q50t)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.50.t',
+            title = 'Q.50.t by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q50tdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q50u_plot <- renderPlot({
+      withProgress(message = 'Q.50.u plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q50udist <- reportsetup[which(is.na(reportsetup$q50u)==FALSE), ] %>%
+          group_by(predict, q50u) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q50u)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.50.u',
+            title = 'Q.50.u by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q50udist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q50v_plot <- renderPlot({
+      withProgress(message = 'Q.50.v plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q50vdist <- reportsetup[which(is.na(reportsetup$q50v)==FALSE), ] %>%
+          group_by(predict, q50v) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q50v)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.50.v',
+            title = 'Q.50.v by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q50vdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q50w_plot <- renderPlot({
+      withProgress(message = 'Q.50.w plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q50wdist <- reportsetup[which(is.na(reportsetup$q50w)==FALSE), ] %>%
+          group_by(predict, q50w) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q50w)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.50.w',
+            title = 'Q.50.w by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q50wdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q50y_plot <- renderPlot({
+      withProgress(message = 'Q.50.y plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q50ydist <- reportsetup[which(is.na(reportsetup$q50y)==FALSE), ] %>%
+          group_by(predict, q50y) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q50y)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.50.y',
+            title = 'Q.50.y by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q50ydist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q50z_plot <- renderPlot({
+      withProgress(message = 'Q.50.z plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q50zdist <- reportsetup[which(is.na(reportsetup$q50z)==FALSE), ] %>%
+          group_by(predict, q50z) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q50z)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.50.z',
+            title = 'Q.50.z by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q50zdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q50aa_plot <- renderPlot({
+      withProgress(message = 'Q.50.aa plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q50aadist <- reportsetup[which(is.na(reportsetup$q50aa)==FALSE), ] %>%
+          group_by(predict, q50aa) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q50aa)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.50.aa',
+            title = 'Q.50.aa by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q50aadist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q50bb_plot <- renderPlot({
+      withProgress(message = 'Q.50.bb plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q50bbdist <- reportsetup[which(is.na(reportsetup$q50bb)==FALSE), ] %>%
+          group_by(predict, q50bb) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q50bb)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.50.bb',
+            title = 'Q.50.bb by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q50bbdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q50dd_plot <- renderPlot({
+      withProgress(message = 'Q.50.dd plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q50dddist <- reportsetup[which(is.na(reportsetup$q50dd)==FALSE), ] %>%
+          group_by(predict, q50dd) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q50dd)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.50.dd',
+            title = 'Q.50.dd by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q50dddist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q50ee_plot <- renderPlot({
+      withProgress(message = 'Q.50.ee plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q50eedist <- reportsetup[which(is.na(reportsetup$q50ee)==FALSE), ] %>%
+          group_by(predict, q50ee) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q50ee)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.50.ee',
+            title = 'Q.50.ee by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q50eedist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q50ff_plot <- renderPlot({
+      withProgress(message = 'Q.50.ff plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q50ffdist <- reportsetup[which(is.na(reportsetup$q50ff)==FALSE), ] %>%
+          group_by(predict, q50ff) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q50ff)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.50.ff',
+            title = 'Q.50.ff by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q50ffdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q50gg_plot <- renderPlot({
+      withProgress(message = 'Q.50.gg plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q50ggdist <- reportsetup[which(is.na(reportsetup$q50gg)==FALSE), ] %>%
+          group_by(predict, q50gg) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q50gg)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.50.gg',
+            title = 'Q.50.gg by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q50ggdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q50hh_plot <- renderPlot({
+      withProgress(message = 'Q.50.hh plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q50hhdist <- reportsetup[which(is.na(reportsetup$q50hh)==FALSE), ] %>%
+          group_by(predict, q50hh) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q50hh)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.50.hh',
+            title = 'Q.50.hh by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q50hhdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q51ii_plot <- renderPlot({
+      withProgress(message = 'Q.51.ii plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q51iidist <- reportsetup[which(is.na(reportsetup$q51ii)==FALSE), ] %>%
+          group_by(predict, q51ii) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q51ii)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.51.ii',
+            title = 'Q.51.ii by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q51iidist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q51jj_plot <- renderPlot({
+      withProgress(message = 'Q.51.jj plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q51jjdist <- reportsetup[which(is.na(reportsetup$q51jj)==FALSE), ] %>%
+          group_by(predict, q51jj) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q51jj)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.51.jj',
+            title = 'Q.51.jj by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q51jjdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q51kk_plot <- renderPlot({
+      withProgress(message = 'Q.51.kk plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q51kkdist <- reportsetup[which(is.na(reportsetup$q51kk)==FALSE), ] %>%
+          group_by(predict, q51kk) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q51kk)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.51.kk',
+            title = 'Q.51.kk by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q51kkdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q51ll_plot <- renderPlot({
+      withProgress(message = 'Q.51.ll plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q51lldist <- reportsetup[which(is.na(reportsetup$q51ll)==FALSE), ] %>%
+          group_by(predict, q51ll) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q51ll)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.51.ll',
+            title = 'Q.51.ll by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q51lldist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q51mm_plot <- renderPlot({
+      withProgress(message = 'Q.51.mm plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q51mmdist <- reportsetup[which(is.na(reportsetup$q51mm)==FALSE), ] %>%
+          group_by(predict, q51mm) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q51mm)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.51.mm',
+            title = 'Q.51.mm by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q51mmdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q51oo_plot <- renderPlot({
+      withProgress(message = 'Q.51.oo plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q51oodist <- reportsetup[which(is.na(reportsetup$q51oo)==FALSE), ] %>%
+          group_by(predict, q51oo) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q51oo)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.51.oo',
+            title = 'Q.51.oo by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q51oodist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q51pp_plot <- renderPlot({
+      withProgress(message = 'Q.51.pp plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q51ppdist <- reportsetup[which(is.na(reportsetup$q51pp)==FALSE), ] %>%
+          group_by(predict, q51pp) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q51pp)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.51.pp',
+            title = 'Q.51.pp by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q51ppdist
+      })
+    })
+    incProgress(1/46)
+    
   })
   
-  output$qc28b_plot <- renderPlot({
-    qc28bdist <- reportsetup[which(is.na(reportsetup$qc28b)==FALSE), ] %>%
-      group_by(predict, qc28b) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+  ## Tab survey3:
+  withProgress(message = 'All survey3 plots ...', value = 0, {
+    output$q53_plot <- renderPlot({
+      withProgress(message = 'Q.53 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q53dist <- reportsetup[which(is.na(reportsetup$q53)==FALSE), ] %>%
+          group_by(predict, q53) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q53)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.53',
+            title = 'Q.53 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q53dist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = qc28b)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.C28b',
-        title = 'Q.C28b by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      qc28bdist
+    output$qb54_plot <- renderPlot({
+      withProgress(message = 'Q.B54 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qb54dist <- reportsetup[which(is.na(reportsetup$qb54)==FALSE), ] %>%
+          group_by(predict, qb54) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qb54)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.B54',
+            title = 'Q.B54 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qb54dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qb55_plot <- renderPlot({
+      withProgress(message = 'Q.B55 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qb55dist <- reportsetup[which(is.na(reportsetup$qb55)==FALSE), ] %>%
+          group_by(predict, qb55) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qb55)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.B55',
+            title = 'Q.B55 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qb55dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc56_plot <- renderPlot({
+      withProgress(message = 'Q.C56 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc56dist <- reportsetup[which(is.na(reportsetup$qc56)==FALSE), ] %>%
+          group_by(predict, qc56) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc56)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C56',
+            title = 'Q.C56 by Factor'
+          ) +
+          theme(legend.position="bottom",legend.direction="vertical")
+        gg_prop1 %+%
+          qc56dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc57_plot <- renderPlot({
+      withProgress(message = 'Q.C57 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc57dist <- reportsetup[which(is.na(reportsetup$qc57)==FALSE), ] %>%
+          group_by(predict, qc57) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc57)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C57',
+            title = 'Q.C57 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc57dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc58a_plot <- renderPlot({
+      withProgress(message = 'Q.C58a plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc58adist <- reportsetup[which(is.na(reportsetup$qc58a)==FALSE), ] %>%
+          group_by(predict, qc58a) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc58a)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C58a',
+            title = 'Q.C58a by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc58adist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc58b_plot <- renderPlot({
+      withProgress(message = 'Q.C58b plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc58bdist <- reportsetup[which(is.na(reportsetup$qc58b)==FALSE), ] %>%
+          group_by(predict, qc58b) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc58b)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C58b',
+            title = 'Q.C58b by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc58bdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q100_plot <- renderPlot({
+      withProgress(message = 'Q.100 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q100dist <- reportsetup[which(is.na(reportsetup$q100)==FALSE), ] %>%
+          group_by(predict, q100) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q100)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.100',
+            title = 'Q.100 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q100dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q101_plot <- renderPlot({
+      withProgress(message = 'Q.101 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q101dist <- reportsetup[which(is.na(reportsetup$q101)==FALSE), ] %>%
+          group_by(predict, q101) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q101)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.101',
+            title = 'Q.101 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q101dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q102_plot <- renderPlot({
+      withProgress(message = 'Q.102 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q102dist <- reportsetup[which(is.na(reportsetup$q102)==FALSE), ] %>%
+          group_by(predict, q102) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q102)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.102',
+            title = 'Q.102 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q102dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q102a_plot <- renderPlot({
+      withProgress(message = 'Q.102a plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q102adist <- reportsetup[which(is.na(reportsetup$q102a)==FALSE), ] %>%
+          group_by(predict, q102a) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q102a)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.102a',
+            title = 'Q.102a by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q102adist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q105a_plot <- renderPlot({
+      withProgress(message = 'Q.105a plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q105adist <- reportsetup[which(is.na(reportsetup$q105a)==FALSE), ] %>%
+          group_by(predict, q105a) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q105a)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.105a',
+            title = 'Q.105a by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q105adist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q105b_plot <- renderPlot({
+      withProgress(message = 'Q.105b plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q105bdist <- reportsetup[which(is.na(reportsetup$q105b)==FALSE), ] %>%
+          group_by(predict, q105b) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q105b)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.105b',
+            title = 'Q.105b by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q105bdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q105d_plot <- renderPlot({
+      withProgress(message = 'Q.105d plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q105ddist <- reportsetup[which(is.na(reportsetup$q105d)==FALSE), ] %>%
+          group_by(predict, q105d) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q105d)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.105d',
+            title = 'Q.105d by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q105ddist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q106_plot <- renderPlot({
+      withProgress(message = 'Q.106 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q106dist <- reportsetup[which(is.na(reportsetup$q106)==FALSE), ] %>%
+          group_by(predict, q106) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q106)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.106',
+            title = 'Q.106 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q106dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qb106_plot <- renderPlot({
+      withProgress(message = 'Q.B106 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qb106dist <- reportsetup[which(is.na(reportsetup$qb106)==FALSE), ] %>%
+          group_by(predict, qb106) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qb106)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.B106',
+            title = 'Q.B106 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qb106dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qb107_plot <- renderPlot({
+      withProgress(message = 'Q.B107 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qb107dist <- reportsetup[which(is.na(reportsetup$qb107)==FALSE), ] %>%
+          group_by(predict, qb107) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qb107)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.B107',
+            title = 'Q.B107 by Factor'
+          ) +
+          theme(legend.position="bottom",legend.direction="vertical")
+        gg_prop1 %+%
+          qb107dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qb108_plot <- renderPlot({
+      withProgress(message = 'Q.B108 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qb108dist <- reportsetup[which(is.na(reportsetup$qb108)==FALSE), ] %>%
+          group_by(predict, qb108) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qb108)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.B108',
+            title = 'Q.B108 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qb108dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qb109_plot <- renderPlot({
+      withProgress(message = 'Q.B109 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qb109dist <- reportsetup[which(is.na(reportsetup$qb109)==FALSE), ] %>%
+          group_by(predict, qb109) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qb109)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.B109',
+            title = 'Q.B109 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qb109dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qb110_plot <- renderPlot({
+      withProgress(message = 'Q.B110 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qb110dist <- reportsetup[which(is.na(reportsetup$qb110)==FALSE), ] %>%
+          group_by(predict, qb110) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qb110)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.B110',
+            title = 'Q.B110 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qb110dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc111_plot <- renderPlot({
+      withProgress(message = 'Q.C111 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc111dist <- reportsetup[which(is.na(reportsetup$qc111)==FALSE), ] %>%
+          group_by(predict, qc111) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc111)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C111',
+            title = 'Q.C111 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc111dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc112_plot <- renderPlot({
+      withProgress(message = 'Q.C112 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc112dist <- reportsetup[which(is.na(reportsetup$qc112)==FALSE), ] %>%
+          group_by(predict, qc112) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc112)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C112',
+            title = 'Q.C112 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc112dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc115_plot <- renderPlot({
+      withProgress(message = 'Q.C115 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc115dist <- reportsetup[which(is.na(reportsetup$qc115)==FALSE), ] %>%
+          group_by(predict, qc115) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc115)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C115',
+            title = 'Q.C115 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc115dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc116_plot <- renderPlot({
+      withProgress(message = 'Q.C116 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc116dist <- reportsetup[which(is.na(reportsetup$qc116)==FALSE), ] %>%
+          group_by(predict, qc116) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc116)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C116',
+            title = 'Q.C116 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc116dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc116a_plot <- renderPlot({
+      withProgress(message = 'Q.C116a plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc116adist <- reportsetup[which(is.na(reportsetup$qc116a)==FALSE), ] %>%
+          group_by(predict, qc116a) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc116a)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C116a',
+            title = 'Q.C116a by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc116adist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc117_plot <- renderPlot({
+      withProgress(message = 'Q.C117 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc117dist <- reportsetup[which(is.na(reportsetup$qc117)==FALSE), ] %>%
+          group_by(predict, qc117) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc117)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C117',
+            title = 'Q.C117 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc117dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q121_plot <- renderPlot({
+      withProgress(message = 'Q.121 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q121dist <- reportsetup[which(is.na(reportsetup$q121)==FALSE), ] %>%
+          group_by(predict, q121) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q121)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.121',
+            title = 'Q.121 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q121dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q121a_plot <- renderPlot({
+      withProgress(message = 'Q.121a plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q121adist <- reportsetup[which(is.na(reportsetup$q121a)==FALSE), ] %>%
+          group_by(predict, q121a) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q121a)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.121a',
+            title = 'Q.121a by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q121adist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q121b_plot <- renderPlot({
+      withProgress(message = 'Q.121b plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q121bdist <- reportsetup[which(is.na(reportsetup$q121b)==FALSE), ] %>%
+          group_by(predict, q121b) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q121b)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.121b',
+            title = 'Q.121b by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q121bdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q122_plot <- renderPlot({
+      withProgress(message = 'Q.122 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q122dist <- reportsetup[which(is.na(reportsetup$q122)==FALSE), ] %>%
+          group_by(predict, q122) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q122)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.122',
+            title = 'Q.122 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q122dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q122a_plot <- renderPlot({
+      withProgress(message = 'Q.122a plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q122adist <- reportsetup[which(is.na(reportsetup$q122a)==FALSE), ] %>%
+          group_by(predict, q122a) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q122a)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.122a',
+            title = 'Q.122a by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q122adist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q122b_plot <- renderPlot({
+      withProgress(message = 'Q.122b plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q122bdist <- reportsetup[which(is.na(reportsetup$q122b)==FALSE), ] %>%
+          group_by(predict, q122b) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q122b)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.122b',
+            title = 'Q.122b by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q122bdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q123_plot <- renderPlot({
+      withProgress(message = 'Q.123 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q123dist <- reportsetup[which(is.na(reportsetup$q123)==FALSE), ] %>%
+          group_by(predict, q123) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q123)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.123',
+            title = 'Q.123 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q123dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q123a_plot <- renderPlot({
+      withProgress(message = 'Q.123a plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q123adist <- reportsetup[which(is.na(reportsetup$q123a)==FALSE), ] %>%
+          group_by(predict, q123a) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q123a)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.123a',
+            title = 'Q.123a by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q123adist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q123b_plot <- renderPlot({
+      withProgress(message = 'Q.123b plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q123bdist <- reportsetup[which(is.na(reportsetup$q123b)==FALSE), ] %>%
+          group_by(predict, q123b) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q123b)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.123b',
+            title = 'Q.123b by Factor'
+          ) +
+          theme(legend.position="bottom",legend.direction="vertical")
+        gg_prop1 %+%
+          q123bdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q124_plot <- renderPlot({
+      withProgress(message = 'Q.124 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q124dist <- reportsetup[which(is.na(reportsetup$q124)==FALSE), ] %>%
+          group_by(predict, q124) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q124)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.124',
+            title = 'Q.124 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q124dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q124a_plot <- renderPlot({
+      withProgress(message = 'Q.124a plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q124adist <- reportsetup[which(is.na(reportsetup$q124a)==FALSE), ] %>%
+          group_by(predict, q124a) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q124a)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.124a',
+            title = 'Q.124a by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q124adist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q124b_plot <- renderPlot({
+      withProgress(message = 'Q.124b plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q124bdist <- reportsetup[which(is.na(reportsetup$q124b)==FALSE), ] %>%
+          group_by(predict, q124b) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q124b)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.124b',
+            title = 'Q.124b by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q124bdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q125_plot <- renderPlot({
+      withProgress(message = 'Q.125 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q125dist <- reportsetup[which(is.na(reportsetup$q125)==FALSE), ] %>%
+          group_by(predict, q125) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q125)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.125',
+            title = 'Q.125 by Factor'
+          ) +
+          theme(legend.position="bottom",legend.direction="vertical")
+        gg_prop1 %+%
+          q125dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q125a_plot <- renderPlot({
+      withProgress(message = 'Q.125a plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q125adist <- reportsetup[which(is.na(reportsetup$q125a)==FALSE), ] %>%
+          group_by(predict, q125a) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q125a)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.125a',
+            title = 'Q.125a by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q125adist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q125b_plot <- renderPlot({
+      withProgress(message = 'Q.125b plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q125bdist <- reportsetup[which(is.na(reportsetup$q125b)==FALSE), ] %>%
+          group_by(predict, q125b) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q125b)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.125b',
+            title = 'Q.125b by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q125bdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q126_plot <- renderPlot({
+      withProgress(message = 'Q.126 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q126dist <- reportsetup[which(is.na(reportsetup$q126)==FALSE), ] %>%
+          group_by(predict, q126) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q126)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.126',
+            title = 'Q.126 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q126dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q126a_plot <- renderPlot({
+      withProgress(message = 'Q.126a plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q126adist <- reportsetup[which(is.na(reportsetup$q126a)==FALSE), ] %>%
+          group_by(predict, q126a) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q126a)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.126a',
+            title = 'Q.126a by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q126adist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q126b_plot <- renderPlot({
+      withProgress(message = 'Q.126b plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        q126bdist <- reportsetup[which(is.na(reportsetup$q126b)==FALSE), ] %>%
+          group_by(predict, q126b) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q126b)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.126b',
+            title = 'Q.126b by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q126bdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc127_plot <- renderPlot({
+      withProgress(message = 'Q.C127 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc127dist <- reportsetup[which(is.na(reportsetup$qc127)==FALSE), ] %>%
+          group_by(predict, qc127) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc127)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C127',
+            title = 'Q.C127 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc127dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc128_plot <- renderPlot({
+      withProgress(message = 'Q.C128 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc128dist <- reportsetup[which(is.na(reportsetup$qc128)==FALSE), ] %>%
+          group_by(predict, qc128) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc128)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C128',
+            title = 'Q.C128 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc128dist
+      })
+    })
+    incProgress(1/46)
+    
   })
   
-  output$qc28c_plot <- renderPlot({
-    qc28cdist <- reportsetup[which(is.na(reportsetup$qc28c)==FALSE), ] %>%
-      group_by(predict, qc28c) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+  ## Tab survey4:
+  withProgress(message = 'All survey4 plots ...', value = 0, {
+
+    output$qc135_plot <- renderPlot({
+      withProgress(message = 'Q.C135 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc135dist <- reportsetup[which(is.na(reportsetup$qc135)==FALSE), ] %>%
+          group_by(predict, qc135) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc135)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C135',
+            title = 'Q.C135 by Factor'
+          ) +
+          theme(legend.position="bottom",legend.direction="vertical")
+        gg_prop1 %+%
+          qc135dist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = qc28c)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.C28c',
-        title = 'Q.C28c by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      qc28cdist
-  })
-  
-  output$qc28d_plot <- renderPlot({
-    qc28ddist <- reportsetup[which(is.na(reportsetup$qc28d)==FALSE), ] %>%
-      group_by(predict, qc28d) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+    output$qc135a_plot <- renderPlot({
+      withProgress(message = 'Q.C135a plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qc135adist <- reportsetup[which(is.na(reportsetup$qc135a)==FALSE), ] %>%
+          group_by(predict, qc135a) %>%
+          summarise(n = sum(weight) # weight variable)
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc135a)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C135a',
+            title = 'Q.C135a by Factor'
+          ) +
+          theme(legend.position="bottom",legend.direction="vertical")
+        gg_prop1 %+%
+          qc135adist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = qc28d)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.C28d',
-        title = 'Q.C28d by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      qc28ddist
-  })
-  
-  output$qc28e_plot <- renderPlot({
-    qc28edist <- reportsetup[which(is.na(reportsetup$qc28e)==FALSE), ] %>%
-      group_by(predict, qc28e) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+    output$sex_plot1 <- renderPlot({
+      withProgress(message = 'Sex plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }  
+        sexdist <- reportsetup[which(is.na(reportsetup$sex)==FALSE), ] %>%
+          group_by(predict, sex) %>%
+          summarise(n = sum(weight) # weight variable) 
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = sex)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          scale_fill_manual(values = c("blue", "red")) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Sex',
+            title = 'Sex by Factor'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          sexdist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = qc28e)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.C28e',
-        title = 'Q.C28e by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      qc28edist
-  })
-  
-  output$qc28f_plot <- renderPlot({
-    qc28fdist <- reportsetup[which(is.na(reportsetup$qc28f)==FALSE), ] %>%
-      group_by(predict, qc28f) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+    output$age_plot1 <- renderPlot({
+      withProgress(message = 'Age plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        agedist <- reportsetup[which(is.na(reportsetup$age.r)==FALSE), ] %>%
+          group_by(predict, age.r) %>%
+          summarise(n = sum(weight) # weight variable) 
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = age.r)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Age/10 (rounded)',
+            title = 'Age by Factor: 2=16-25; 3=26-35; ... 10=96-105'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          agedist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = qc28f)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.C28f',
-        title = 'Q.C28f by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      qc28fdist
-  })
-  
-  output$qc28g_plot <- renderPlot({
-    qc28gdist <- reportsetup[which(is.na(reportsetup$qc28g)==FALSE), ] %>%
-      group_by(predict, qc28g) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+    output$educ_plot1 <- renderPlot({
+      withProgress(message = 'Education plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        educdist <- reportsetup[which(is.na(reportsetup$educ)==FALSE), ] %>%
+          group_by(predict, educ) %>%
+          summarise(n = sum(weight) # weight variable) 
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = educ)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          # scale_fill_manual(values = c("blue", "red")) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Education',
+            title = 'Education by Factor'
+          ) + 
+          theme(legend.position="bottom",legend.direction="vertical")
+        gg_prop1 %+%
+          educdist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = qc28g)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.C28g',
-        title = 'Q.C28g by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      qc28gdist
-  })
-  
-  output$qc28h_plot <- renderPlot({
-    qc28hdist <- reportsetup[which(is.na(reportsetup$qc28h)==FALSE), ] %>%
-      group_by(predict, qc28h) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+    output$hisp_plot1 <- renderPlot({
+      withProgress(message = 'Hispanic plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        hispdist <- reportsetup[which(is.na(reportsetup$hisp)==FALSE), ] %>%
+          group_by(predict, hisp) %>%
+          summarise(n = sum(weight) # weight variable) 
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = hisp)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Hispanic/Non-Hispanic',
+            title = 'Hispanic/Non-Hispanic by Factor'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          hispdist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = qc28h)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.C28h',
-        title = 'Q.C28h by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      qc28hdist
-  })
-  
-  output$qa29a_plot <- renderPlot({
-    qa29adist <- reportsetup[which(is.na(reportsetup$qa29a)==FALSE), ] %>%
-      group_by(predict, qa29a) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+    output$race_plot1 <- renderPlot({
+      withProgress(message = 'Race plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        racedist <- reportsetup[which(is.na(reportsetup$race)==FALSE), ] %>%
+          group_by(predict, race) %>%
+          summarise(n = sum(weight) # weight variable) 
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = race)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Race',
+            title = 'Race by Factor'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          racedist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = qa29a)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.A29a',
-        title = 'Q.A29a by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      qa29adist
-  })
-  
-  output$qa29b_plot <- renderPlot({
-    qa29bdist <- reportsetup[which(is.na(reportsetup$qa29b)==FALSE), ] %>%
-      group_by(predict, qa29b) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+    output$birth_hisp_plot <- renderPlot({
+      withProgress(message = 'Birth plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        birth_hispdist <- reportsetup[which(is.na(reportsetup$birth_hisp)==FALSE), ] %>%
+          group_by(predict, birth_hisp) %>%
+          summarise(n = sum(weight) # weight variable) 
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = birth_hisp)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Birth',
+            title = 'Birth by Factor'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          birth_hispdist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = qa29b)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.A29b',
-        title = 'Q.A29b by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      qa29bdist
-  })
-  
-  output$q40_plot <- renderPlot({
-    q40dist <- reportsetup %>%
-      group_by(predict, q40) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+    output$usborn_plot <- renderPlot({
+      withProgress(message = 'U.S. Born plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        usborndist <- reportsetup[which(is.na(reportsetup$usborn)==FALSE), ] %>%
+          group_by(predict, usborn) %>%
+          summarise(n = sum(weight) # weight variable) 
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = usborn)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'U.S. Born',
+            title = 'U.S. Born by Factor'
+          ) + 
+          theme(legend.position="bottom",legend.direction="vertical")
+        gg_prop1 %+%
+          usborndist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q40)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.40',
-        title = 'Q.40 by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q40dist
-  })
-  
-  output$qb40a_plot <- renderPlot({
-    qb40adist <- reportsetup[which(is.na(reportsetup$qb40a)==FALSE), ] %>%
-      group_by(predict, qb40a) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+    output$marital_plot1 <- renderPlot({
+      withProgress(message = 'Marital Status plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        maritaldist <- reportsetup[which(is.na(reportsetup$marital)==FALSE), ] %>%
+          group_by(predict, marital) %>%
+          summarise(n = sum(weight) # weight variable) 
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = marital)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Marital Status',
+            title = 'Marital Status by Factor'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          maritaldist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = qb40a)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.B40.a',
-        title = 'Q.B40.a by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      qb40adist
-  })
-  
-  output$qb40b_plot <- renderPlot({
-    qb40bdist <- reportsetup[which(is.na(reportsetup$qb40b)==FALSE), ] %>%
-      group_by(predict, qb40b) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+    output$parent_plot1 <- renderPlot({
+      withProgress(message = 'Parent status plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        parentdist <- reportsetup[which(is.na(reportsetup$parent)==FALSE), ] %>%
+          group_by(predict, parent) %>%
+          summarise(n = sum(weight) # weight variable) 
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = parent)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Parent Status',
+            title = 'Parent Status by Factor'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          parentdist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = qb40b)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.B40.b',
-        title = 'Q.B40.b by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      qb40bdist
-  })
-  
-  output$q41_plot <- renderPlot({
-    q41dist <- reportsetup %>%
-      group_by(predict, q41) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+    output$citizen_plot1 <- renderPlot({
+      withProgress(message = 'Citizenship plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        citizendist <- reportsetup[which(is.na(reportsetup$citizen)==FALSE), ] %>%
+          group_by(predict, citizen) %>%
+          summarise(n = sum(weight) # weight variable) 
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = citizen)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Citizenship Status',
+            title = 'Citizenship Status by Factor'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          citizendist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q41)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.41',
-        title = 'Q.41 by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q41dist
-  })
-  
-  output$q42_plot <- renderPlot({
-    q42dist <- reportsetup %>%
-      group_by(predict, q42) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+    output$relig_plot1 <- renderPlot({
+      withProgress(message = 'Religion plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        religdist <- reportsetup[which(is.na(reportsetup$relig)==FALSE), ] %>%
+          group_by(predict, relig) %>%
+          summarise(n = sum(weight) # weight variable) 
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = relig)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Religion',
+            title = 'Religion by Factor'
+          ) + 
+          theme(legend.position="bottom", legend.direction="vertical")
+        gg_prop1 %+%
+          religdist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q42)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.42',
-        title = 'Q.42 by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q42dist
-  })
-  
-  output$q43_plot <- renderPlot({
-    q43dist <- reportsetup[which(is.na(reportsetup$q43)==FALSE), ] %>%
-      group_by(predict, q43) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+    output$chr_plot <- renderPlot({
+      withProgress(message = 'Christianity plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        chrdist <- reportsetup[which(is.na(reportsetup$chr)==FALSE), ] %>%
+          group_by(predict, chr) %>%
+          summarise(n = sum(weight) # weight variable) 
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = chr)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Christianity',
+            title = 'Christianity by Factor'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          chrdist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q43)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.43',
-        title = 'Q.43 by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q43dist
-  })
-  
-  output$qc48a_plot <- renderPlot({
-    qc48adist <- reportsetup[which(is.na(reportsetup$qc48a)==FALSE), ] %>%
-      group_by(predict, qc48a) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+    output$born_plot <- renderPlot({
+      withProgress(message = 'Born Again plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        borndist <- reportsetup[which(is.na(reportsetup$born)==FALSE), ] %>%
+          group_by(predict, born) %>%
+          summarise(n = sum(weight) # weight variable) 
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = born)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Born Again',
+            title = 'Born Again by Factor'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          borndist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = qc48a)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.C48.a',
-        title = 'Q.C48.a by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      qc48adist
-  })
-  
-  output$qc48b_plot <- renderPlot({
-    qc48bdist <- reportsetup[which(is.na(reportsetup$qc48b)==FALSE), ] %>%
-      group_by(predict, qc48b) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+    output$attend_plot1 <- renderPlot({
+      withProgress(message = 'Church Attendance plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        attenddist <- reportsetup[which(is.na(reportsetup$attend)==FALSE), ] %>%
+          group_by(predict, attend) %>%
+          summarise(n = sum(weight) # weight variable) 
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = attend)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Church Attendance',
+            title = 'Church Attendance by Factor'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          attenddist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = qc48b)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.C48.b',
-        title = 'Q.C48.b by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      qc48bdist
-  })
-  
-  output$qc48c_plot <- renderPlot({
-    qc48cdist <- reportsetup[which(is.na(reportsetup$qc48c)==FALSE), ] %>%
-      group_by(predict, qc48c) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+    output$qb139_plot <- renderPlot({
+      withProgress(message = 'Q.B139 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qb139dist <- reportsetup[which(is.na(reportsetup$qb139)==FALSE), ] %>%
+          group_by(predict, qb139) %>%
+          summarise(n = sum(weight) # weight variable) 
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qb139)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.B139',
+            title = 'Q.B139 by Factor'
+          ) + 
+          theme(legend.position="bottom", legend.direction="vertical")
+        gg_prop1 %+%
+          qb139dist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = qc48c)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.C48.c',
-        title = 'Q.C48.c by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      qc48cdist
-  })
-  
-  output$qc49a_plot <- renderPlot({
-    qc49adist <- reportsetup[which(is.na(reportsetup$qc49a)==FALSE), ] %>%
-      group_by(predict, qc49a) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+    output$qb139a_plot <- renderPlot({
+      withProgress(message = 'Q.B139a plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        qb139adist <- reportsetup[which(is.na(reportsetup$qb139a)==FALSE), ] %>%
+          group_by(predict, qb139a) %>%
+          summarise(n = sum(weight) # weight variable) 
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qb139a)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.B139a',
+            title = 'Q.B139a by Factor'
+          ) + 
+          theme(legend.position="bottom", legend.direction="vertical")
+        gg_prop1 %+%
+          qb139adist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = qc49a)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.C49.a',
-        title = 'Q.C49.a by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      qc49adist
-  })
-  
-  output$qc49b_plot <- renderPlot({
-    qc49bdist <- reportsetup[which(is.na(reportsetup$qc49b)==FALSE), ] %>%
-      group_by(predict, qc49b) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+    output$income_plot1 <- renderPlot({
+      withProgress(message = 'Income plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        incomedist <- reportsetup[which(is.na(reportsetup$income)==FALSE), ] %>%
+          group_by(predict, income) %>%
+          summarise(n = sum(weight) # weight variable) 
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = income)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Income',
+            title = 'Income by Factor'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          incomedist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = qc49b)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.C49.b',
-        title = 'Q.C49.b by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      qc49bdist
-  })
-  
-  output$qc49c_plot <- renderPlot({
-    qc49cdist <- reportsetup[which(is.na(reportsetup$qc49c)==FALSE), ] %>%
-      group_by(predict, qc49c) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
+    output$inchi_plot <- renderPlot({
+      withProgress(message = 'High Income plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        inchidist <- reportsetup[which(is.na(reportsetup$inchi)==FALSE), ] %>%
+          group_by(predict, inchi) %>%
+          summarise(n = sum(weight) # weight variable) 
+          ) %>%
+          mutate(prop = prop.table(n))
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = inchi)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'High Income',
+            title = 'High Income by Factor'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          inchidist
+      })
+    })
+    incProgress(1/46)
     
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = qc49c)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.C49.c',
-        title = 'Q.C49.c by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      qc49cdist
   })
-  
-  output$q50q_plot <- renderPlot({
-    q50qdist <- reportsetup[which(is.na(reportsetup$q50q)==FALSE), ] %>%
-      group_by(predict, q50q) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q50q)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.50.q',
-        title = 'Q.50.q by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q50qdist
-  })
-  
-  output$q50r_plot <- renderPlot({
-    q50rdist <- reportsetup[which(is.na(reportsetup$q50r)==FALSE), ] %>%
-      group_by(predict, q50r) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q50r)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.50.r',
-        title = 'Q.50.r by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q50rdist
-  })
-  
-  output$q50s_plot <- renderPlot({
-    q50sdist <- reportsetup[which(is.na(reportsetup$q50s)==FALSE), ] %>%
-      group_by(predict, q50s) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q50s)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.50.s',
-        title = 'Q.50.s by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q50sdist
-  })
-  
-  output$q50t_plot <- renderPlot({
-    q50tdist <- reportsetup[which(is.na(reportsetup$q50t)==FALSE), ] %>%
-      group_by(predict, q50t) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q50t)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.50.t',
-        title = 'Q.50.t by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q50tdist
-  })
-  
-  output$q50u_plot <- renderPlot({
-    q50udist <- reportsetup[which(is.na(reportsetup$q50u)==FALSE), ] %>%
-      group_by(predict, q50u) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q50u)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.50.u',
-        title = 'Q.50.u by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q50udist
-  })
-  
-  output$q50v_plot <- renderPlot({
-    q50vdist <- reportsetup[which(is.na(reportsetup$q50v)==FALSE), ] %>%
-      group_by(predict, q50v) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q50v)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.50.v',
-        title = 'Q.50.v by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q50vdist
-  })
-  
-  output$q50w_plot <- renderPlot({
-    q50wdist <- reportsetup[which(is.na(reportsetup$q50w)==FALSE), ] %>%
-      group_by(predict, q50w) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q50w)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.50.w',
-        title = 'Q.50.w by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q50wdist
-  })
-  
-  output$q50y_plot <- renderPlot({
-    q50ydist <- reportsetup[which(is.na(reportsetup$q50y)==FALSE), ] %>%
-      group_by(predict, q50y) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q50y)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.50.y',
-        title = 'Q.50.y by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q50ydist
-  })
-  
-  output$q50z_plot <- renderPlot({
-    q50zdist <- reportsetup[which(is.na(reportsetup$q50z)==FALSE), ] %>%
-      group_by(predict, q50z) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q50z)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.50.z',
-        title = 'Q.50.z by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q50zdist
-  })
-  
-  output$q50aa_plot <- renderPlot({
-    q50aadist <- reportsetup[which(is.na(reportsetup$q50aa)==FALSE), ] %>%
-      group_by(predict, q50aa) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q50aa)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.50.aa',
-        title = 'Q.50.aa by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q50aadist
-  })
-  
-  output$q50bb_plot <- renderPlot({
-    q50bbdist <- reportsetup[which(is.na(reportsetup$q50bb)==FALSE), ] %>%
-      group_by(predict, q50bb) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q50bb)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.50.bb',
-        title = 'Q.50.bb by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q50bbdist
-  })
-  
-  output$q50dd_plot <- renderPlot({
-    q50dddist <- reportsetup[which(is.na(reportsetup$q50dd)==FALSE), ] %>%
-      group_by(predict, q50dd) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q50dd)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.50.dd',
-        title = 'Q.50.dd by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q50dddist
-  })
-  
-  output$q50ee_plot <- renderPlot({
-    q50eedist <- reportsetup[which(is.na(reportsetup$q50ee)==FALSE), ] %>%
-      group_by(predict, q50ee) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q50ee)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.50.ee',
-        title = 'Q.50.ee by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q50eedist
-  })
-  
-  output$q50ff_plot <- renderPlot({
-    q50ffdist <- reportsetup[which(is.na(reportsetup$q50ff)==FALSE), ] %>%
-      group_by(predict, q50ff) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q50ff)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.50.ff',
-        title = 'Q.50.ff by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q50ffdist
-  })
-  
-  output$q50gg_plot <- renderPlot({
-    q50ggdist <- reportsetup[which(is.na(reportsetup$q50gg)==FALSE), ] %>%
-      group_by(predict, q50gg) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q50gg)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.50.gg',
-        title = 'Q.50.gg by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q50ggdist
-  })
-  
-  output$q50hh_plot <- renderPlot({
-    q50hhdist <- reportsetup[which(is.na(reportsetup$q50hh)==FALSE), ] %>%
-      group_by(predict, q50hh) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q50hh)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.50.hh',
-        title = 'Q.50.hh by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q50hhdist
-  })
-  
-  output$q51ii_plot <- renderPlot({
-    q51iidist <- reportsetup[which(is.na(reportsetup$q51ii)==FALSE), ] %>%
-      group_by(predict, q51ii) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q51ii)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.51.ii',
-        title = 'Q.51.ii by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q51iidist
-  })
-  
-  output$q51jj_plot <- renderPlot({
-    q51jjdist <- reportsetup[which(is.na(reportsetup$q51jj)==FALSE), ] %>%
-      group_by(predict, q51jj) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q51jj)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.51.jj',
-        title = 'Q.51.jj by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q51jjdist
-  })
-  
-  output$q51kk_plot <- renderPlot({
-    q51kkdist <- reportsetup[which(is.na(reportsetup$q51kk)==FALSE), ] %>%
-      group_by(predict, q51kk) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q51kk)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.51.kk',
-        title = 'Q.51.kk by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q51kkdist
-  })
-  
-  output$q51ll_plot <- renderPlot({
-    q51lldist <- reportsetup[which(is.na(reportsetup$q51ll)==FALSE), ] %>%
-      group_by(predict, q51ll) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q51ll)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.51.ll',
-        title = 'Q.51.ll by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q51lldist
-  })
-  
-  output$q51mm_plot <- renderPlot({
-    q51mmdist <- reportsetup[which(is.na(reportsetup$q51mm)==FALSE), ] %>%
-      group_by(predict, q51mm) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q51mm)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.51.mm',
-        title = 'Q.51.mm by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q51mmdist
-  })
-  
-  output$q51oo_plot <- renderPlot({
-    q51oodist <- reportsetup[which(is.na(reportsetup$q51oo)==FALSE), ] %>%
-      group_by(predict, q51oo) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q51oo)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.51.oo',
-        title = 'Q.51.oo by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q51oodist
-  })
-  
-  output$q51pp_plot <- renderPlot({
-    q51ppdist <- reportsetup[which(is.na(reportsetup$q51pp)==FALSE), ] %>%
-      group_by(predict, q51pp) %>%
-      summarise(n = sum(weight) # weight variable)
-      ) %>%
-      mutate(prop = prop.table(n))
-    
-    gg_prop1 <- ggplot(data = data.frame(),
-                       aes(x = predict, y = prop, fill = q51pp)) +
-      geom_bar(stat = 'identity', position = 'dodge') +
-      geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
-                position = position_dodge(width = 0.9),
-                vjust = -0.25) +
-      scale_y_continuous(labels = percent) +
-      labs(
-        x = 'Factor',
-        y = NULL,
-        fill = 'Q.51.pp',
-        title = 'Q.51.pp by Factor'
-      ) +
-      theme(legend.position="bottom")
-    gg_prop1 %+%
-      q51ppdist
-  })
-  
-  # # Hide the loading message when the rest of the server function has executed
-  # hide(id = "loading-content", anim = TRUE, animType = "fade")    
-  # show("app-content")
-  
+
+    ## Tab coefs_table:
   output$coefs_table <- renderDataTable({
     datatable(model.rank.coefs, options = list(pageLength = 100)) %>%
       formatPercentage('prob', 1) %>%
@@ -3302,10 +5630,4 @@ shinyServer(function(input, output) {
                   backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center')
   })
   
-  # # Hide the loading message when the rest of the server function has executed
-  # hide(id = "loading-content", anim = TRUE, animType = "fade")    
-  # show("app-content")
-  
-}
-
-)
+})
