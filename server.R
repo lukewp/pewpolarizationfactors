@@ -21,7 +21,7 @@ library(scales)
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
   
-  ## Histograms
+  ## Tab demographics:
   withProgress(message = 'All demographics plots ...', value = 0, {
     
     output$usr_plot <- renderPlot({
@@ -446,7 +446,7 @@ shinyServer(function(input, output) {
     incProgress(1/16)
   })
   
-## For State Tab:
+  ## Tab map:
   output$state_table <- renderDataTable({
     datatable(statedisttable[ , 1:4], options = list(pageLength = 100)) %>%
       formatPercentage(names(statedisttable[c(2:4)]), 1) %>%
@@ -465,12 +465,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qa1dist <- reportsetup[which(is.na(reportsetup$qa1)==FALSE), ] %>%
-          group_by(predict, qa1) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa1)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -496,12 +491,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc1dist <- reportsetup[which(is.na(reportsetup$qc1)==FALSE), ] %>%
-          group_by(predict, qc1) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc1)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -527,12 +517,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc1adist <- reportsetup[which(is.na(reportsetup$qc1a)==FALSE), ] %>%
-          group_by(predict, qc1a) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc1a)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -558,12 +543,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qb2dist <- reportsetup[which(is.na(reportsetup$qb2)==FALSE), ] %>%
-          group_by(predict, qb2) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb2)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -589,12 +569,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qb3dist <- reportsetup[which(is.na(reportsetup$qb3)==FALSE), ] %>%
-          group_by(predict, qb3) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb3)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -620,12 +595,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qb4dist <- reportsetup[which(is.na(reportsetup$qb4)==FALSE), ] %>%
-          group_by(predict, qb4) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb4)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -651,12 +621,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qb5dist <- reportsetup[which(is.na(reportsetup$qb5)==FALSE), ] %>%
-          group_by(predict, qb5) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb5)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -682,12 +647,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qa6dist <- reportsetup[which(is.na(reportsetup$qa6)==FALSE), ] %>%
-          group_by(predict, qa6) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa6)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -713,12 +673,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qa8dist <- reportsetup[which(is.na(reportsetup$qa8)==FALSE), ] %>%
-          group_by(predict, qa8) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa8)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -744,12 +699,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qa9adist <- reportsetup[which(is.na(reportsetup$qa9a)==FALSE), ] %>%
-          group_by(predict, qa9a) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa9a)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -775,12 +725,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qa9bdist <- reportsetup[which(is.na(reportsetup$qa9b)==FALSE), ] %>%
-          group_by(predict, qa9b) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa9b)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -806,12 +751,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qa9cdist <- reportsetup[which(is.na(reportsetup$qa9c)==FALSE), ] %>%
-          group_by(predict, qa9c) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa9c)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -837,12 +777,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qa9ddist <- reportsetup[which(is.na(reportsetup$qa9d)==FALSE), ] %>%
-          group_by(predict, qa9d) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa9d)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -868,12 +803,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qa9edist <- reportsetup[which(is.na(reportsetup$qa9e)==FALSE), ] %>%
-          group_by(predict, qa9e) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa9e)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -899,12 +829,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qa9fdist <- reportsetup[which(is.na(reportsetup$qa9f)==FALSE), ] %>%
-          group_by(predict, qa9f) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa9f)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -930,12 +855,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qa9gdist <- reportsetup[which(is.na(reportsetup$qa9g)==FALSE), ] %>%
-          group_by(predict, qa9g) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa9g)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -961,12 +881,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q11adist <- reportsetup %>%
-          group_by(predict, q11a) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q11a)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -992,12 +907,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q11bdist <- reportsetup %>%
-          group_by(predict, q11b) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q11b)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1023,12 +933,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q11c_bdist <- reportsetup[which(is.na(reportsetup$q11c_b)==FALSE), ] %>%
-          group_by(predict, q11c_b) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q11c_b)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1054,12 +959,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q11e_bdist <- reportsetup[which(is.na(reportsetup$q11e_b)==FALSE), ] %>%
-          group_by(predict, q11e_b) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q11e_b)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1085,12 +985,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q11h_bdist <- reportsetup[which(is.na(reportsetup$q11h_b)==FALSE), ] %>%
-          group_by(predict, q11h_b) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q11h_b)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1116,12 +1011,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q11i_bdist <- reportsetup[which(is.na(reportsetup$q11i_b)==FALSE), ] %>%
-          group_by(predict, q11i_b) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q11i_b)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1147,12 +1037,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q11j_bdist <- reportsetup[which(is.na(reportsetup$q11j_b)==FALSE), ] %>%
-          group_by(predict, q11j_b) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q11j_b)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1178,12 +1063,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q11atdist <- reportsetup[which(is.na(reportsetup$q11at)==FALSE), ] %>%
-          group_by(predict, q11at) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q11at)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1209,12 +1089,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q11btdist <- reportsetup[which(is.na(reportsetup$q11bt)==FALSE), ] %>%
-          group_by(predict, q11bt) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q11bt)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1240,12 +1115,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qb12dist <- reportsetup[which(is.na(reportsetup$qb12)==FALSE), ] %>%
-          group_by(predict, qb12) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb12)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1271,12 +1141,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q25adist <- reportsetup %>%
-          group_by(predict, q25a) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25a)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1302,12 +1167,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q25bdist <- reportsetup %>%
-          group_by(predict, q25b) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25b)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1333,12 +1193,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q25cdist <- reportsetup %>%
-          group_by(predict, q25c) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25c)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1364,12 +1219,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q25ddist <- reportsetup %>%
-          group_by(predict, q25d) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25d)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1395,12 +1245,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q25fdist <- reportsetup %>%
-          group_by(predict, q25f) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25f)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1426,12 +1271,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q25gdist <- reportsetup %>%
-          group_by(predict, q25g) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25g)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1457,12 +1297,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q25hdist <- reportsetup %>%
-          group_by(predict, q25h) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25h)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1488,12 +1323,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q25idist <- reportsetup %>%
-          group_by(predict, q25i) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25i)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1519,12 +1349,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q25jdist <- reportsetup %>%
-          group_by(predict, q25j) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25j)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1550,12 +1375,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q25kdist <- reportsetup %>%
-          group_by(predict, q25k) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25k)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1581,12 +1401,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q25ldist <- reportsetup %>%
-          group_by(predict, q25l) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25l)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1612,12 +1427,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q25mdist <- reportsetup %>%
-          group_by(predict, q25m) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25m)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1643,12 +1453,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q25ndist <- reportsetup %>%
-          group_by(predict, q25n) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25n)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1674,12 +1479,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q25odist <- reportsetup[which(is.na(reportsetup$q25o)==FALSE), ] %>%
-          group_by(predict, q25o) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25o)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1705,12 +1505,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q25pdist <- reportsetup[which(is.na(reportsetup$q25p)==FALSE), ] %>%
-          group_by(predict, q25p) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25p)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1736,12 +1531,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qb26dist <- reportsetup[which(is.na(reportsetup$qb26)==FALSE), ] %>%
-          group_by(predict, qb26) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb26)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1767,12 +1557,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc26dist <- reportsetup[which(is.na(reportsetup$qc26)==FALSE), ] %>%
-          group_by(predict, qc26) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc26)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1798,11 +1583,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        oftvotedist <- reportsetup %>%
-          group_by(predict, oftvote) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = oftvote)) +
@@ -1829,11 +1609,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q26f1dist <- reportsetup[which(is.na(reportsetup$q26f1.r)==FALSE), ] %>%
-          group_by(predict, q26f1.r) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q26f1.r)) +
@@ -1860,11 +1635,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q26f2dist <- reportsetup[which(is.na(reportsetup$q26f2.r)==FALSE), ] %>%
-          group_by(predict, q26f2.r) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q26f2.r)) +
@@ -1891,11 +1661,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qb27dist <- reportsetup[which(is.na(reportsetup$qb27)==FALSE), ] %>%
-          group_by(predict, qb27) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb27)) +
@@ -1922,12 +1687,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qb27adist <- reportsetup[which(is.na(reportsetup$qb27a)==FALSE), ] %>%
-          group_by(predict, qb27a) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb27a)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1953,11 +1713,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        int1dist <- reportsetup %>%
-          group_by(predict, int1) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = int1)) +
@@ -1984,12 +1739,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        int2dist <- reportsetup[which(is.na(reportsetup$int2)==FALSE), ] %>%
-          group_by(predict, int2) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = int2)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -2015,12 +1765,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        int3mdist <- reportsetup[which(is.na(reportsetup$int3m)==FALSE), ] %>%
-          group_by(predict, int3m) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = int3m)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -2050,11 +1795,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc28adist <- reportsetup[which(is.na(reportsetup$qc28a)==FALSE), ] %>%
-          group_by(predict, qc28a) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc28a)) +
@@ -2081,11 +1821,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc28bdist <- reportsetup[which(is.na(reportsetup$qc28b)==FALSE), ] %>%
-          group_by(predict, qc28b) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc28b)) +
@@ -2112,11 +1847,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc28cdist <- reportsetup[which(is.na(reportsetup$qc28c)==FALSE), ] %>%
-          group_by(predict, qc28c) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc28c)) +
@@ -2143,11 +1873,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc28ddist <- reportsetup[which(is.na(reportsetup$qc28d)==FALSE), ] %>%
-          group_by(predict, qc28d) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc28d)) +
@@ -2174,11 +1899,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc28edist <- reportsetup[which(is.na(reportsetup$qc28e)==FALSE), ] %>%
-          group_by(predict, qc28e) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc28e)) +
@@ -2205,11 +1925,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc28fdist <- reportsetup[which(is.na(reportsetup$qc28f)==FALSE), ] %>%
-          group_by(predict, qc28f) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc28f)) +
@@ -2236,11 +1951,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc28gdist <- reportsetup[which(is.na(reportsetup$qc28g)==FALSE), ] %>%
-          group_by(predict, qc28g) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc28g)) +
@@ -2267,11 +1977,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc28hdist <- reportsetup[which(is.na(reportsetup$qc28h)==FALSE), ] %>%
-          group_by(predict, qc28h) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc28h)) +
@@ -2298,11 +2003,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qa29adist <- reportsetup[which(is.na(reportsetup$qa29a)==FALSE), ] %>%
-          group_by(predict, qa29a) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa29a)) +
@@ -2329,11 +2029,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qa29bdist <- reportsetup[which(is.na(reportsetup$qa29b)==FALSE), ] %>%
-          group_by(predict, qa29b) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa29b)) +
@@ -2360,11 +2055,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q40dist <- reportsetup %>%
-          group_by(predict, q40) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q40)) +
@@ -2391,11 +2081,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qb40adist <- reportsetup[which(is.na(reportsetup$qb40a)==FALSE), ] %>%
-          group_by(predict, qb40a) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb40a)) +
@@ -2422,11 +2107,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qb40bdist <- reportsetup[which(is.na(reportsetup$qb40b)==FALSE), ] %>%
-          group_by(predict, qb40b) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb40b)) +
@@ -2453,11 +2133,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q41dist <- reportsetup %>%
-          group_by(predict, q41) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q41)) +
@@ -2484,11 +2159,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q42dist <- reportsetup %>%
-          group_by(predict, q42) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q42)) +
@@ -2515,11 +2185,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q43dist <- reportsetup[which(is.na(reportsetup$q43)==FALSE), ] %>%
-          group_by(predict, q43) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q43)) +
@@ -2546,11 +2211,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc48adist <- reportsetup[which(is.na(reportsetup$qc48a)==FALSE), ] %>%
-          group_by(predict, qc48a) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc48a)) +
@@ -2577,11 +2237,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc48bdist <- reportsetup[which(is.na(reportsetup$qc48b)==FALSE), ] %>%
-          group_by(predict, qc48b) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc48b)) +
@@ -2608,11 +2263,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc48cdist <- reportsetup[which(is.na(reportsetup$qc48c)==FALSE), ] %>%
-          group_by(predict, qc48c) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc48c)) +
@@ -2639,11 +2289,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc49adist <- reportsetup[which(is.na(reportsetup$qc49a)==FALSE), ] %>%
-          group_by(predict, qc49a) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc49a)) +
@@ -2670,11 +2315,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc49bdist <- reportsetup[which(is.na(reportsetup$qc49b)==FALSE), ] %>%
-          group_by(predict, qc49b) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc49b)) +
@@ -2701,11 +2341,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc49cdist <- reportsetup[which(is.na(reportsetup$qc49c)==FALSE), ] %>%
-          group_by(predict, qc49c) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc49c)) +
@@ -2732,11 +2367,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q50qdist <- reportsetup[which(is.na(reportsetup$q50q)==FALSE), ] %>%
-          group_by(predict, q50q) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q50q)) +
@@ -2763,11 +2393,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q50rdist <- reportsetup[which(is.na(reportsetup$q50r)==FALSE), ] %>%
-          group_by(predict, q50r) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q50r)) +
@@ -2794,11 +2419,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q50sdist <- reportsetup[which(is.na(reportsetup$q50s)==FALSE), ] %>%
-          group_by(predict, q50s) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q50s)) +
@@ -2825,11 +2445,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q50tdist <- reportsetup[which(is.na(reportsetup$q50t)==FALSE), ] %>%
-          group_by(predict, q50t) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q50t)) +
@@ -2856,11 +2471,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q50udist <- reportsetup[which(is.na(reportsetup$q50u)==FALSE), ] %>%
-          group_by(predict, q50u) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q50u)) +
@@ -2887,11 +2497,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q50vdist <- reportsetup[which(is.na(reportsetup$q50v)==FALSE), ] %>%
-          group_by(predict, q50v) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q50v)) +
@@ -2918,11 +2523,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q50wdist <- reportsetup[which(is.na(reportsetup$q50w)==FALSE), ] %>%
-          group_by(predict, q50w) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q50w)) +
@@ -2949,11 +2549,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q50ydist <- reportsetup[which(is.na(reportsetup$q50y)==FALSE), ] %>%
-          group_by(predict, q50y) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q50y)) +
@@ -2980,11 +2575,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q50zdist <- reportsetup[which(is.na(reportsetup$q50z)==FALSE), ] %>%
-          group_by(predict, q50z) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q50z)) +
@@ -3011,11 +2601,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q50aadist <- reportsetup[which(is.na(reportsetup$q50aa)==FALSE), ] %>%
-          group_by(predict, q50aa) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q50aa)) +
@@ -3042,11 +2627,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q50bbdist <- reportsetup[which(is.na(reportsetup$q50bb)==FALSE), ] %>%
-          group_by(predict, q50bb) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q50bb)) +
@@ -3073,11 +2653,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q50dddist <- reportsetup[which(is.na(reportsetup$q50dd)==FALSE), ] %>%
-          group_by(predict, q50dd) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q50dd)) +
@@ -3104,11 +2679,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q50eedist <- reportsetup[which(is.na(reportsetup$q50ee)==FALSE), ] %>%
-          group_by(predict, q50ee) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q50ee)) +
@@ -3135,11 +2705,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q50ffdist <- reportsetup[which(is.na(reportsetup$q50ff)==FALSE), ] %>%
-          group_by(predict, q50ff) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q50ff)) +
@@ -3166,11 +2731,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q50ggdist <- reportsetup[which(is.na(reportsetup$q50gg)==FALSE), ] %>%
-          group_by(predict, q50gg) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q50gg)) +
@@ -3197,11 +2757,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q50hhdist <- reportsetup[which(is.na(reportsetup$q50hh)==FALSE), ] %>%
-          group_by(predict, q50hh) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q50hh)) +
@@ -3228,11 +2783,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q51iidist <- reportsetup[which(is.na(reportsetup$q51ii)==FALSE), ] %>%
-          group_by(predict, q51ii) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q51ii)) +
@@ -3259,11 +2809,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q51jjdist <- reportsetup[which(is.na(reportsetup$q51jj)==FALSE), ] %>%
-          group_by(predict, q51jj) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q51jj)) +
@@ -3290,11 +2835,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q51kkdist <- reportsetup[which(is.na(reportsetup$q51kk)==FALSE), ] %>%
-          group_by(predict, q51kk) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q51kk)) +
@@ -3321,11 +2861,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q51lldist <- reportsetup[which(is.na(reportsetup$q51ll)==FALSE), ] %>%
-          group_by(predict, q51ll) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q51ll)) +
@@ -3352,11 +2887,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q51mmdist <- reportsetup[which(is.na(reportsetup$q51mm)==FALSE), ] %>%
-          group_by(predict, q51mm) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q51mm)) +
@@ -3383,11 +2913,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q51oodist <- reportsetup[which(is.na(reportsetup$q51oo)==FALSE), ] %>%
-          group_by(predict, q51oo) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q51oo)) +
@@ -3414,11 +2939,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q51ppdist <- reportsetup[which(is.na(reportsetup$q51pp)==FALSE), ] %>%
-          group_by(predict, q51pp) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q51pp)) +
@@ -3449,11 +2969,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q53dist <- reportsetup[which(is.na(reportsetup$q53)==FALSE), ] %>%
-          group_by(predict, q53) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q53)) +
@@ -3480,11 +2995,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qb54dist <- reportsetup[which(is.na(reportsetup$qb54)==FALSE), ] %>%
-          group_by(predict, qb54) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb54)) +
@@ -3511,11 +3021,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qb55dist <- reportsetup[which(is.na(reportsetup$qb55)==FALSE), ] %>%
-          group_by(predict, qb55) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb55)) +
@@ -3542,11 +3047,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc56dist <- reportsetup[which(is.na(reportsetup$qc56)==FALSE), ] %>%
-          group_by(predict, qc56) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc56)) +
@@ -3573,11 +3073,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc57dist <- reportsetup[which(is.na(reportsetup$qc57)==FALSE), ] %>%
-          group_by(predict, qc57) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc57)) +
@@ -3604,11 +3099,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc58adist <- reportsetup[which(is.na(reportsetup$qc58a)==FALSE), ] %>%
-          group_by(predict, qc58a) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc58a)) +
@@ -3635,11 +3125,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc58bdist <- reportsetup[which(is.na(reportsetup$qc58b)==FALSE), ] %>%
-          group_by(predict, qc58b) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc58b)) +
@@ -3666,11 +3151,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q100dist <- reportsetup[which(is.na(reportsetup$q100)==FALSE), ] %>%
-          group_by(predict, q100) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q100)) +
@@ -3697,11 +3177,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q101dist <- reportsetup[which(is.na(reportsetup$q101)==FALSE), ] %>%
-          group_by(predict, q101) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q101)) +
@@ -3728,11 +3203,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q102dist <- reportsetup[which(is.na(reportsetup$q102)==FALSE), ] %>%
-          group_by(predict, q102) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q102)) +
@@ -3759,11 +3229,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q102adist <- reportsetup[which(is.na(reportsetup$q102a)==FALSE), ] %>%
-          group_by(predict, q102a) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q102a)) +
@@ -3790,11 +3255,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q105adist <- reportsetup[which(is.na(reportsetup$q105a)==FALSE), ] %>%
-          group_by(predict, q105a) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q105a)) +
@@ -3821,11 +3281,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q105bdist <- reportsetup[which(is.na(reportsetup$q105b)==FALSE), ] %>%
-          group_by(predict, q105b) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q105b)) +
@@ -3852,11 +3307,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q105ddist <- reportsetup[which(is.na(reportsetup$q105d)==FALSE), ] %>%
-          group_by(predict, q105d) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q105d)) +
@@ -3883,11 +3333,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q106dist <- reportsetup[which(is.na(reportsetup$q106)==FALSE), ] %>%
-          group_by(predict, q106) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q106)) +
@@ -3914,11 +3359,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qb106dist <- reportsetup[which(is.na(reportsetup$qb106)==FALSE), ] %>%
-          group_by(predict, qb106) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb106)) +
@@ -3945,11 +3385,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qb107dist <- reportsetup[which(is.na(reportsetup$qb107)==FALSE), ] %>%
-          group_by(predict, qb107) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb107)) +
@@ -3976,11 +3411,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qb108dist <- reportsetup[which(is.na(reportsetup$qb108)==FALSE), ] %>%
-          group_by(predict, qb108) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb108)) +
@@ -4007,11 +3437,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qb109dist <- reportsetup[which(is.na(reportsetup$qb109)==FALSE), ] %>%
-          group_by(predict, qb109) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb109)) +
@@ -4038,11 +3463,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qb110dist <- reportsetup[which(is.na(reportsetup$qb110)==FALSE), ] %>%
-          group_by(predict, qb110) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb110)) +
@@ -4069,11 +3489,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc111dist <- reportsetup[which(is.na(reportsetup$qc111)==FALSE), ] %>%
-          group_by(predict, qc111) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc111)) +
@@ -4100,11 +3515,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc112dist <- reportsetup[which(is.na(reportsetup$qc112)==FALSE), ] %>%
-          group_by(predict, qc112) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc112)) +
@@ -4131,11 +3541,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc115dist <- reportsetup[which(is.na(reportsetup$qc115)==FALSE), ] %>%
-          group_by(predict, qc115) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc115)) +
@@ -4162,11 +3567,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc116dist <- reportsetup[which(is.na(reportsetup$qc116)==FALSE), ] %>%
-          group_by(predict, qc116) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc116)) +
@@ -4193,11 +3593,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc116adist <- reportsetup[which(is.na(reportsetup$qc116a)==FALSE), ] %>%
-          group_by(predict, qc116a) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc116a)) +
@@ -4224,11 +3619,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc117dist <- reportsetup[which(is.na(reportsetup$qc117)==FALSE), ] %>%
-          group_by(predict, qc117) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc117)) +
@@ -4255,11 +3645,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q121dist <- reportsetup[which(is.na(reportsetup$q121)==FALSE), ] %>%
-          group_by(predict, q121) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q121)) +
@@ -4286,11 +3671,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q121adist <- reportsetup[which(is.na(reportsetup$q121a)==FALSE), ] %>%
-          group_by(predict, q121a) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q121a)) +
@@ -4317,11 +3697,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q121bdist <- reportsetup[which(is.na(reportsetup$q121b)==FALSE), ] %>%
-          group_by(predict, q121b) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q121b)) +
@@ -4348,11 +3723,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q122dist <- reportsetup[which(is.na(reportsetup$q122)==FALSE), ] %>%
-          group_by(predict, q122) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q122)) +
@@ -4379,11 +3749,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q122adist <- reportsetup[which(is.na(reportsetup$q122a)==FALSE), ] %>%
-          group_by(predict, q122a) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q122a)) +
@@ -4410,11 +3775,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q122bdist <- reportsetup[which(is.na(reportsetup$q122b)==FALSE), ] %>%
-          group_by(predict, q122b) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q122b)) +
@@ -4441,11 +3801,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q123dist <- reportsetup[which(is.na(reportsetup$q123)==FALSE), ] %>%
-          group_by(predict, q123) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q123)) +
@@ -4472,11 +3827,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q123adist <- reportsetup[which(is.na(reportsetup$q123a)==FALSE), ] %>%
-          group_by(predict, q123a) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q123a)) +
@@ -4503,11 +3853,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q123bdist <- reportsetup[which(is.na(reportsetup$q123b)==FALSE), ] %>%
-          group_by(predict, q123b) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q123b)) +
@@ -4534,11 +3879,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q124dist <- reportsetup[which(is.na(reportsetup$q124)==FALSE), ] %>%
-          group_by(predict, q124) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q124)) +
@@ -4565,11 +3905,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q124adist <- reportsetup[which(is.na(reportsetup$q124a)==FALSE), ] %>%
-          group_by(predict, q124a) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q124a)) +
@@ -4596,11 +3931,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q124bdist <- reportsetup[which(is.na(reportsetup$q124b)==FALSE), ] %>%
-          group_by(predict, q124b) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q124b)) +
@@ -4627,11 +3957,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q125dist <- reportsetup[which(is.na(reportsetup$q125)==FALSE), ] %>%
-          group_by(predict, q125) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q125)) +
@@ -4658,11 +3983,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q125adist <- reportsetup[which(is.na(reportsetup$q125a)==FALSE), ] %>%
-          group_by(predict, q125a) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q125a)) +
@@ -4689,11 +4009,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q125bdist <- reportsetup[which(is.na(reportsetup$q125b)==FALSE), ] %>%
-          group_by(predict, q125b) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q125b)) +
@@ -4720,11 +4035,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q126dist <- reportsetup[which(is.na(reportsetup$q126)==FALSE), ] %>%
-          group_by(predict, q126) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q126)) +
@@ -4751,11 +4061,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q126adist <- reportsetup[which(is.na(reportsetup$q126a)==FALSE), ] %>%
-          group_by(predict, q126a) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q126a)) +
@@ -4782,11 +4087,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        q126bdist <- reportsetup[which(is.na(reportsetup$q126b)==FALSE), ] %>%
-          group_by(predict, q126b) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q126b)) +
@@ -4813,11 +4113,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc127dist <- reportsetup[which(is.na(reportsetup$qc127)==FALSE), ] %>%
-          group_by(predict, qc127) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc127)) +
@@ -4844,11 +4139,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc128dist <- reportsetup[which(is.na(reportsetup$qc128)==FALSE), ] %>%
-          group_by(predict, qc128) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc128)) +
@@ -4880,11 +4170,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc135dist <- reportsetup[which(is.na(reportsetup$qc135)==FALSE), ] %>%
-          group_by(predict, qc135) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc135)) +
@@ -4911,11 +4196,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qc135adist <- reportsetup[which(is.na(reportsetup$qc135a)==FALSE), ] %>%
-          group_by(predict, qc135a) %>%
-          summarise(n = sum(weight) # weight variable)
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc135a)) +
@@ -4942,11 +4222,11 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         }  
-        sexdist <- reportsetup[which(is.na(reportsetup$sex)==FALSE), ] %>%
-          group_by(predict, sex) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
+        # sexdist <- reportsetup[which(is.na(reportsetup$sex)==FALSE), ] %>%
+        #   group_by(predict, sex) %>%
+        #   summarise(n = sum(weight) # weight variable) 
+        #   ) %>%
+        #   mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = sex)) +
@@ -4974,11 +4254,11 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        agedist <- reportsetup[which(is.na(reportsetup$age.r)==FALSE), ] %>%
-          group_by(predict, age.r) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
+        # agedist <- reportsetup[which(is.na(reportsetup$age.r)==FALSE), ] %>%
+        #   group_by(predict, age.r) %>%
+        #   summarise(n = sum(weight) # weight variable) 
+        #   ) %>%
+        #   mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = age.r)) +
@@ -5005,11 +4285,11 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        educdist <- reportsetup[which(is.na(reportsetup$educ)==FALSE), ] %>%
-          group_by(predict, educ) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
+        # educdist <- reportsetup[which(is.na(reportsetup$educ)==FALSE), ] %>%
+        #   group_by(predict, educ) %>%
+        #   summarise(n = sum(weight) # weight variable) 
+        #   ) %>%
+        #   mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = educ)) +
@@ -5037,11 +4317,11 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        hispdist <- reportsetup[which(is.na(reportsetup$hisp)==FALSE), ] %>%
-          group_by(predict, hisp) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
+        # hispdist <- reportsetup[which(is.na(reportsetup$hisp)==FALSE), ] %>%
+        #   group_by(predict, hisp) %>%
+        #   summarise(n = sum(weight) # weight variable) 
+        #   ) %>%
+        #   mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = hisp)) +
@@ -5068,11 +4348,11 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        racedist <- reportsetup[which(is.na(reportsetup$race)==FALSE), ] %>%
-          group_by(predict, race) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
+        # racedist <- reportsetup[which(is.na(reportsetup$race)==FALSE), ] %>%
+        #   group_by(predict, race) %>%
+        #   summarise(n = sum(weight) # weight variable) 
+        #   ) %>%
+        #   mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = race)) +
@@ -5099,11 +4379,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        birth_hispdist <- reportsetup[which(is.na(reportsetup$birth_hisp)==FALSE), ] %>%
-          group_by(predict, birth_hisp) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = birth_hisp)) +
@@ -5130,11 +4405,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        usborndist <- reportsetup[which(is.na(reportsetup$usborn)==FALSE), ] %>%
-          group_by(predict, usborn) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = usborn)) +
@@ -5161,11 +4431,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        maritaldist <- reportsetup[which(is.na(reportsetup$marital)==FALSE), ] %>%
-          group_by(predict, marital) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = marital)) +
@@ -5192,12 +4457,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        parentdist <- reportsetup[which(is.na(reportsetup$parent)==FALSE), ] %>%
-          group_by(predict, parent) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = parent)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -5223,12 +4483,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        citizendist <- reportsetup[which(is.na(reportsetup$citizen)==FALSE), ] %>%
-          group_by(predict, citizen) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = citizen)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -5254,12 +4509,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        religdist <- reportsetup[which(is.na(reportsetup$relig)==FALSE), ] %>%
-          group_by(predict, relig) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = relig)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -5285,12 +4535,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        chrdist <- reportsetup[which(is.na(reportsetup$chr)==FALSE), ] %>%
-          group_by(predict, chr) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = chr)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -5316,11 +4561,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        borndist <- reportsetup[which(is.na(reportsetup$born)==FALSE), ] %>%
-          group_by(predict, born) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = born)) +
@@ -5347,11 +4587,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        attenddist <- reportsetup[which(is.na(reportsetup$attend)==FALSE), ] %>%
-          group_by(predict, attend) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = attend)) +
@@ -5378,11 +4613,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qb139dist <- reportsetup[which(is.na(reportsetup$qb139)==FALSE), ] %>%
-          group_by(predict, qb139) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb139)) +
@@ -5409,11 +4639,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        qb139adist <- reportsetup[which(is.na(reportsetup$qb139a)==FALSE), ] %>%
-          group_by(predict, qb139a) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb139a)) +
@@ -5440,11 +4665,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        incomedist <- reportsetup[which(is.na(reportsetup$income)==FALSE), ] %>%
-          group_by(predict, income) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = income)) +
@@ -5471,11 +4691,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        inchidist <- reportsetup[which(is.na(reportsetup$inchi)==FALSE), ] %>%
-          group_by(predict, inchi) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = inchi)) +

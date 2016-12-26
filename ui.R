@@ -129,6 +129,9 @@ ui <- dashboardPage(
         fluidRow(box(
           width = 12, plotOutput("income_plot", height = 250)
         )),
+        # fluidRow(box(
+        #   width = 12, plotOutput("inchi_plot", height = 250)
+        # )),
         fluidRow(box(
           width = 12, plotOutput("reg_plot", height = 350)
         )),
