@@ -91,6 +91,12 @@ ui <- dashboardPage(
         tabName = "demographics",
         # Boxes need to be put in a row (or column)
         fluidRow(box(
+          width = 12, 
+          HTML("
+               <p>These demographic descriptors were held out of the values-grouping (factorization) algorithm, so the groupings themselves were generated based on values questions from the survey and NOT these variables. These demographics variables therefore help us describe these groupings.</p>
+               ")
+        )),
+        fluidRow(box(
           width = 12, plotOutput("usr_plot", height = 250)
         )),
         fluidRow(box(
@@ -112,6 +118,12 @@ ui <- dashboardPage(
           width = 12, plotOutput("race_plot", height = 250)
         )),
         fluidRow(box(
+          width = 12, plotOutput("birth_hisp_plot", height = 250)
+        )),
+        fluidRow(box(
+          width = 12, plotOutput("usborn_plot", height = 350)
+        )),
+        fluidRow(box(
           width = 12, plotOutput("marital_plot", height = 250)
         )),
         fluidRow(box(
@@ -124,14 +136,20 @@ ui <- dashboardPage(
           width = 12, plotOutput("relig_plot", height = 600)
         )),
         fluidRow(box(
+          width = 12, plotOutput("chr_plot", height = 250)
+        )),
+        fluidRow(box(
+          width = 12, plotOutput("born_plot", height = 250)
+        )),
+        fluidRow(box(
           width = 12, plotOutput("attend_plot", height = 250)
         )),
         fluidRow(box(
           width = 12, plotOutput("income_plot", height = 250)
         )),
-        # fluidRow(box(
-        #   width = 12, plotOutput("inchi_plot", height = 250)
-        # )),
+        fluidRow(box(
+          width = 12, plotOutput("inchi_plot", height = 250)
+        )),
         fluidRow(box(
           width = 12, plotOutput("reg_plot", height = 350)
         )),
@@ -1809,7 +1827,7 @@ ui <- dashboardPage(
                   <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Another country</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
             ),
-            plotOutput("birth_hisp_plot", height = 250),
+            plotOutput("birth_hisp_plot1", height = 250),
             HTML(
               "
                   <p><strong>&nbsp;</strong></p>
@@ -1824,7 +1842,7 @@ ui <- dashboardPage(
                   <p>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Other U.S. Territories (includes Guam, Samoa, U.S. Virgin Islands)<strong> (VOL.)</strong></p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
             ),
-            plotOutput("usborn_plot", height = 250),
+            plotOutput("usborn_plot1", height = 350),
             HTML(
               "
                   <p><strong>&nbsp;</strong></p>
@@ -1899,7 +1917,7 @@ ui <- dashboardPage(
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
             ),
-            plotOutput("chr_plot", height = 250),
+            plotOutput("chr_plot1", height = 250),
             HTML(
               "
                   <p><strong>&nbsp;</strong></p>
@@ -1910,7 +1928,7 @@ ui <- dashboardPage(
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No, would not</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
             ),
-            plotOutput("born_plot", height = 250),
+            plotOutput("born_plot1", height = 250),
             HTML(
               "
                   <p><strong>&nbsp;</strong></p>
@@ -1982,7 +2000,7 @@ ui <- dashboardPage(
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $250,000 or more</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don't know/Refused</p>"
             ),
-            plotOutput("inchi_plot", height = 250),
+            plotOutput("inchi_plot1", height = 250),
             HTML(
               "
                   <p><strong>&nbsp;</strong></p>

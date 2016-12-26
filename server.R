@@ -211,6 +211,58 @@ shinyServer(function(input, output) {
     })
     incProgress(1/16)
     
+    output$birth_hisp_plot <- renderPlot({
+      withProgress(message = 'Hispanic Birth Location plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = birth_hisp)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Hispanic Birth Location',
+            title = 'Hispanic Birth Location by Factor'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          birth_hispdist
+      })
+    })
+    incProgress(1/16)
+    
+    output$usborn_plot <- renderPlot({
+      withProgress(message = 'U.S. Born plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = usborn)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'U.S. Born',
+            title = 'U.S. Born by Factor'
+          ) + 
+          theme(legend.position="bottom",legend.direction="vertical")
+        gg_prop1 %+%
+          usborndist
+      })
+    })
+    incProgress(1/16)
+    
     output$marital_plot <- renderPlot({
       withProgress(message = 'Marital Status plot ...', value = 0, {
         for (i in 1:15) {
@@ -315,6 +367,58 @@ shinyServer(function(input, output) {
     })
     incProgress(1/16)
     
+    output$chr_plot <- renderPlot({
+      withProgress(message = 'Christianity plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = chr)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Among "Other/DK": Christian?',
+            title = 'Among "Other/DK": Christianity by Factor'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          chrdist
+      })
+    })
+    incProgress(1/16)
+    
+    output$born_plot <- renderPlot({
+      withProgress(message = 'Born Again plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = born)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Among Christian Other/DK: Born Again?',
+            title = 'Among Christian Other/DK: Born Again by Factor'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          borndist
+      })
+    })
+    incProgress(1/16)
+    
     output$attend_plot <- renderPlot({
       withProgress(message = 'Church Attendance plot ...', value = 0, {
         for (i in 1:15) {
@@ -363,6 +467,32 @@ shinyServer(function(input, output) {
           theme(legend.position="bottom")
         gg_prop1 %+%
           incomedist
+      })
+    })
+    incProgress(1/16)
+    
+    output$inchi_plot <- renderPlot({
+      withProgress(message = 'High Income plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = inchi)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Among $150k+: High Income?',
+            title = 'Among $150k+: High Income by Factor'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          inchidist
       })
     })
     incProgress(1/16)
@@ -4374,7 +4504,7 @@ shinyServer(function(input, output) {
     })
     incProgress(1/46)
     
-    output$birth_hisp_plot <- renderPlot({
+    output$birth_hisp_plot1 <- renderPlot({
       withProgress(message = 'Birth plot ...', value = 0, {
         for (i in 1:15) {
           incProgress(1/15)
@@ -4400,7 +4530,7 @@ shinyServer(function(input, output) {
     })
     incProgress(1/46)
     
-    output$usborn_plot <- renderPlot({
+    output$usborn_plot1 <- renderPlot({
       withProgress(message = 'U.S. Born plot ...', value = 0, {
         for (i in 1:15) {
           incProgress(1/15)
@@ -4530,7 +4660,7 @@ shinyServer(function(input, output) {
     })
     incProgress(1/46)
     
-    output$chr_plot <- renderPlot({
+    output$chr_plot1 <- renderPlot({
       withProgress(message = 'Christianity plot ...', value = 0, {
         for (i in 1:15) {
           incProgress(1/15)
@@ -4546,8 +4676,8 @@ shinyServer(function(input, output) {
           labs(
             x = 'Factor',
             y = NULL,
-            fill = 'Christianity',
-            title = 'Christianity by Factor'
+            fill = 'Among "Other/DK": Christian?',
+            title = 'Among "Other/DK": Christianity by Factor'
           ) + 
           theme(legend.position="bottom")
         gg_prop1 %+%
@@ -4556,7 +4686,7 @@ shinyServer(function(input, output) {
     })
     incProgress(1/46)
     
-    output$born_plot <- renderPlot({
+    output$born_plot1 <- renderPlot({
       withProgress(message = 'Born Again plot ...', value = 0, {
         for (i in 1:15) {
           incProgress(1/15)
@@ -4572,8 +4702,8 @@ shinyServer(function(input, output) {
           labs(
             x = 'Factor',
             y = NULL,
-            fill = 'Born Again',
-            title = 'Born Again by Factor'
+            fill = 'Among Other/DK Christian: Born Again?',
+            title = 'Among Other/DK Christian: Born Again by Factor'
           ) + 
           theme(legend.position="bottom")
         gg_prop1 %+%
@@ -4686,7 +4816,7 @@ shinyServer(function(input, output) {
     })
     incProgress(1/46)
     
-    output$inchi_plot <- renderPlot({
+    output$inchi_plot1 <- renderPlot({
       withProgress(message = 'High Income plot ...', value = 0, {
         for (i in 1:15) {
           incProgress(1/15)
@@ -4702,8 +4832,8 @@ shinyServer(function(input, output) {
           labs(
             x = 'Factor',
             y = NULL,
-            fill = 'High Income',
-            title = 'High Income by Factor'
+            fill = 'Among $150k+: High Income?',
+            title = 'Among $150k+: High Income by Factor'
           ) + 
           theme(legend.position="bottom")
         gg_prop1 %+%
