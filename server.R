@@ -16,31 +16,7 @@ library(tidyr)
 library(ggthemes)
 library(scales)
 
-## explanation object created by shinySetup.R
-reportsetup <- explanation %>%
-  mutate(predict = as.factor(predict),
-         state = as.factor(state),
-         usr = as.factor(usr),
-         density = as.ordered(density),
-         sex = as.factor(sex),
-         # age = as.ordered(age),
-         age.r = as.ordered(round(age/10,0)), # Splitting into buckets by 10
-         educ = as.factor(educ),
-         hisp = as.factor(hisp),
-         race = as.factor(racecmb),
-         marital = as.factor(marital),
-         parent = as.factor(parent),
-         citizen = as.factor(citizen),
-         relig = as.factor(relig),
-         attend = as.ordered(attend),
-         income = as.ordered(income),
-         reg = as.factor(reg),
-         party = as.factor(party),
-         ideo = as.factor(ideo),
-         q26f1.r = as.ordered(round(q26f1/10,0)), # Splitting into buckets by 10
-         q26f2.r = as.ordered(round(q26f2/10,0)) # Splitting into buckets by 10
-  )
-
+## Assume all tables from shinySetup.R are in memory
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
@@ -53,12 +29,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         }  
-        usrdist <- reportsetup %>%
-          group_by(predict, usr) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = usr)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -85,12 +56,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         }  
-        densitydist <- reportsetup %>%
-          group_by(predict, density) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = density)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -117,12 +83,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         }  
-        sexdist <- reportsetup %>%
-          group_by(predict, sex) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = sex)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -149,12 +110,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        agedist <- reportsetup %>%
-          group_by(predict, age.r) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = age.r)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -181,13 +137,8 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        educdist <- reportsetup %>%
-          group_by(predict, educ) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
-        gg_prop1 <- ggplot(data = data.frame(),
+
+          gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = educ)) +
           geom_bar(stat = 'identity', position = 'dodge') +
           geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
@@ -213,12 +164,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        hispdist <- reportsetup %>%
-          group_by(predict, hisp) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = hisp)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -244,12 +190,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        racedist <- reportsetup %>%
-          group_by(predict, race) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = race)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -275,12 +216,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        maritaldist <- reportsetup %>%
-          group_by(predict, marital) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = marital)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -306,12 +242,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        parentdist <- reportsetup[which(is.na(reportsetup$parent)==FALSE), ] %>%
-          group_by(predict, parent) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = parent)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -337,12 +268,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        citizendist <- reportsetup[which(is.na(reportsetup$citizen)==FALSE), ] %>%
-          group_by(predict, citizen) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = citizen)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -368,12 +294,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        religdist <- reportsetup %>%
-          group_by(predict, relig) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = relig)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -399,12 +320,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        attenddist <- reportsetup %>%
-          group_by(predict, attend) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = attend)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -430,12 +346,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        incomedist <- reportsetup %>%
-          group_by(predict, income) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = income)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -461,12 +372,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        regdist <- reportsetup %>%
-          group_by(predict, reg) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = reg)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -492,12 +398,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        partydist <- reportsetup %>%
-          group_by(predict, party) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
-        
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = party)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -523,11 +424,6 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-        ideodist <- reportsetup %>%
-          group_by(predict, ideo) %>%
-          summarise(n = sum(weight) # weight variable) 
-          ) %>%
-          mutate(prop = prop.table(n))
         
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = ideo)) +
@@ -550,17 +446,9 @@ shinyServer(function(input, output) {
     incProgress(1/16)
   })
   
-  statedist <- reportsetup[which(is.na(reportsetup$predict)==FALSE), ] %>%
-    group_by(state, predict) %>%
-    summarise(
-      n=sum(weight) # weight variable
-    ) %>%
-    mutate(prop = prop.table(n))
-  
-  statedisttable <- spread(statedist[c("state","predict","prop")], key = predict, value = prop)
-  
+## For State Tab:
   output$state_table <- renderDataTable({
-    datatable(statedisttable, options = list(pageLength = 100)) %>%
+    datatable(statedisttable[ , 1:4], options = list(pageLength = 100)) %>%
       formatPercentage(names(statedisttable[c(2:4)]), 1) %>%
       formatStyle(names(statedisttable[c(2:4)]),
                   background = styleColorBar(range(statedisttable[c(2:4)], na.rm = TRUE), 'lightblue'),
