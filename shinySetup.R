@@ -6,7 +6,6 @@ library(scales)
 ## rawinput (DF)
 ## model.rank (NMF)
 
-
 model.rank.basis <- data.frame(basis(model.rank))
 model.rank.basis$row.id <- rownames(model.rank.basis)
 
@@ -49,6 +48,76 @@ reportsetup <- explanation %>%
          q26f2.r = as.ordered(round(q26f2/10,0)) # Splitting into buckets by 10
   )
 
+## For Tab map:
+statefactordist <- reportsetup[which(is.na(reportsetup$predict)==FALSE), ] %>%
+  group_by(state, predict) %>%
+  summarise(
+    n=sum(weight) # weight variable
+  ) %>%
+  mutate(prop = prop.table(n))
+
+statedisttable <- spread(statefactordist[c("state","predict","prop")], key = predict, value = prop)
+
+statevotes <- read_csv("~/Dropbox/Projects/USFactors/data/statevotes.csv")
+statedisttable <- merge(statedisttable, statevotes, value=state, all.x=TRUE)
+statedisttable$O2012 <- 1 - statedisttable$D2012 - statedisttable$R2012
+statedisttable$O2016 <- 1 - statedisttable$D2016 - statedisttable$R2016
+
+statepartydist <- reportsetup[which(is.na(reportsetup$party)==FALSE), ] %>%
+  group_by(state, party) %>%
+  summarise(
+    n=sum(weight) # weight variable
+  ) %>%
+  mutate(prop = prop.table(n))
+
+statedisttable <- merge(statedisttable, spread(statepartydist[ , c("state","party","prop")], key = party, value = prop)[c("state", "Republican", "Democrat", "Independent")], value=state, all.x = TRUE)
+
+statefactorregdist <- reportsetup[which(is.na(reportsetup$predict)==FALSE & reportsetup$reg=="Are you ABSOLUTELY CERTAIN that you are registered to vote at your current address [OR]"), ] %>%
+  mutate(predictreg = paste(predict, "reg", sep="")) %>%
+  group_by(state, predictreg) %>%
+  summarise(
+    n=sum(weight) # weight variable
+  ) %>%
+  mutate(prop = prop.table(n))
+
+statedisttable <- merge(statedisttable, spread(statefactorregdist[ , c("state","predictreg","prop")], key = predictreg, value = prop), value=state, all.x = TRUE)
+
+# factor2012.mfit <- lm(cbind(D2012, R2012) ~ 0 + `1` + `2` + `3`, data = statedisttable)
+factor2016.mfit <- lm(cbind(D2016, R2016) ~ 0 + `1` + `2` + `3`, data = statedisttable)
+# 
+# factorreg2012.mfit <- lm(cbind(D2012, R2012) ~ 0 + `1reg` + `2reg` + `3reg`, data = statedisttable)
+# factorreg2016.mfit <- lm(cbind(D2016, R2016) ~ 0 + `1reg` + `2reg` + `3reg`, data = statedisttable)
+# 
+# party2012.mfit <- lm(cbind(D2012, R2012) ~ 0 + Democrat + Republican + Independent, data = statedisttable)
+# party2016.mfit <- lm(cbind(D2016, R2016) ~ 0 + Democrat + Republican + Independent, data = statedisttable)
+
+## Registered voters: 
+
+summary(factor2016.mfit)
+
+mlmdf <- data.frame(factor2016.mfit$fitted.values, row.names = statedisttable$state)
+
+factord2016.fit <- lm(formula = D2016 ~ 0 + `1` + `2` + `3`, data = statedisttable)
+tmpdf <- data.frame(predict(factord2016.fit, interval="predict"))
+tmpdf$factord16 <- tmpdf$fit
+tmpdf$factord16min <- tmpdf$lwr
+tmpdf$factord16max <- tmpdf$upr
+tmpdf <- merge(tmpdf, data.frame(statedisttable$state), by=0)
+tmpdf$state <- tmpdf$statedisttable.state
+statedisttable <- merge(statedisttable, tmpdf[c("state", "factord16", "factord16min", "factord16max")], by="state")
+rm(tmpdf)
+
+factorr2016.fit <- lm(formula = R2016 ~ 0 + `1` + `2` + `3`, data = statedisttable)
+tmpdf <- data.frame(predict(factorr2016.fit, interval="predict"))
+tmpdf$factorr16 <- tmpdf$fit
+tmpdf$factorr16min <- tmpdf$lwr
+tmpdf$factorr16max <- tmpdf$upr
+tmpdf <- merge(tmpdf, data.frame(statedisttable$state), by=0)
+tmpdf$state <- tmpdf$statedisttable.state
+statedisttable <- merge(statedisttable, tmpdf[c("state", "factorr16", "factorr16min", "factorr16max")], by="state")
+rm(tmpdf)
+
+## For demographics tab:
 usrdist <- reportsetup %>%
   group_by(predict, usr) %>%
   summarise(n = sum(weight) # weight variable) 
@@ -174,16 +243,6 @@ ideodist <- reportsetup %>%
   summarise(n = sum(weight) # weight variable) 
   ) %>%
   mutate(prop = prop.table(n))
-
-## For Tab map:
-statedist <- reportsetup[which(is.na(reportsetup$predict)==FALSE), ] %>%
-  group_by(state, predict) %>%
-  summarise(
-    n=sum(weight) # weight variable
-  ) %>%
-  mutate(prop = prop.table(n))
-
-statedisttable <- spread(statedist[c("state","predict","prop")], key = predict, value = prop)
 
 ## For Tab survey1:
 qa1dist <- reportsetup[which(is.na(reportsetup$qa1)==FALSE), ] %>%
