@@ -3,8 +3,8 @@ library(tidyr)
 library(scales)
 
 ## Assumes the following are in the environment:
-## rawinput (DF)
-## model.rank (NMF)
+## rawinput (DF) -- the survey instrument itself
+## model.rank (NMF) -- the 3-rank NMF model, output of the NMF process
 
 model.rank.basis <- data.frame(basis(model.rank))
 model.rank.basis$row.id <- rownames(model.rank.basis)
@@ -12,7 +12,7 @@ model.rank.basis$row.id <- rownames(model.rank.basis)
 model.rank.predictions <- data.frame(predict(model.rank, "rows", prob=TRUE))
 model.rank.predictions$row.id <- rownames(model.rank.predictions)
 
-## Merging rawinput w/ NMF output:
+## Merging survey results w/ NMF output:
 explanation <- merge(rawinput, model.rank.predictions, value=row.id, all.x=TRUE)
 explanation <- merge(explanation, model.rank.basis, value=row.id, all.x=TRUE)
 
@@ -20,10 +20,11 @@ explanation <- merge(explanation, model.rank.basis, value=row.id, all.x=TRUE)
 # write.csv(explanation, "./outputs/polarization_2014_explanation.csv", na="", row.names = FALSE)
 # write.csv(names(explanation), "./outputs/polarization_2014_explanation_header.csv")
 
+## For coefs table:
 model.rank.coefs <- data.frame(t(coef(model.rank)))
 model.rank.coefs <- merge(data.frame(predict(model.rank, prob=TRUE)), model.rank.coefs, by=0)
 
-## reportsetup object:
+## reportsetup object (built up over survey results, back-ends visualizations):
 reportsetup <- explanation %>%
   mutate(predict = as.factor(predict),
          state = as.factor(state),
@@ -49,6 +50,7 @@ reportsetup <- explanation %>%
   )
 
 ## For Tab map:
+## Weighted factor distribution by state:
 statefactordist <- reportsetup[which(is.na(reportsetup$predict)==FALSE), ] %>%
   group_by(state, predict) %>%
   summarise(
@@ -58,11 +60,13 @@ statefactordist <- reportsetup[which(is.na(reportsetup$predict)==FALSE), ] %>%
 
 statedisttable <- spread(statefactordist[c("state","predict","prop")], key = predict, value = prop)
 
+## Bringing in 2012 and 2016 election results:
 statevotes <- read_csv("./data/statevotes.csv")
 statedisttable <- merge(statedisttable, statevotes, value=state, all.x=TRUE)
 statedisttable$O2012 <- 1 - statedisttable$D2012 - statedisttable$R2012
 statedisttable$O2016 <- 1 - statedisttable$D2016 - statedisttable$R2016
 
+## Adding state-level summaries for self-reported parties to state table:
 statepartydist <- reportsetup[which(is.na(reportsetup$party)==FALSE), ] %>%
   group_by(state, party) %>%
   summarise(
@@ -72,6 +76,8 @@ statepartydist <- reportsetup[which(is.na(reportsetup$party)==FALSE), ] %>%
 
 statedisttable <- merge(statedisttable, spread(statepartydist[ , c("state","party","prop")], key = party, value = prop)[c("state", "Republican", "Democrat", "Independent")], value=state, all.x = TRUE)
 
+
+## Adding a representation of factors based on self-reported registration:
 statefactorregdist <- reportsetup[which(is.na(reportsetup$predict)==FALSE & reportsetup$reg=="Are you ABSOLUTELY CERTAIN that you are registered to vote at your current address [OR]"), ] %>%
   mutate(predictreg = paste(predict, "reg", sep="")) %>%
   group_by(state, predictreg) %>%
@@ -82,21 +88,36 @@ statefactorregdist <- reportsetup[which(is.na(reportsetup$predict)==FALSE & repo
 
 statedisttable <- merge(statedisttable, spread(statefactorregdist[ , c("state","predictreg","prop")], key = predictreg, value = prop), value=state, all.x = TRUE)
 
+## Model explanations of elections:
+# Factor mlms:
+# 2-way DV:
 # factor2012.mfit <- lm(cbind(D2012, R2012) ~ 0 + `1` + `2` + `3`, data = statedisttable)
 factor2016.mfit <- lm(cbind(D2016, R2016) ~ 0 + `1` + `2` + `3`, data = statedisttable)
-# 
+# 3-way DV:
+# factor2012.3mfit <- lm(cbind(D2012, O2012, R2012) ~ 0 + `1` + `2` + `3`, data = statedisttable)
+# factor2016.3mfit <- lm(cbind(D2016, O2016, R2016) ~ 0 + `1` + `2` + `3`, data = statedisttable)
+
+
+# Factor mlms limited to self-reported voter reg:
+# 2-way DV:
 # factorreg2012.mfit <- lm(cbind(D2012, R2012) ~ 0 + `1reg` + `2reg` + `3reg`, data = statedisttable)
 # factorreg2016.mfit <- lm(cbind(D2016, R2016) ~ 0 + `1reg` + `2reg` + `3reg`, data = statedisttable)
-# 
-# party2012.mfit <- lm(cbind(D2012, R2012) ~ 0 + Democrat + Republican + Independent, data = statedisttable)
-party2016.mfit <- lm(cbind(D2016, R2016) ~ 0 + Democrat + Republican + Independent, data = statedisttable)
+# 3-way DV:
+# factorreg2012.3mfit <- lm(cbind(D2012, O2012, R2012) ~ 0 + `1reg` + `2reg` + `3reg`, data = statedisttable)
+# factorreg2016.3mfit <- lm(cbind(D2016, O2016, R2016) ~ 0 + `1reg` + `2reg` + `3reg`, data = statedisttable)
 
-## Registered voters: 
+# Party-based mlms:
+# 2-way DV:
+# party2012.mfit <- lm(cbind(D2012, R2012) ~ 0 + Democrat + Independent + Republican, data = statedisttable)
+party2016.mfit <- lm(cbind(D2016, R2016) ~ 0 + Democrat + Independent + Republican, data = statedisttable)
+# 3-way DV:
+# party2012.3mfit <- lm(cbind(D2012, O2012, R2012) ~ 0 + Democrat + Independent + Republican, data = statedisttable)
+# party2016.3mfit <- lm(cbind(D2016, O2016, R2016) ~ 0 + Democrat + Independent + Republican, data = statedisttable)
 
-summary(factor2016.mfit)
-
+# Create the df for the heplot:
 mlmdf <- data.frame(factor2016.mfit$fitted.values, row.names = statedisttable$state)
 
+## Factor-based 2016 observed-vs-predicted plot prep:
 factord2016.fit <- lm(formula = D2016 ~ 0 + `1` + `2` + `3`, data = statedisttable)
 tmpdf <- data.frame(predict(factord2016.fit, interval="predict"))
 tmpdf$factord16 <- tmpdf$fit
@@ -117,46 +138,48 @@ tmpdf$state <- tmpdf$statedisttable.state
 statedisttable <- merge(statedisttable, tmpdf[c("state", "factorr16", "factorr16min", "factorr16max")], by="state")
 rm(tmpdf)
 
+
+### BUILD VARIABLE SUMMARIES BY PREDICTED FACTOR (all the histograms):
 ## For demographics tab:
 usrdist <- reportsetup %>%
   group_by(predict, usr) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 densitydist <- reportsetup %>%
   group_by(predict, density) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 sexdist <- reportsetup %>%
   group_by(predict, sex) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 agedist <- reportsetup %>%
   group_by(predict, age.r) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 educdist <- reportsetup %>%
   group_by(predict, educ) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 hispdist <- reportsetup %>%
   group_by(predict, hisp) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 racedist <- reportsetup %>%
   group_by(predict, race) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
@@ -174,25 +197,25 @@ usborndist <- reportsetup[which(is.na(reportsetup$usborn)==FALSE), ] %>%
 
 maritaldist <- reportsetup %>%
   group_by(predict, marital) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 parentdist <- reportsetup[which(is.na(reportsetup$parent)==FALSE), ] %>%
   group_by(predict, parent) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 citizendist <- reportsetup[which(is.na(reportsetup$citizen)==FALSE), ] %>%
   group_by(predict, citizen) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 religdist <- reportsetup %>%
   group_by(predict, relig) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
@@ -210,13 +233,13 @@ borndist <- reportsetup[which(is.na(reportsetup$born)==FALSE), ] %>%
 
 attenddist <- reportsetup %>%
   group_by(predict, attend) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 incomedist <- reportsetup %>%
   group_by(predict, income) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
@@ -228,128 +251,128 @@ inchidist <- reportsetup[which(is.na(reportsetup$inchi)==FALSE), ] %>%
 
 regdist <- reportsetup %>%
   group_by(predict, reg) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 partydist <- reportsetup %>%
   group_by(predict, party) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 ideodist <- reportsetup %>%
   group_by(predict, ideo) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 ## For Tab survey1:
 qa1dist <- reportsetup[which(is.na(reportsetup$qa1)==FALSE), ] %>%
   group_by(predict, qa1) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 qc1dist <- reportsetup[which(is.na(reportsetup$qc1)==FALSE), ] %>%
   group_by(predict, qc1) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 qc1adist <- reportsetup[which(is.na(reportsetup$qc1a)==FALSE), ] %>%
   group_by(predict, qc1a) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 qb2dist <- reportsetup[which(is.na(reportsetup$qb2)==FALSE), ] %>%
   group_by(predict, qb2) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 qb3dist <- reportsetup[which(is.na(reportsetup$qb3)==FALSE), ] %>%
   group_by(predict, qb3) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 qb4dist <- reportsetup[which(is.na(reportsetup$qb4)==FALSE), ] %>%
   group_by(predict, qb4) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 qb5dist <- reportsetup[which(is.na(reportsetup$qb5)==FALSE), ] %>%
   group_by(predict, qb5) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 qa6dist <- reportsetup[which(is.na(reportsetup$qa6)==FALSE), ] %>%
   group_by(predict, qa6) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 qa8dist <- reportsetup[which(is.na(reportsetup$qa8)==FALSE), ] %>%
   group_by(predict, qa8) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 qa9adist <- reportsetup[which(is.na(reportsetup$qa9a)==FALSE), ] %>%
   group_by(predict, qa9a) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 qa9bdist <- reportsetup[which(is.na(reportsetup$qa9b)==FALSE), ] %>%
   group_by(predict, qa9b) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 qa9cdist <- reportsetup[which(is.na(reportsetup$qa9c)==FALSE), ] %>%
   group_by(predict, qa9c) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 qa9ddist <- reportsetup[which(is.na(reportsetup$qa9d)==FALSE), ] %>%
   group_by(predict, qa9d) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 qa9edist <- reportsetup[which(is.na(reportsetup$qa9e)==FALSE), ] %>%
   group_by(predict, qa9e) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 qa9fdist <- reportsetup[which(is.na(reportsetup$qa9f)==FALSE), ] %>%
   group_by(predict, qa9f) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 qa9gdist <- reportsetup[which(is.na(reportsetup$qa9g)==FALSE), ] %>%
   group_by(predict, qa9g) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 q11adist <- reportsetup %>%
   group_by(predict, q11a) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 q11bdist <- reportsetup %>%
   group_by(predict, q11b) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
@@ -1114,12 +1137,12 @@ qc135adist <- reportsetup[which(is.na(reportsetup$qc135a)==FALSE), ] %>%
 
 qb139dist <- reportsetup[which(is.na(reportsetup$qb139)==FALSE), ] %>%
   group_by(predict, qb139) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))
 
 qb139adist <- reportsetup[which(is.na(reportsetup$qb139a)==FALSE), ] %>%
   group_by(predict, qb139a) %>%
-  summarise(n = sum(weight) # weight variable) 
+  summarise(n = sum(weight) # weight variable
   ) %>%
   mutate(prop = prop.table(n))

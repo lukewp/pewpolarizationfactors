@@ -49,10 +49,10 @@ ui <- dashboardPage(
         tabName = "intro",
         h2("Introduction"),
         fluidRow(box(
-          width = 12, 
+          width = 12,
+          tags$p("Study of the 2014 Pew Political Polarization Survey"),
+          tags$p("This visualization and analysis is based on the ", tags$a(href="http://www.people-press.org/2014/03/16/2014-political-polarization-survey/","Pew Political Polarization Dataset from 2014"), "."),
           HTML("
-               <p>Study of the 2014 Pew Political Polarization Survey</p>
-               <p>This visualization and analysis is based on the Pew Political Polarization Dataset from 2014, available at http://www.people-press.org/2014/03/16/2014-political-polarization-survey/</p>
                <p>The analysis is meant to explore the possibility that there are three prominent-and-discrete audiences in US political life, to help explain some American political dynamics. </p>
                <p>Instead of thinking of America's electorate as right, left, and in the middle, it's better to think of a triangle with a major (equally-sized) constituency at each point.</p>
                <p>In order to build a majority coalition, any two of these points must align behind an issue or a candidate.</p>
@@ -66,8 +66,8 @@ ui <- dashboardPage(
                In 2016, the coalition was an 'orange' coalition -- that is, a combination of the red and yellow factor constituencies.</p>
                <p>A 'purple' coalition may also be possible, one that finds common ground between the Blue and Red constituencies at the expense of the Traditional Values factor.</p>
                <p>And of course, a new party could emerge that more cogently captures the values of the Traditional Values factor, which would introduce entirely new dynamics to the American political landscape, and appear a very viable possibility based on this analysis.</p>
-               <p>Explore the 2014 Pew survey in terms of these factors with this visualization, code for which is available here: https://github.com/lukewp/pewpolarizationfactors.</p>
-               ")
+              "),
+          tags$p("Explore the 2014 Pew survey in terms of these factors with this visualization, code for which ", tags$a(href="https://github.com/lukewp/pewpolarizationfactors", "is available here"),".")
         ))),
       tabItem(
         tabName = "demographics",
@@ -76,6 +76,7 @@ ui <- dashboardPage(
           width = 12, 
           HTML("
                <p>These demographic descriptors were held out of the values-grouping (factorization) algorithm, so the groupings themselves were generated based on values questions from the survey and NOT these variables. These demographics variables therefore help us describe these groupings.</p>
+               <p>For each chart, Factor 1 (Human Rights and Equality) is on the left, Factor 2 (Traditional Values) is in the middle, and Factor 3 (Free Market Capitalism) is on the right.</p>
                ")
         )),
         fluidRow(box(
@@ -170,15 +171,18 @@ ui <- dashboardPage(
           width = 12, 
           HTML("<p>A multivariate linear regression model was fit to 2016 election results (DV = each party's % of popular vote by state; IV = % of population each factor represents by state), with the three factors described above as the explanatory (independent) variables. Compared to similar models constructed using partisanship, these representative clusters of like-values were a stronger fit (on 2012 elections also). Diagnostics appear below, along with prediction-intervals-vs-observation plots:</p>"),
           verbatimTextOutput("factor2016mfitsummary"),
-          HTML("<p>The factor-based model explains the state-wise support of Clinton and Trump well, with maximum error of 11% on either end (Wyoming and Washington, DC), and an R-squared value of 0.9839 for Clinton and 0.9887 for Trump. All three factors were significant in each regression. An interpretation of the coefficients for D2016 (the Clinton support variable) shows a strong positive coefficient for the Factor 1, a lower, still-positive coefficient for Factor 2, and a low-negative coefficent for Factor 3. The direction and scale of the 1 and 3 factor coefficients are indicative of overperformance when a certain group is in abundance -- that is, if a state has a particularly high Factor 1 population share, or particularly low Factor 3 population share relative to the mean, Clinton will overperform -- indicating perhaps more Factor 1 people turn out relative to those in Factor 3, who may be more likely to stay home. The R2016 (Trump) coefficients are generally the reverse of the D2016 coefficients, though more pronounced over/underperformance for Factors 1 and 3, and a stronger positive coefficient for Factor 2 compared to Clinton's (approximately a 70/30 split in favor of Trump).</p>
-               <p>For point of comparison, a similar multivariate linear regression model was built based on the self-reported partisanship (Democrat, Republican, Independent) from each state. Its fit summary is below:</p>"),
-          verbatimTextOutput("party2016mfitsummary")
+          HTML("<p>The factor-based model explains the state-wise support of Clinton and Trump well, with maximum explanation error (difference between predicted and observed value -- or residual) of 11% on either end (Wyoming and Washington DC), and an R-squared value of 0.9839 for Clinton and 0.9887 for Trump. All three factors were significant in each regression. An interpretation of the coefficients for D2016 (the Clinton support variable) shows a strong positive coefficient for the Factor 1, a lower, still-positive coefficient for Factor 2, and a low-negative coefficent for Factor 3. The direction and scale of the 1 and 3 factor coefficients are indicative of overperformance when a certain group is in abundance -- that is, if a state has a particularly high Factor 1 population share, or particularly low Factor 3 population share relative to the mean, Clinton will overperform -- indicating perhaps more Factor 1 people turn out relative to those in Factor 3, who may be more likely to stay home. The R2016 (Trump) coefficients are generally the reverse of the D2016 coefficients, though more pronounced over/underperformance for Factors 1 and 3, and a stronger positive coefficient for Factor 2 compared to Clinton's (approximately a 70/30 split in favor of Trump).</p>
+                <p>For comparison, a similar multivariate linear regression model was built based on the self-reported partisanship (Democrat, Republican, Independent) from each state.The model's fit summary is below:</p>
+               "),
+          verbatimTextOutput("party2016mfitsummary"),
+          HTML("<p>We see a relatively lower (but still quite high) R^2 for each of the regression components within the party-based model, a broader distribution of residuals, and a major difference in the statistical significance of the explanatory variables.</p>
+               ")
           )),
         fluidRow(box(
           width = 12, 
-          HTML("The Q-Q plot of the factor-based 2016 model is here:"),
+          HTML("The x^2 Q-Q plot of the factor-based 2016 model is here:"),
           plotOutput("cqfactorplot", height = 500),
-          HTML("And the party-based 2016 model:"),
+          HTML("And the party-based 2016 model. The difference in explanation accuracy between the two models is evident in the number of points landing outside the red-shaded area (the confidence envelope) in this second x^2 Q-Q plot:"),
           plotOutput("cqpartyplot", height = 500)
           )),
         fluidRow(box(width = 12, plotOutput("manovaheplot", height = 900)
