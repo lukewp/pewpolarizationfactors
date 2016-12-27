@@ -58,7 +58,11 @@ statefactordist <- reportsetup[which(is.na(reportsetup$predict)==FALSE), ] %>%
 
 statedisttable <- spread(statefactordist[c("state","predict","prop")], key = predict, value = prop)
 
+<<<<<<< HEAD
 statevotes <- read_csv("./data/statevotes.csv")
+=======
+statevotes <- read_csv("~/Dropbox/Projects/USFactors/data/statevotes.csv")
+>>>>>>> c69a32d996b08bf553dbcf31ec1208d9af4454cd
 statedisttable <- merge(statedisttable, statevotes, value=state, all.x=TRUE)
 statedisttable$O2012 <- 1 - statedisttable$D2012 - statedisttable$R2012
 statedisttable$O2016 <- 1 - statedisttable$D2016 - statedisttable$R2016
