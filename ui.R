@@ -20,34 +20,16 @@ ui <- dashboardPage(
     width = 150,
     sidebarMenu(
       menuItem("Introduction", tabName = "intro", icon = icon("file-text"), selected = TRUE),
-      menuItem(
-        "Demographics",
-        tabName = "demographics",
-        icon = icon("bar-chart")
-      ),
+      menuItem("Demographics", tabName = "demographics", icon = icon("bar-chart")),
       menuItem("States", tabName = "map", icon = icon("globe")),
+      menuItem("Factor Coefs", tabName = "coefs_table", icon = icon("file-text")),
+      menuItem("Diagnostics", tabName = "model_diag", icon = icon("wrench")),
+      
       ## Breaking into different sections to ease render speed
-      menuItem(
-        "Survey Q.1-27",
-        tabName = "survey1",
-        icon = icon("file-text")
-      ),
-      menuItem(
-        "Survey Q.28-52",
-        tabName = "survey2",
-        icon = icon("file-text")
-      ),
-      menuItem(
-        "Survey Q.53-134",
-        tabName = "survey3",
-        icon = icon("file-text")
-      ),
-      menuItem(
-        "Survey Q.135-End",
-        tabName = "survey4",
-        icon = icon("file-text")
-      ),
-      menuItem("Factor Coefs", tabName = "coefs_table", icon = icon("file-text"))
+      menuItem("Survey Q.1-27", tabName = "survey1", icon = icon("file-text")),
+      menuItem("Survey Q.28-52", tabName = "survey2", icon = icon("file-text")),
+      menuItem("Survey Q.53-134", tabName = "survey3", icon = icon("file-text")),
+      menuItem("Survey Q.135-End", tabName = "survey4", icon = icon("file-text"))
     )
   ),
   dashboardBody(
@@ -71,7 +53,7 @@ ui <- dashboardPage(
           HTML("
                <p>Study of the 2014 Pew Political Polarization Survey</p>
                <p>This visualization and analysis is based on the Pew Political Polarization Dataset from 2014, available at http://www.people-press.org/2014/03/16/2014-political-polarization-survey/</p>
-               <p>The analysis reveals 3 dominant factors in US political life, to help explain some American political dynamics. </p>
+               <p>The analysis is meant to explore the possibility that there are three prominent-and-discrete audiences in US political life, to help explain some American political dynamics. </p>
                <p>Instead of thinking of America's electorate as right, left, and in the middle, it's better to think of a triangle with a major (equally-sized) constituency at each point.</p>
                <p>In order to build a majority coalition, any two of these points must align behind an issue or a candidate.</p>
                <ul>
@@ -83,7 +65,7 @@ ui <- dashboardPage(
                <p>In the 2008 election, the coalition was a 'green' coalition -- that is, a combination of the blue and yellow factor constituencies.
                In 2016, the coalition was an 'orange' coalition -- that is, a combination of the red and yellow factor constituencies.</p>
                <p>A 'purple' coalition may also be possible, one that finds common ground between the Blue and Red constituencies at the expense of the Traditional Values factor.</p>
-               <p>And of course, a new party could emerge that more perfectly captures the values of the Traditional Values factor, which would introduce entirely new dynamics to the American political landscape, and appear a very viable possibility based on this analysis.</p>
+               <p>And of course, a new party could emerge that more cogently captures the values of the Traditional Values factor, which would introduce entirely new dynamics to the American political landscape, and appear a very viable possibility based on this analysis.</p>
                <p>Explore the 2014 Pew survey in terms of these factors with this visualization, code for which is available here: https://github.com/lukewp/pewpolarizationfactors.</p>
                ")
         ))),
@@ -164,8 +146,41 @@ ui <- dashboardPage(
         tabName = "map",
         h2("Factor Concentration by State"),
         fluidRow(box(
-          width = 12, dataTableOutput("state_table")
+          width = 12, 
+          HTML("<p>The three factors were plotted against state populations according to Pew's weighting variable. The numbers in this table describe the percentage of people in each state, in each factor.</p>"),
+          dataTableOutput("state_table")
         ))),
+      tabItem(
+        tabName = "coefs_table",
+        h2("Factor Coefficients by Variable"),
+        fluidRow(box(
+          width = 12, 
+          HTML("
+               <p>The 51 variables below, corresponding to survey questions, were used to determine factors. These were picked because they were asked of all respondents, but specifically don't ask about partisan identity or demographics -- as these survey questions were reserved as independent variables and not part of a complex DV distilled via factorization.</p>
+               <p>A row.name can be translated easily into a survey question -- for example, 'q25k.c1' = 'Q.25, sub-question K, statement #1'</p>
+               <p>A row.name ending in .ca or .cd indicate an agree/disagree question that was recoded into two variables with positive response ranges from 0.0-1.0 for inclusion in NMF.</p>
+               <p>'predict' indicates the factor number predicted by a particular variable, and 'prob' indicates the probability of assignment to that factor for positive correlation to the variable.</p>
+               <p>X1, X2, and X3 correspond to the factors 1, 2, and 3 respectively. A higher coefficient means a variable is highly-correlated. Some variables are related to multiple factors.</p>"),
+          dataTableOutput("coefs_table")
+          ))),
+      tabItem(
+        tabName = "model_diag",
+        h2("Model Diagnostics"),
+        fluidRow(box(
+          width = 12, 
+          HTML("
+               <p>A multivariate linear regression model was fit to 2016 election results (DV = each party's % of popular vote by state; IV = % of population each factor represents by state), with the three factors described above as the explanatory (independent) variables. Compared to similar models constructed using partisanship, these representative clusters of like-values were a stronger fit (on 2012 elections also). Diagnostics appear below, along with prediction-intervals-vs-observation plots:</p>"),
+          verbatimTextOutput("factor2016mfitsummary")
+          )),
+        fluidRow(box(width = 12, plotOutput("cqfactorplot", height = 500)
+          )),
+        fluidRow(box(width = 12, plotOutput("manovaheplot", height = 900)
+        )),
+        fluidRow(box(width = 12, plotOutput("factord2016plot", height = 700)
+        )),
+        fluidRow(box(width = 12, plotOutput("factorr2016plot", height = 700)
+        ))
+        ),
       tabItem(
         tabName = "survey1",
         fluidPage(fluidRow(
@@ -2337,19 +2352,6 @@ ui <- dashboardPage(
                   # "
             )
           )
-        ))),
-      tabItem(
-        tabName = "coefs_table",
-        h2("Factor Coefficients by Variable"),
-        fluidRow(box(
-          width = 12, 
-          HTML("
-                   <p>The 51 variables below, corresponding to survey questions, were used to determine factors. These were picked because they were asked of all respondents, but specifically don't ask about partisan identity or demographics -- as these survey questions were reserved as independent variables and not part of a complex DV distilled via factorization.</p>
-                   <p>A row.name can be translated easily into a survey question -- for example, 'q25k.c1' = 'Q.25, sub-question K, statement #1'</p>
-                   <p>A row.name ending in .ca or .cd indicate an agree/disagree question that was recoded into two variables with positive response ranges from 0.0-1.0 for inclusion in NMF.</p>
-                   <p>'predict' indicates the factor number predicted by a particular variable, and 'prob' indicates the probability of assignment to that factor for positive correlation to the variable.</p>
-                   <p>X1, X2, and X3 correspond to the factors 1, 2, and 3 respectively. A higher coefficient means a variable is highly-correlated. Some variables are related to multiple factors.</p>"),
-          dataTableOutput("coefs_table")
         )))
     ))
 )

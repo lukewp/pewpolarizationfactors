@@ -23,10 +23,16 @@ A "purple" coalition may also be possible, one that finds common ground between 
 
 Explore these datasets by going through code in this package, or also look at the shinyapps.io page here (assuming I haven't used all my free hours this month!): https://lwp-viz.shinyapps.io/usfactors/
 
-TODO: Regression explanation of state-by-state 2012; 2016 votes by factor
+TODO: Regression explanation of state-by-state 2012; 2016 votes by factor **FINISH 2012**
+
 TODO: Venn diagram for all voters
+
 TODO: Venn diagram for electoral votes
+
 TODO: Choropleths for electoral votes
+
 TODO: Scenario-builder
+
 TODO: Decision tree for factor assignment by survey
+
 TODO: Decision tree for factor assignment by demographic

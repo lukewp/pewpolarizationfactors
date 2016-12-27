@@ -15,11 +15,87 @@ library(dplyr)
 library(tidyr)
 library(ggthemes)
 library(scales)
-
+library(candisc)
 ## Assume all tables from shinySetup.R are in memory
+# source("./shinySetup.R")
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
+  
+  ## Model explanation:
+  withProgress(message = "All model plots ...", value = 0, {
+    output$factor2016mfitsummary <- renderPrint({summary(factor2016.mfit)})
+    
+    output$cqfactorplot <- renderPlot({
+      withProgress(message = 'Chi-Square Q-Q Plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        cqplot(factor2016.mfit)
+      })
+    })
+    
+    output$manovaheplot <- renderPlot({
+      withProgress(message = 'MANOVA Model 3-D Plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        
+        heplot(factor2016.mfit, ylim = (0:1), axes = FALSE, 
+               xlab = "Modeled Clinton 2016 %",
+               ylab = "Modeled Trump 2016 %",
+               main = "Plot of Three-Factors' Explanation of 2016 Two-Party Support",
+               term.labels = c("Factor 1", "Factor 2", "Factor 3"), 
+               label.pos = c("left","center", "left", "left"), 
+               col = c("orange", "blue", "yellow", "red"),
+               offset.axes = c(-.25, -.5))
+        points(mlmdf, cex = 0.2)
+        text(mlmdf$D2016, mlmdf$R2016, row.names(mlmdf), cex=0.45, pos=2)
+        axis(1, at=pretty(mlmdf$D2016), lab=paste(pretty(mlmdf$D2016)*100,"%"), las=TRUE)
+        axis(2, at=pretty(mlmdf$R2016), lab=paste(pretty(mlmdf$R2016)*100,"%"), las=TRUE)
+      })
+    })
+    
+    output$factord2016plot <- renderPlot({
+      withProgress(message = '3-Factor-based Clinton 2016 Explanation Plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        ggplot(statedisttable, aes(x=D2016, y=state)) +
+          geom_point(size = 3, col = "blue") + 
+          geom_errorbarh(aes(xmin = factord16min, xmax = factord16max), show.legend = TRUE) +
+          scale_x_continuous(labels = percent) +
+          labs(
+            x = "% Support Hillary Clinton 2016",
+            y = NULL,
+            title = "3-Factor-based Explanation of 2016 Clinton Support %"
+          ) + 
+          theme(legend.position="bottom")
+      })
+    })
+    
+    output$factorr2016plot <- renderPlot({
+      withProgress(message = '3-Factor-based Trump 2016 Explanation Plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        ggplot(statedisttable, aes(x=R2016, y=state)) +
+          geom_point(size = 3, col = "red") + 
+          geom_errorbarh(aes(xmin = factorr16min, xmax = factorr16max), show.legend = TRUE) +
+          scale_x_continuous(labels = percent) +
+          labs(
+            x = "% Support Donald Trump 2016",
+            y = NULL,
+            title = "3-Factor-based Explanation of 2016 Trump Support %"
+          ) + 
+          theme(legend.position="bottom")
+      })
+    })
+    
+  })
   
   ## Tab demographics:
   withProgress(message = 'All demographics plots ...', value = 0, {
@@ -4844,7 +4920,7 @@ shinyServer(function(input, output) {
     
   })
 
-    ## Tab coefs_table:
+  ## Tab coefs_table:
   output$coefs_table <- renderDataTable({
     datatable(model.rank.coefs, options = list(pageLength = 100)) %>%
       formatPercentage('prob', 1) %>%
