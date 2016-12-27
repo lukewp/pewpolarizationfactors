@@ -26,6 +26,8 @@ shinyServer(function(input, output) {
   withProgress(message = "All model plots ...", value = 0, {
     output$factor2016mfitsummary <- renderPrint({summary(factor2016.mfit)})
     
+    output$party2016mfitsummary <- renderPrint({summary(party2016.mfit)})
+    
     output$cqfactorplot <- renderPlot({
       withProgress(message = 'Chi-Square Q-Q Plot ...', value = 0, {
         for (i in 1:15) {
@@ -33,6 +35,16 @@ shinyServer(function(input, output) {
         }
         
         cqplot(factor2016.mfit)
+      })
+    })
+    
+    output$cqpartyplot <- renderPlot({
+      withProgress(message = 'Chi-Square Q-Q Plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        cqplot(party2016.mfit)
       })
     })
     

@@ -89,7 +89,7 @@ factor2016.mfit <- lm(cbind(D2016, R2016) ~ 0 + `1` + `2` + `3`, data = statedis
 # factorreg2016.mfit <- lm(cbind(D2016, R2016) ~ 0 + `1reg` + `2reg` + `3reg`, data = statedisttable)
 # 
 # party2012.mfit <- lm(cbind(D2012, R2012) ~ 0 + Democrat + Republican + Independent, data = statedisttable)
-# party2016.mfit <- lm(cbind(D2016, R2016) ~ 0 + Democrat + Republican + Independent, data = statedisttable)
+party2016.mfit <- lm(cbind(D2016, R2016) ~ 0 + Democrat + Republican + Independent, data = statedisttable)
 
 ## Registered voters: 
 

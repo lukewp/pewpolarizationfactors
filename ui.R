@@ -168,11 +168,18 @@ ui <- dashboardPage(
         h2("Model Diagnostics"),
         fluidRow(box(
           width = 12, 
-          HTML("
-               <p>A multivariate linear regression model was fit to 2016 election results (DV = each party's % of popular vote by state; IV = % of population each factor represents by state), with the three factors described above as the explanatory (independent) variables. Compared to similar models constructed using partisanship, these representative clusters of like-values were a stronger fit (on 2012 elections also). Diagnostics appear below, along with prediction-intervals-vs-observation plots:</p>"),
-          verbatimTextOutput("factor2016mfitsummary")
+          HTML("<p>A multivariate linear regression model was fit to 2016 election results (DV = each party's % of popular vote by state; IV = % of population each factor represents by state), with the three factors described above as the explanatory (independent) variables. Compared to similar models constructed using partisanship, these representative clusters of like-values were a stronger fit (on 2012 elections also). Diagnostics appear below, along with prediction-intervals-vs-observation plots:</p>"),
+          verbatimTextOutput("factor2016mfitsummary"),
+          HTML("<p>The factor-based model explains the state-wise support of Clinton and Trump well, with maximum error of 11% on either end (Wyoming and Washington, DC), and an R-squared value of 0.9839 for Clinton and 0.9887 for Trump. All three factors were significant in each regression. An interpretation of the coefficients for D2016 (the Clinton support variable) shows a strong positive coefficient for the Factor 1, a lower, still-positive coefficient for Factor 2, and a low-negative coefficent for Factor 3. The direction and scale of the 1 and 3 factor coefficients are indicative of overperformance when a certain group is in abundance -- that is, if a state has a particularly high Factor 1 population share, or particularly low Factor 3 population share relative to the mean, Clinton will overperform -- indicating perhaps more Factor 1 people turn out relative to those in Factor 3, who may be more likely to stay home. The R2016 (Trump) coefficients are generally the reverse of the D2016 coefficients, though more pronounced over/underperformance for Factors 1 and 3, and a stronger positive coefficient for Factor 2 compared to Clinton's (approximately a 70/30 split in favor of Trump).</p>
+               <p>For point of comparison, a similar multivariate linear regression model was built based on the self-reported partisanship (Democrat, Republican, Independent) from each state. Its fit summary is below:</p>"),
+          verbatimTextOutput("party2016mfitsummary")
           )),
-        fluidRow(box(width = 12, plotOutput("cqfactorplot", height = 500)
+        fluidRow(box(
+          width = 12, 
+          HTML("The Q-Q plot of the factor-based 2016 model is here:"),
+          plotOutput("cqfactorplot", height = 500),
+          HTML("And the party-based 2016 model:"),
+          plotOutput("cqpartyplot", height = 500)
           )),
         fluidRow(box(width = 12, plotOutput("manovaheplot", height = 900)
         )),
