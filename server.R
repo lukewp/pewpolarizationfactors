@@ -107,6 +107,9 @@ shinyServer(function(input, output) {
       })
     })
     
+    output$factor2012mfitsummary <- renderPrint({summary(factor2012.mfit)})
+    output$party2012mfitsummary <- renderPrint({summary(party2012.mfit)})
+    
   })
   
   ## Tab demographics:

@@ -91,7 +91,7 @@ statedisttable <- merge(statedisttable, spread(statefactorregdist[ , c("state","
 ## Model explanations of elections:
 # Factor mlms:
 # 2-way DV:
-# factor2012.mfit <- lm(cbind(D2012, R2012) ~ 0 + `1` + `2` + `3`, data = statedisttable)
+factor2012.mfit <- lm(cbind(D2012, R2012) ~ 0 + `1` + `2` + `3`, data = statedisttable)
 factor2016.mfit <- lm(cbind(D2016, R2016) ~ 0 + `1` + `2` + `3`, data = statedisttable)
 # 3-way DV:
 # factor2012.3mfit <- lm(cbind(D2012, O2012, R2012) ~ 0 + `1` + `2` + `3`, data = statedisttable)
@@ -108,7 +108,7 @@ factor2016.mfit <- lm(cbind(D2016, R2016) ~ 0 + `1` + `2` + `3`, data = statedis
 
 # Party-based mlms:
 # 2-way DV:
-# party2012.mfit <- lm(cbind(D2012, R2012) ~ 0 + Democrat + Independent + Republican, data = statedisttable)
+party2012.mfit <- lm(cbind(D2012, R2012) ~ 0 + Democrat + Independent + Republican, data = statedisttable)
 party2016.mfit <- lm(cbind(D2016, R2016) ~ 0 + Democrat + Independent + Republican, data = statedisttable)
 # 3-way DV:
 # party2012.3mfit <- lm(cbind(D2012, O2012, R2012) ~ 0 + Democrat + Independent + Republican, data = statedisttable)

@@ -25,7 +25,7 @@ Explore these datasets by going through code in this package, or also look at th
 
 TODO: Regression explanation of state-by-state 2012 votes by factor
 
-TODO: Explain three-DV mlm models' fit explanation
+TODO: Explain three-DV mlm models' fit
 
 TODO: Venn diagram for all voters
 

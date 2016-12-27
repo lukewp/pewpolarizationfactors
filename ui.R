@@ -172,7 +172,7 @@ ui <- dashboardPage(
           HTML("<p>A multivariate linear regression model was fit to 2016 election results (DV = each party's % of popular vote by state; IV = % of population each factor represents by state), with the three factors described above as the explanatory (independent) variables. Compared to similar models constructed using partisanship, these representative clusters of like-values were a stronger fit (on 2012 elections also). Diagnostics appear below, along with prediction-intervals-vs-observation plots:</p>"),
           verbatimTextOutput("factor2016mfitsummary"),
           HTML("<p>The factor-based model explains the state-wise support of Clinton and Trump well, with maximum explanation error (difference between predicted and observed value -- or residual) of 11% on either end (Wyoming and Washington DC), and an R-squared value of 0.9839 for Clinton and 0.9887 for Trump. All three factors were significant in each regression. An interpretation of the coefficients for D2016 (the Clinton support variable) shows a strong positive coefficient for the Factor 1, a lower, still-positive coefficient for Factor 2, and a low-negative coefficent for Factor 3. The direction and scale of the 1 and 3 factor coefficients are indicative of overperformance when a certain group is in abundance -- that is, if a state has a particularly high Factor 1 population share, or particularly low Factor 3 population share relative to the mean, Clinton will overperform -- indicating perhaps more Factor 1 people turn out relative to those in Factor 3, who may be more likely to stay home. The R2016 (Trump) coefficients are generally the reverse of the D2016 coefficients, though more pronounced over/underperformance for Factors 1 and 3, and a stronger positive coefficient for Factor 2 compared to Clinton's (approximately a 70/30 split in favor of Trump).</p>
-                <p>For comparison, a similar multivariate linear regression model was built based on the self-reported partisanship (Democrat, Republican, Independent) from each state.The model's fit summary is below:</p>
+                <p>For comparison, a similar multivariate linear regression model was built based on the self-reported partisanship (Democrat, Republican, Independent) from each state. The model's fit summary is below:</p>
                "),
           verbatimTextOutput("party2016mfitsummary"),
           HTML("<p>We see a relatively lower (but still quite high) R^2 for each of the regression components within the party-based model, a broader distribution of residuals, and a major difference in the statistical significance of the explanatory variables.</p>
@@ -184,13 +184,23 @@ ui <- dashboardPage(
           plotOutput("cqfactorplot", height = 500),
           HTML("And the party-based 2016 model. The difference in explanation accuracy between the two models is evident in the number of points landing outside the red-shaded area (the confidence envelope) in this second x^2 Q-Q plot:"),
           plotOutput("cqpartyplot", height = 500)
-          )),
+        )),
         fluidRow(box(width = 12, plotOutput("manovaheplot", height = 900)
         )),
         fluidRow(box(width = 12, plotOutput("factord2016plot", height = 700)
         )),
         fluidRow(box(width = 12, plotOutput("factorr2016plot", height = 700)
+        )),
+        fluidRow(box(
+          width = 12,
+          HTML("<p>Here's the fit summary for a similar factor-based model constructed to explain the 2012 election:</p>"),
+          verbatimTextOutput("factor2012mfitsummary"),
+          HTML("<p>The model isn't quite as tight as the factor-based model for 2016 but it's still a cleaner predictor of the election than a similar self-reported party-based model.</p>
+               <p>And the party-based model for 2012:</p>
+               "),
+          verbatimTextOutput("party2012mfitsummary")
         ))
+        
         ),
       tabItem(
         tabName = "survey1",
