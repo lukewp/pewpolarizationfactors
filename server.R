@@ -109,6 +109,84 @@ shinyServer(function(input, output) {
     
     output$factor2012mfitsummary <- renderPrint({summary(factor2012.mfit)})
     output$party2012mfitsummary <- renderPrint({summary(party2012.mfit)})
+
+    output$factord2012plot <- renderPlot({
+      withProgress(message = '3-Factor-based Obama 2012 Explanation Plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        ggplot(statedisttable, aes(x=D2012, y=state)) +
+          geom_point(size = 3, col = "blue") + 
+          geom_errorbarh(aes(xmin = factord12min, xmax = factord12max), show.legend = TRUE) +
+          scale_x_continuous(labels = percent) +
+          labs(
+            x = "% Support Barack Obama 2012",
+            y = NULL,
+            title = "3-Factor-based Explanation of 2012 Obama Support %"
+          ) + 
+          theme(legend.position="bottom")
+      })
+    })
+    
+    output$factorr2012plot <- renderPlot({
+      withProgress(message = '3-Factor-based Romney 2012 Explanation Plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        ggplot(statedisttable, aes(x=R2012, y=state)) +
+          geom_point(size = 3, col = "red") + 
+          geom_errorbarh(aes(xmin = factorr12min, xmax = factorr12max), show.legend = TRUE) +
+          scale_x_continuous(labels = percent) +
+          labs(
+            x = "% Support Mitt Romney 2012",
+            y = NULL,
+            title = "3-Factor-based Explanation of 2012 Romney Support %"
+          ) + 
+          theme(legend.position="bottom")
+      })
+    })
+    
+    output$factor2008mfitsummary <- renderPrint({summary(factor2008.mfit)})
+    
+    output$factord2008plot <- renderPlot({
+      withProgress(message = '3-Factor-based Obama 2008 Explanation Plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        ggplot(statedisttable, aes(x=D2008, y=state)) +
+          geom_point(size = 3, col = "blue") + 
+          geom_errorbarh(aes(xmin = factord08min, xmax = factord08max), show.legend = TRUE) +
+          scale_x_continuous(labels = percent) +
+          labs(
+            x = "% Support Barack Obama 2008",
+            y = NULL,
+            title = "3-Factor-based Explanation of 2008 Obama Support %"
+          ) + 
+          theme(legend.position="bottom")
+      })
+    })
+    
+    output$factorr2008plot <- renderPlot({
+      withProgress(message = '3-Factor-based McCain 2008 Explanation Plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        ggplot(statedisttable, aes(x=R2008, y=state)) +
+          geom_point(size = 3, col = "red") + 
+          geom_errorbarh(aes(xmin = factorr08min, xmax = factorr08max), show.legend = TRUE) +
+          scale_x_continuous(labels = percent) +
+          labs(
+            x = "% Support John McCain 2008",
+            y = NULL,
+            title = "3-Factor-based Explanation of 2008 McCain Support %"
+          ) + 
+          theme(legend.position="bottom")
+      })
+    })
     
   })
   

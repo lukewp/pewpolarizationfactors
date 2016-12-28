@@ -1,6 +1,7 @@
 library(dplyr)
 library(tidyr)
 library(scales)
+library(readr)
 
 ## Assumes the following are in the environment:
 ## rawinput (DF) -- the survey instrument itself
@@ -63,8 +64,10 @@ statedisttable <- spread(statefactordist[c("state","predict","prop")], key = pre
 ## Bringing in 2012 and 2016 election results:
 statevotes <- read_csv("./data/statevotes.csv")
 statedisttable <- merge(statedisttable, statevotes, value=state, all.x=TRUE)
-statedisttable$O2012 <- 1 - statedisttable$D2012 - statedisttable$R2012
+
 statedisttable$O2016 <- 1 - statedisttable$D2016 - statedisttable$R2016
+statedisttable$O2012 <- 1 - statedisttable$D2012 - statedisttable$R2012
+statedisttable$O2008 <- 1 - statedisttable$D2008 - statedisttable$R2008
 
 ## Adding state-level summaries for self-reported parties to state table:
 statepartydist <- reportsetup[which(is.na(reportsetup$party)==FALSE), ] %>%
@@ -91,6 +94,7 @@ statedisttable <- merge(statedisttable, spread(statefactorregdist[ , c("state","
 ## Model explanations of elections:
 # Factor mlms:
 # 2-way DV:
+factor2008.mfit <- lm(cbind(D2008, R2008) ~ 0 + `1` + `2` + `3`, data = statedisttable)
 factor2012.mfit <- lm(cbind(D2012, R2012) ~ 0 + `1` + `2` + `3`, data = statedisttable)
 factor2016.mfit <- lm(cbind(D2016, R2016) ~ 0 + `1` + `2` + `3`, data = statedisttable)
 # 3-way DV:
@@ -136,6 +140,48 @@ tmpdf$factorr16max <- tmpdf$upr
 tmpdf <- merge(tmpdf, data.frame(statedisttable$state), by=0)
 tmpdf$state <- tmpdf$statedisttable.state
 statedisttable <- merge(statedisttable, tmpdf[c("state", "factorr16", "factorr16min", "factorr16max")], by="state")
+rm(tmpdf)
+
+## Factor-based 2012 observed-vs-predicted plot prep:
+factord2012.fit <- lm(formula = D2012 ~ 0 + `1` + `2` + `3`, data = statedisttable)
+tmpdf <- data.frame(predict(factord2012.fit, interval="predict"))
+tmpdf$factord12 <- tmpdf$fit
+tmpdf$factord12min <- tmpdf$lwr
+tmpdf$factord12max <- tmpdf$upr
+tmpdf <- merge(tmpdf, data.frame(statedisttable$state), by=0)
+tmpdf$state <- tmpdf$statedisttable.state
+statedisttable <- merge(statedisttable, tmpdf[c("state", "factord12", "factord12min", "factord12max")], by="state")
+rm(tmpdf)
+
+factorr2012.fit <- lm(formula = R2012 ~ 0 + `1` + `2` + `3`, data = statedisttable)
+tmpdf <- data.frame(predict(factorr2012.fit, interval="predict"))
+tmpdf$factorr12 <- tmpdf$fit
+tmpdf$factorr12min <- tmpdf$lwr
+tmpdf$factorr12max <- tmpdf$upr
+tmpdf <- merge(tmpdf, data.frame(statedisttable$state), by=0)
+tmpdf$state <- tmpdf$statedisttable.state
+statedisttable <- merge(statedisttable, tmpdf[c("state", "factorr12", "factorr12min", "factorr12max")], by="state")
+rm(tmpdf)
+
+## Factor-based 2008 observed-vs-predicted plot prep:
+factord2008.fit <- lm(formula = D2008 ~ 0 + `1` + `2` + `3`, data = statedisttable)
+tmpdf <- data.frame(predict(factord2008.fit, interval="predict"))
+tmpdf$factord08 <- tmpdf$fit
+tmpdf$factord08min <- tmpdf$lwr
+tmpdf$factord08max <- tmpdf$upr
+tmpdf <- merge(tmpdf, data.frame(statedisttable$state), by=0)
+tmpdf$state <- tmpdf$statedisttable.state
+statedisttable <- merge(statedisttable, tmpdf[c("state", "factord08", "factord08min", "factord08max")], by="state")
+rm(tmpdf)
+
+factorr2008.fit <- lm(formula = R2008 ~ 0 + `1` + `2` + `3`, data = statedisttable)
+tmpdf <- data.frame(predict(factorr2008.fit, interval="predict"))
+tmpdf$factorr08 <- tmpdf$fit
+tmpdf$factorr08min <- tmpdf$lwr
+tmpdf$factorr08max <- tmpdf$upr
+tmpdf <- merge(tmpdf, data.frame(statedisttable$state), by=0)
+tmpdf$state <- tmpdf$statedisttable.state
+statedisttable <- merge(statedisttable, tmpdf[c("state", "factorr08", "factorr08min", "factorr08max")], by="state")
 rm(tmpdf)
 
 

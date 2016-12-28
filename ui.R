@@ -199,6 +199,19 @@ ui <- dashboardPage(
                <p>And the party-based model for 2012:</p>
                "),
           verbatimTextOutput("party2012mfitsummary")
+        )),
+        fluidRow(box(width = 12, plotOutput("factord2012plot", height = 700)
+        )),
+        fluidRow(box(width = 12, plotOutput("factorr2012plot", height = 700)
+        )),
+        fluidRow(box(
+          width = 12,
+          HTML("<p>And 2008:</p>"),
+          verbatimTextOutput("factor2008mfitsummary")
+        )),
+        fluidRow(box(width = 12, plotOutput("factord2008plot", height = 700)
+        )),
+        fluidRow(box(width = 12, plotOutput("factorr2008plot", height = 700)
         ))
         
         ),
