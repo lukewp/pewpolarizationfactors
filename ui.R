@@ -176,9 +176,11 @@ ui <- dashboardPage(
         fluidRow(box(
           width = 12,
           HTML("
-                <p>Another interesting way to understand how people may be assigned into one factor or another based on their responses to the questions is to look at a simple regression tree model. The one below shows those agreeing with Statement #2 from question Q51kk ('<em>Government aid to the poor does more good than harm, because people can&rsquo;t get out of poverty until their basic needs are met</em>') being strongly associated with Factor 1. The remainder, assigned to Factor 2 and 3, can be separated by their support for the statement '<em>Most corporations make a fair and reasonable amount of profit</em>': Those in agreement go to Factor 3, those who disagree to Factor 2.</p>
+                <p>Another interesting way to understand how people may be assigned into one factor or another based on their responses to the questions is to look at a simple partition tree model. The one below shows those agreeing with Statement #2 from question Q51kk ('<em>Government aid to the poor does more good than harm, because people can&rsquo;t get out of poverty until their basic needs are met</em>') being strongly associated with Factor 1. The remainder, assigned to Factor 2 and 3, can be separated by their support for the statement '<em>Most corporations make a fair and reasonable amount of profit</em>': Those in agreement go to Factor 3, those who disagree to Factor 2.</p>
                "),
-          plotOutput("factor_rtplot")
+          plotOutput("factor_rtplot"),
+          HTML("<p>Not the most accurate model, but simple and correct about 2/3rds of the time (random would make a correct assignment 1 time in 3):</p>"),
+          verbatimTextOutput("rtsummary")
         ))
         ),
       tabItem(

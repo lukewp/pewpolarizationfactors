@@ -18,6 +18,7 @@ library(ggthemes)
 library(scales)
 library(candisc)
 library(NMF)
+
 ## Assume all tables from shinySetup.R are in memory
 # source("./shinySetup.R")
 
@@ -5071,18 +5072,24 @@ shinyServer(function(input, output) {
       for (i in 1:15) {
         incProgress(1/15)
       } 
-      fancyRpartPlot(modrt$finalModel)
-      # rtdata <- dendro_data(modrt$finalModel)
-      # ggplot() +
-      #   geom_segment(data = rtdata$segments,
-      #                aes(x=x, y=y, xend=xend, yend=yend)) +
-      #   geom_text(data = rtdata$labels,
-      #             aes(x=x, y=y, label=label), size = 5, vjust = 1) +
-      #   geom_text(data = rtdata$leaf_labels,
-      #             aes(x=x, y=y, label=label), size = 5, vjust = 2) +
-      #   theme_dendro()
+      # fancyRpartPlot(modrt$finalModel) # Requires rattle
+      rtdata <- dendro_data(modrt$finalModel, dendrogram = FALSE)
+      ggplot() +
+        geom_segment(data = rtdata$segments,
+                     aes(x=x, y=y, xend=xend, yend=yend)) +
+        geom_text(data = rtdata$labels,
+                  aes(x=x, y=y, label=label), size = 5, vjust = -0.25) +
+        geom_text(data = rtdata$leaf_labels,
+                  aes(x=x, y=y, label=label), size = 5, vjust = 1.25) +
+        ggtitle("Simple Partition Tree Factor Assignment Model") +
+        theme(plot.title = element_text(size = 20, face = "bold", hjust = 0.5)) +
+        theme_dendro()
+      
         
     })
   })
+  
+  # Diagnostic on the model?
+  output$rtsummary <- renderPrint({summary(modrt$results)})
   
 })

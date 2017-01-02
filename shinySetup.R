@@ -6,12 +6,11 @@ library(caret)
 
 library(rpart)
 library(rpart.plot)
-library(rattle)
 
-library(randomForest)
-library(randomForestSRC)
-
-library(pROC)
+# library(randomForest)
+# library(randomForestSRC)
+# 
+# library(pROC)
 
 ## Assumes the following are in the environment:
 ## rawinput (DF) -- the survey instrument itself
@@ -220,7 +219,7 @@ modrt <- train(predict~q100+q105a+q105b+q126+q25a+q25b+q25c+q25d+
                   q50aa+q50bb+q50dd+q50ee+q50q+q50r+q50u+q51kk, method="rpart", data=training) 
 
 # Plot of decision tree:
-fancyRpartPlot(modrt$finalModel)
+# fancyRpartPlot(modrt$finalModel) # Requires rattle
 table(predict(modrt, newdata=training), training$predict)
 table(predict(modrt, newdata=validation), validation$predict)
 
@@ -230,7 +229,7 @@ table(predict(modrt, newdata=validation), validation$predict)
 #                   marital+relig+attend+income+reg+party+ideo, 
 #                 method="rpart", data=training) 
 # 
-# fancyRpartPlot(modrt1$finalModel)
+# fancyRpartPlot(modrt1$finalModel) # Requires rattle
 # table(predict(modrt1, newdata=training), training$predict)
 # table(predict(modrt1, newdata=validation), validation$predict)
 
@@ -242,7 +241,7 @@ table(predict(modrt, newdata=validation), validation$predict)
 #                        keep.forest = TRUE,
 #                        ntree = 400,
 #                        do.trace = TRUE)
-# modfit1.explain <- printRandomForests(modfit1)
+# modfit1.explain <- printRandomForests(modfit1) # Requires rattle
 # table(predict(modfit1, newdata=training), training$predict)
 # table(predict(modfit1, newdata=validation), validation$predict)
 
