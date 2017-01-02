@@ -163,7 +163,24 @@ ui <- dashboardPage(
                <p>'predict' indicates the factor number predicted by a particular variable, and 'prob' indicates the probability of assignment to that factor for positive correlation to the variable.</p>
                <p>X1, X2, and X3 correspond to the factors 1, 2, and 3 respectively. A higher coefficient means a variable is highly-correlated. Some variables are related to multiple factors.</p>"),
           dataTableOutput("coefs_table")
-          ))),
+          )),
+        fluidRow(box(
+          width = 12,
+          HTML("
+                <p>The plot below shows how these variables each contribute to the three branches of the model -- and how those branches may be subdivided based on these variables under the model.</p>
+                <p>This chart, called a dendrogram, can be read left-to-right to understand how the whole (America's population) can be divided up into subgroups based upon answers to questions.</p>"
+                # <p>It can also be read right-to-left, with the right-most variable names for each of the three branches being most strongly related to each factor.</p>
+               ),
+          plotOutput("nmf_dendrogram", height = 1000)
+        )),
+        fluidRow(box(
+          width = 12,
+          HTML("
+                <p>Another interesting way to understand how people may be assigned into one factor or another based on their responses to the questions is to look at a simple regression tree model. The one below shows those agreeing with Statement #2 from question Q51kk ('<em>Government aid to the poor does more good than harm, because people can&rsquo;t get out of poverty until their basic needs are met</em>') being strongly associated with Factor 1. The remainder, assigned to Factor 2 and 3, can be separated by their support for the statement '<em>Most corporations make a fair and reasonable amount of profit</em>': Those in agreement go to Factor 3, those who disagree to Factor 2.</p>
+               "),
+          plotOutput("factor_rtplot")
+        ))
+        ),
       tabItem(
         tabName = "model_diag",
         h2("Model Diagnostics"),

@@ -2,6 +2,16 @@ library(dplyr)
 library(tidyr)
 library(scales)
 library(readr)
+library(caret)
+
+library(rpart)
+library(rpart.plot)
+library(rattle)
+
+library(randomForest)
+library(randomForestSRC)
+
+library(pROC)
 
 ## Assumes the following are in the environment:
 ## rawinput (DF) -- the survey instrument itself
@@ -183,6 +193,58 @@ tmpdf <- merge(tmpdf, data.frame(statedisttable$state), by=0)
 tmpdf$state <- tmpdf$statedisttable.state
 statedisttable <- merge(statedisttable, tmpdf[c("state", "factorr08", "factorr08min", "factorr08max")], by="state")
 rm(tmpdf)
+
+### Decision Tree for factors:
+train.flag <- createDataPartition(y=explanation$predict, p=0.5, list=FALSE)
+training <- explanation[train.flag, ]
+validation <- explanation[-train.flag, ]
+
+## Random Forest:
+# modfit <- randomForest(predict~q100+q105a+q105b+q126+q25a+q25b+q25c+q25d+
+#                        q25f+q25g+q25h+q25i+q25j+q25k+q25l+q25m+q25n+q40+
+#                        q50aa+q50bb+q50dd+q50ee+q50q+q50r+q50u+q51kk, 
+#                        data = training, 
+#                        importance = TRUE, 
+#                        keep.forest = TRUE, 
+#                        ntree = 40, # for this dataset, 40 trees gets us to a good place.
+#                        do.trace = TRUE) 
+# 
+# modfit.explain <- printRandomForests(modfit)
+# table(predict(modfit, newdata=training), training$predict)
+# table(predict(modfit, newdata=validation), validation$predict)
+
+
+# Simple regression tree based on IV cols from NMF model:
+modrt <- train(predict~q100+q105a+q105b+q126+q25a+q25b+q25c+q25d+
+                  q25f+q25g+q25h+q25i+q25j+q25k+q25l+q25m+q25n+q40+
+                  q50aa+q50bb+q50dd+q50ee+q50q+q50r+q50u+q51kk, method="rpart", data=training) 
+
+# Plot of decision tree:
+fancyRpartPlot(modrt$finalModel)
+table(predict(modrt, newdata=training), training$predict)
+table(predict(modrt, newdata=validation), validation$predict)
+
+
+# # Bad RT model based on demo cols, excluded from NMF model -- notably cannot predict factor 2 at all:
+# modrt1 <- train(predict~density+sex+age+educ+hisp+racecmb+
+#                   marital+relig+attend+income+reg+party+ideo, 
+#                 method="rpart", data=training) 
+# 
+# fancyRpartPlot(modrt1$finalModel)
+# table(predict(modrt1, newdata=training), training$predict)
+# table(predict(modrt1, newdata=validation), validation$predict)
+
+# # Random Forest on demos -- still not as good as basic tree on NMF IVs:
+# modfit1 <- randomForest(predict~density+sex+age+educ+hisp+racecmb+
+#                           marital+relig+attend+income+reg+party+ideo,
+#                        data = training,
+#                        importance = TRUE,
+#                        keep.forest = TRUE,
+#                        ntree = 400,
+#                        do.trace = TRUE)
+# modfit1.explain <- printRandomForests(modfit1)
+# table(predict(modfit1, newdata=training), training$predict)
+# table(predict(modfit1, newdata=validation), validation$predict)
 
 
 ### BUILD VARIABLE SUMMARIES BY PREDICTED FACTOR (all the histograms):

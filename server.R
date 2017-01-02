@@ -11,11 +11,13 @@ library(shiny)
 library(shinydashboard)
 library(DT)
 library(ggplot2)
+library(ggdendro)
 library(dplyr)
 library(tidyr)
 library(ggthemes)
 library(scales)
 library(candisc)
+library(NMF)
 ## Assume all tables from shinySetup.R are in memory
 # source("./shinySetup.R")
 
@@ -109,7 +111,7 @@ shinyServer(function(input, output) {
     
     output$factor2012mfitsummary <- renderPrint({summary(factor2012.mfit)})
     output$party2012mfitsummary <- renderPrint({summary(party2012.mfit)})
-
+    
     output$factord2012plot <- renderPlot({
       withProgress(message = '3-Factor-based Obama 2012 Explanation Plot ...', value = 0, {
         for (i in 1:15) {
@@ -198,7 +200,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         }  
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = usr)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -225,7 +227,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         }  
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = density)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -252,7 +254,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         }  
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = sex)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -279,7 +281,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = age.r)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -306,8 +308,8 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
-          gg_prop1 <- ggplot(data = data.frame(),
+        
+        gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = educ)) +
           geom_bar(stat = 'identity', position = 'dodge') +
           geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
@@ -333,7 +335,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = hisp)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -359,7 +361,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = race)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -437,7 +439,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = marital)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -463,7 +465,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = parent)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -489,7 +491,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = citizen)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -515,7 +517,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = relig)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -593,7 +595,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = attend)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -619,7 +621,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = income)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -671,7 +673,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = reg)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -697,7 +699,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = party)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -764,7 +766,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa1)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -790,7 +792,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc1)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -816,7 +818,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc1a)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -842,7 +844,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb2)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -868,7 +870,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb3)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -894,7 +896,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb4)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -920,7 +922,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb5)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -946,7 +948,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa6)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -972,7 +974,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa8)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -998,7 +1000,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa9a)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1024,7 +1026,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa9b)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1050,7 +1052,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa9c)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1076,7 +1078,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa9d)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1102,7 +1104,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa9e)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1128,7 +1130,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa9f)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1154,7 +1156,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qa9g)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1180,7 +1182,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q11a)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1206,7 +1208,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q11b)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1232,7 +1234,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q11c_b)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1258,7 +1260,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q11e_b)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1284,7 +1286,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q11h_b)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1310,7 +1312,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q11i_b)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1336,7 +1338,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q11j_b)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1362,7 +1364,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q11at)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1388,7 +1390,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q11bt)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1414,7 +1416,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb12)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1440,7 +1442,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25a)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1466,7 +1468,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25b)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1492,7 +1494,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25c)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1518,7 +1520,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25d)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1544,7 +1546,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25f)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1570,7 +1572,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25g)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1596,7 +1598,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25h)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1622,7 +1624,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25i)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1648,7 +1650,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25j)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1674,7 +1676,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25k)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1700,7 +1702,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25l)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1726,7 +1728,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25m)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1752,7 +1754,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25n)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1778,7 +1780,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25o)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1804,7 +1806,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q25p)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1830,7 +1832,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb26)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1856,7 +1858,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc26)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -1986,7 +1988,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qb27a)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -2038,7 +2040,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = int2)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -2064,7 +2066,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = int3m)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -4463,7 +4465,7 @@ shinyServer(function(input, output) {
   
   ## Tab survey4:
   withProgress(message = 'All survey4 plots ...', value = 0, {
-
+    
     output$qc135_plot <- renderPlot({
       withProgress(message = 'Q.C135 plot ...', value = 0, {
         for (i in 1:15) {
@@ -4756,7 +4758,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = parent)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -4782,7 +4784,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = citizen)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -4808,7 +4810,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = relig)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -4834,7 +4836,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         } 
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = chr)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -5012,24 +5014,75 @@ shinyServer(function(input, output) {
     incProgress(1/46)
     
   })
-
+  
   ## Tab coefs_table:
   output$coefs_table <- renderDataTable({
-    datatable(model.rank.coefs, options = list(pageLength = 100)) %>%
-      formatPercentage('prob', 1) %>%
-      formatStyle('prob',
-                  background = styleColorBar(range(model.rank.coefs['prob'], na.rm = TRUE), 'lightblue'),
-                  backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center') %>%
-      formatRound(c('X1', 'X2', 'X3'), 3) %>%
-      formatStyle('X1',
-                  background = styleColorBar(range(model.rank.coefs['X1'], na.rm = TRUE), 'lightgreen'),
-                  backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center') %>%
-      formatStyle('X2',
-                  background = styleColorBar(range(model.rank.coefs['X2'], na.rm = TRUE), 'lightgreen'),
-                  backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center') %>%
-      formatStyle('X3',
-                  background = styleColorBar(range(model.rank.coefs['X3'], na.rm = TRUE), 'lightgreen'),
-                  backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center')
+    withProgress(message = 'Coefficients Table ...', value = 0, {
+      for (i in 1:15) {
+        incProgress(1/15)
+      } 
+      datatable(model.rank.coefs, options = list(pageLength = 100)) %>%
+        formatPercentage('prob', 1) %>%
+        formatStyle('prob',
+                    background = styleColorBar(range(model.rank.coefs['prob'], na.rm = TRUE), 'lightblue'),
+                    backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center') %>%
+        formatRound(c('X1', 'X2', 'X3'), 3) %>%
+        formatStyle('X1',
+                    background = styleColorBar(range(model.rank.coefs['X1'], na.rm = TRUE), 'lightgreen'),
+                    backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center') %>%
+        formatStyle('X2',
+                    background = styleColorBar(range(model.rank.coefs['X2'], na.rm = TRUE), 'lightgreen'),
+                    backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center') %>%
+        formatStyle('X3',
+                    background = styleColorBar(range(model.rank.coefs['X3'], na.rm = TRUE), 'lightgreen'),
+                    backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center')
+      
+    })
+  })
+  
+  output$nmf_dendrogram <- renderPlot({
+    withProgress(message = 'Factor Dendrogram ...', value = 0, {
+      for (i in 1:15) {
+        incProgress(1/15)
+      } 
+      # ggdendrogram(consensushc(model.rank), rotate = TRUE) +
+      #   labs(title = "Factor Assignment Variables")
+      hc <- consensushc(model.rank, dendrogram = FALSE)
+      ddata <- dendro_data(as.dendrogram(hc), type = "rectangle")
+      # ddata$labels$group <- as.factor(cutree(hc, 3)[order(match(cutree(hc, 3), hc$order))])
+      ggplot(segment(ddata)) +
+        geom_segment(aes(x=x, y=y, xend=xend, yend=yend)) +
+        geom_text(data = ddata$labels, size = 5, vjust = 0, hjust = -0.25,
+                  aes(x=x, y=y, label=label
+                      # , colour = group
+                      )) +
+        # scale_colour_manual(values=c("blue","yellow","red")) +
+        ggtitle("Factor Assignment Variables") +
+        theme(plot.title = element_text(size = 20, face = "bold", hjust = 0.5)) +
+        coord_flip() +
+        scale_y_reverse(expand=c(0.2, 0)) +
+        scale_x_reverse() +
+        theme_dendro()
+    })
+  })
+  
+  output$factor_rtplot <- renderPlot({
+    withProgress(message = 'Regression Tree Model plot ...', value = 0, {
+      for (i in 1:15) {
+        incProgress(1/15)
+      } 
+      fancyRpartPlot(modrt$finalModel)
+      # rtdata <- dendro_data(modrt$finalModel)
+      # ggplot() +
+      #   geom_segment(data = rtdata$segments,
+      #                aes(x=x, y=y, xend=xend, yend=yend)) +
+      #   geom_text(data = rtdata$labels,
+      #             aes(x=x, y=y, label=label), size = 5, vjust = 1) +
+      #   geom_text(data = rtdata$leaf_labels,
+      #             aes(x=x, y=y, label=label), size = 5, vjust = 2) +
+      #   theme_dendro()
+        
+    })
   })
   
 })
