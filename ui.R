@@ -150,7 +150,23 @@ ui <- dashboardPage(
           width = 12, 
           HTML("<p>The three factors were plotted against state populations according to Pew's weighting variable. The numbers in this table describe the percentage of people in each state, in each factor.</p>"),
           dataTableOutput("state_table")
-        ))),
+        )),
+        fluidRow(box(
+          width = 12, 
+          HTML("<p>Factor 1's geographic dispersion:</p>"),
+          plotOutput("factor1map")
+        )),
+        fluidRow(box(
+          width = 12, 
+          HTML("<p>Factor 2's geographic dispersion:</p>"),
+          plotOutput("factor2map")
+        )),
+        fluidRow(box(
+          width = 12, 
+          HTML("<p>Factor 3's geographic dispersion:</p>"),
+          plotOutput("factor3map")
+        ))
+        ),
       tabItem(
         tabName = "coefs_table",
         h2("Factor Coefficients by Variable"),

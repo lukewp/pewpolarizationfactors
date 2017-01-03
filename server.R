@@ -18,6 +18,8 @@ library(ggthemes)
 library(scales)
 library(candisc)
 library(NMF)
+library(choroplethr)
+library(choroplethrMaps)
 
 ## Assume all tables from shinySetup.R are in memory
 # source("./shinySetup.R")
@@ -757,6 +759,78 @@ shinyServer(function(input, output) {
                   backgroundSize = '98% 88%',
                   backgroundRepeat = 'no-repeat',
                   backgroundPosition = 'center')
+  })
+  
+  output$factor1map <- renderPlot({
+    withProgress(message = 'Factor 1 Choropleth ...', value = 0, {
+      for (i in 1:15) {
+        incProgress(1/15)
+      } 
+      
+      tmpvars <- c("state","1")
+      tmpdf <- data.frame(statedisttable[tmpvars])
+      colnames(tmpdf) <- c("region.factor", "value")
+      tmpdf$region <- as.character(tmpdf$region.factor)
+      tmpdf$region.factor <- NULL
+      tmpdf$region <- tolower(tmpdf$region)
+      tmpdf$region[tmpdf$region=="washington dc"] <- "district of columbia"
+      
+      gg_prop1 = StateChoropleth$new(tmpdf)
+        gg_prop1$set_num_colors(1)
+        gg_prop1$title = "Factor 1"
+        gg_prop1$legend = "Population %"
+        gg_prop1$ggplot_scale = scale_fill_gradient(name = "Concentration", low = "white", high = "blue")
+        gg_prop1$render()
+      
+    })
+  })
+  
+  output$factor2map <- renderPlot({
+    withProgress(message = 'Factor 2 Choropleth ...', value = 0, {
+      for (i in 1:15) {
+        incProgress(1/15)
+      } 
+      
+      tmpvars <- c("state","2")
+      tmpdf <- data.frame(statedisttable[tmpvars])
+      colnames(tmpdf) <- c("region.factor", "value")
+      tmpdf$region <- as.character(tmpdf$region.factor)
+      tmpdf$region.factor <- NULL
+      tmpdf$region <- tolower(tmpdf$region)
+      tmpdf$region[tmpdf$region=="washington dc"] <- "district of columbia"
+      
+      gg_prop1 = StateChoropleth$new(tmpdf)
+      gg_prop1$set_num_colors(1)
+      gg_prop1$title = "Factor 2"
+      gg_prop1$legend = "Population %"
+      gg_prop1$ggplot_scale = scale_fill_gradient(name = "Concentration", low = "white", high = "darkgreen")
+      gg_prop1$render()
+      
+    })
+  })
+  
+  output$factor3map <- renderPlot({
+    withProgress(message = 'Factor 3 Choropleth ...', value = 0, {
+      for (i in 1:15) {
+        incProgress(1/15)
+      } 
+      
+      tmpvars <- c("state","3")
+      tmpdf <- data.frame(statedisttable[tmpvars])
+      colnames(tmpdf) <- c("region.factor", "value")
+      tmpdf$region <- as.character(tmpdf$region.factor)
+      tmpdf$region.factor <- NULL
+      tmpdf$region <- tolower(tmpdf$region)
+      tmpdf$region[tmpdf$region=="washington dc"] <- "district of columbia"
+      
+      gg_prop1 = StateChoropleth$new(tmpdf)
+      gg_prop1$set_num_colors(1)
+      gg_prop1$title = "Factor 3"
+      gg_prop1$legend = "Population %"
+      gg_prop1$ggplot_scale = scale_fill_gradient(name = "Concentration", low = "white", high = "darkred")
+      gg_prop1$render()
+      
+    })
   })
   
   ## Tab survey1:

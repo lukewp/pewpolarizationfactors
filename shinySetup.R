@@ -245,6 +245,16 @@ table(predict(modrt, newdata=validation), validation$predict)
 # table(predict(modfit1, newdata=training), training$predict)
 # table(predict(modfit1, newdata=validation), validation$predict)
 
+## Choropleths:
+# tmpvars <- c("state","1")
+# tmpdf <- data.frame(statedisttable[tmpvars])
+# colnames(tmpdf) <- c("region.factor", "value")
+# tmpdf$region <- as.character(tmpdf$region.factor)
+# tmpdf$region.factor <- NULL
+# tmpdf$region <- tolower(tmpdf$region)
+# tmpdf$region[tmpdf$region=="washington dc"] <- "district of columbia"
+# state_choropleth(tmpdf)
+
 
 ### BUILD VARIABLE SUMMARIES BY PREDICTED FACTOR (all the histograms):
 ## For demographics tab:
