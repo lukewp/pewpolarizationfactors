@@ -271,7 +271,12 @@ ui <- dashboardPage(
         ),
       tabItem(
         tabName = "survey1",
-        fluidPage(fluidRow(
+        fluidPage(
+          fluidRow(box(
+            width = 12, 
+            HTML("<p>Questions included in the factor model training are denoted with a '***'</p>")
+          )),
+            fluidRow(
           box(
             width = 12,
             HTML(
@@ -577,7 +582,7 @@ ui <- dashboardPage(
                   <p><strong>NO QUESTIONS 13-24</strong></p>
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK ALL:</strong></p>
-                  <p>Q.25&nbsp;&nbsp; I'm going to read you some pairs of statements that will help us understand how you feel about a number of things. As I read each pair, tell me whether the FIRST statement or the SECOND statement comes closer to your own views &mdash; even if neither is exactly right. The first pair is <strong>[READ AND RANDOMIZE PAIRS BUT <u>NOT </u>STATEMENTS WITHIN EACH PAIR]</strong>. Next, <strong>[NEXT PAIR] [IF NECESSARY: </strong>&ldquo;Which statement comes closer to your views, even if neither is exactly right?&rdquo;]</p>
+                  <p>***Q.25&nbsp;&nbsp; I'm going to read you some pairs of statements that will help us understand how you feel about a number of things. As I read each pair, tell me whether the FIRST statement or the SECOND statement comes closer to your own views &mdash; even if neither is exactly right. The first pair is <strong>[READ AND RANDOMIZE PAIRS BUT <u>NOT </u>STATEMENTS WITHIN EACH PAIR]</strong>. Next, <strong>[NEXT PAIR] [IF NECESSARY: </strong>&ldquo;Which statement comes closer to your views, even if neither is exactly right?&rdquo;]</p>
                   <p>&nbsp;</p>
                   <ol>
                   <li>Government is almost always wasteful and inefficient [OR]</li>
@@ -823,7 +828,12 @@ ui <- dashboardPage(
         ))),
       tabItem(
         tabName = "survey2",
-        fluidPage(fluidRow(
+        fluidPage(
+          fluidRow(box(
+            width = 12, 
+            HTML("<p>Questions included in the factor model training are denoted with a '***'</p>")
+          )),
+          fluidRow(
           box(
             width = 12,
             HTML(
@@ -891,7 +901,7 @@ ui <- dashboardPage(
                   <p><strong>NO QUESTIONS 30-39</strong></p>
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK ALL:</strong></p>
-                  <p>Q.40&nbsp;&nbsp; Would you say you follow what's going on in government and public affairs...<strong>[READ]</strong>?</p>
+                  <p>***Q.40&nbsp;&nbsp; Would you say you follow what's going on in government and public affairs...<strong>[READ]</strong>?</p>
                   <p>&nbsp;</p>
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Most of the time</p>
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Some of the time</p>
@@ -1015,7 +1025,7 @@ ui <- dashboardPage(
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don&rsquo;t know/Refused <strong>(VOL.)</strong></p>
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK ALL:</strong></p>
-                  <p>Q.50&nbsp;&nbsp; Now I'm going to read a few more pairs of statements. Again, just tell me whether the FIRST statement or the SECOND statement comes closer to your own views &mdash; even if neither is exactly right. The first pair is <strong>[READ AND RANDOMIZE ITEMS Q THRU Z FOLLOWED BY RANDOMIZED ITEMS AA THRU HH; RANDOMIZE PAIRS BUT NOT STATEMENTS WITHIN EACH PAIR]. </strong>Next, <strong>[NEXT PAIR] [IF NECESSARY: </strong>&ldquo;Which statement comes closer to your views, even if neither is exactly right?&rdquo;]</p>
+                  <p>***Q.50&nbsp;&nbsp; Now I'm going to read a few more pairs of statements. Again, just tell me whether the FIRST statement or the SECOND statement comes closer to your own views &mdash; even if neither is exactly right. The first pair is <strong>[READ AND RANDOMIZE ITEMS Q THRU Z FOLLOWED BY RANDOMIZED ITEMS AA THRU HH; RANDOMIZE PAIRS BUT NOT STATEMENTS WITHIN EACH PAIR]. </strong>Next, <strong>[NEXT PAIR] [IF NECESSARY: </strong>&ldquo;Which statement comes closer to your views, even if neither is exactly right?&rdquo;]</p>
                   <p>&nbsp;</p>
                   <ol>
                   <li>This country should do whatever it takes to protect the environment [OR]</li>
@@ -1200,7 +1210,7 @@ ui <- dashboardPage(
             HTML(
               "
                   <p>&nbsp;</p>
-                  <p><strong>ASK ALL:</strong></p>
+                  <p><strong>***ASK ALL:</strong></p>
                   <ol>
                   <li>Government aid to the poor does more harm than good, by making people too dependent on government assistance [OR]</li>
                   </ol>
@@ -1263,7 +1273,12 @@ ui <- dashboardPage(
         ))),
       tabItem(
         tabName = "survey3",
-        fluidPage(fluidRow(
+        fluidPage(
+          fluidRow(box(
+            width = 12, 
+            HTML("<p>Questions included in the factor model training are denoted with a '***'</p>")
+          )),
+          fluidRow(
           box(
             width = 12,
             HTML(
@@ -1360,7 +1375,7 @@ ui <- dashboardPage(
                   <p><strong>NO QUESTIONS 59-99</strong></p>
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK ALL:</strong></p>
-                  <p>Q.100 Have you ever contributed money to a candidate running for public office or to a group working to elect a candidate?</p>
+                  <p>***Q.100 Have you ever contributed money to a candidate running for public office or to a group working to elect a candidate?</p>
                   <p>&nbsp;</p>
                   <p>&nbsp;</p>
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes</p>
@@ -1409,7 +1424,7 @@ ui <- dashboardPage(
                   <p><strong>NO QUESTIONS 103-104</strong></p>
                   <p><strong>&nbsp;</strong></p>
                   <p><strong>ASK ALL:</strong></p>
-                  <p>Q.105 And again, just thinking about the last two years&hellip;Please tell me if you have done any of the following. First, over the last two years have you <strong>[INSERT ITEM; RANDOMIZE], </strong>or not? And over the last two years have you <strong>[INSERT NEXT ITEM</strong>], or not?</p>
+                  <p>***Q.105 And again, just thinking about the last two years&hellip;Please tell me if you have done any of the following. First, over the last two years have you <strong>[INSERT ITEM; RANDOMIZE], </strong>or not? And over the last two years have you <strong>[INSERT NEXT ITEM</strong>], or not?</p>
                   <p>&nbsp;</p>
                   <ol>
                   <li>Worked or volunteered for a political candidate or campaign</li>"
@@ -1764,7 +1779,7 @@ ui <- dashboardPage(
                   <p><strong>RANDOMIZE IN BLOCKS:</strong></p>
                   <p><strong>Q121/121a/b, Q122/122a/b, Q123/a/b, Q124/a/b, Q125/a/b, Q126/a/b</strong></p>
                   <p><strong>ASK ALL:</strong></p>
-                  <p>Q.126 Overall, do you approve or disapprove of the government&rsquo;s collection of telephone and internet data as part of anti-terrorism efforts?</p>
+                  <p>***Q.126 Overall, do you approve or disapprove of the government&rsquo;s collection of telephone and internet data as part of anti-terrorism efforts?</p>
                   <p>&nbsp;</p>
                   <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Approve</p>
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Disapprove</p>
@@ -1827,7 +1842,12 @@ ui <- dashboardPage(
         ))),
       tabItem(
         tabName = "survey4",
-        fluidPage(fluidRow(
+        fluidPage(
+          fluidRow(box(
+            width = 12, 
+            HTML("<p>Questions included in the factor model training are denoted with a '***'</p>")
+          )),
+          fluidRow(
           box(
             width = 12,
             HTML(
