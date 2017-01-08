@@ -796,10 +796,11 @@ shinyServer(function(input, output) {
   
   ## Tab map:
   output$state_table <- renderDataTable({
-    datatable(statedisttable[ , 1:4], options = list(pageLength = 100)) %>%
-      formatPercentage(names(statedisttable[c(2:4)]), 1) %>%
-      formatStyle(names(statedisttable[c(2:4)]),
-                  background = styleColorBar(range(statedisttable[c(2:4)], na.rm = TRUE), 'lightblue'),
+    statedistnames <- c('state', '1', '2', '3')
+    datatable(statedisttable[statedistnames], options = list(pageLength = 100)) %>%
+      formatPercentage(c('1','2','3'), 1) %>%
+      formatStyle(c('1','2','3'),
+                  background = styleColorBar(0:1, 'lightblue'),
                   backgroundSize = '98% 88%',
                   backgroundRepeat = 'no-repeat',
                   backgroundPosition = 'center')
@@ -823,7 +824,7 @@ shinyServer(function(input, output) {
         gg_prop1$set_num_colors(1)
         gg_prop1$title = "Factor 1"
         gg_prop1$legend = "Population %"
-        gg_prop1$ggplot_scale = scale_fill_gradient(name = "Concentration", low = "white", high = "blue")
+        gg_prop1$ggplot_scale = scale_fill_gradient(name = "Concentration", low = "white", high = "royalblue3")
         gg_prop1$render()
       
     })
@@ -847,7 +848,7 @@ shinyServer(function(input, output) {
       gg_prop1$set_num_colors(1)
       gg_prop1$title = "Factor 2"
       gg_prop1$legend = "Population %"
-      gg_prop1$ggplot_scale = scale_fill_gradient(name = "Concentration", low = "white", high = "darkgreen")
+      gg_prop1$ggplot_scale = scale_fill_gradient(name = "Concentration", low = "white", high = "yellow3")
       gg_prop1$render()
       
     })
@@ -871,7 +872,7 @@ shinyServer(function(input, output) {
       gg_prop1$set_num_colors(1)
       gg_prop1$title = "Factor 3"
       gg_prop1$legend = "Population %"
-      gg_prop1$ggplot_scale = scale_fill_gradient(name = "Concentration", low = "white", high = "darkred")
+      gg_prop1$ggplot_scale = scale_fill_gradient(name = "Concentration", low = "white", high = "red3")
       gg_prop1$render()
       
     })
