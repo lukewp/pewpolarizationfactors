@@ -51,7 +51,7 @@ ui <- dashboardPage(
         fluidRow(box(
           width = 12,
           tags$p("Study of the 2014 Pew Political Polarization Survey"),
-          tags$p("This visualization and analysis is based on the ", tags$a(href="http://www.people-press.org/2014/03/16/2014-political-polarization-survey/","Pew Political Polarization Dataset from 2014"), "."),
+          tags$p("This visualization and analysis is based on the ", tags$a(href="http://www.people-press.org/2014/03/16/2014-political-polarization-survey/","Pew Political Polarization Dataset from 2014"), ". Of several attitudes-and-political-values surveys conducted, this research was selected for analysis because its large size (>10,000) provides fertile ground for more robust factor analysis."),
           HTML("
                <p>The analysis is meant to explore the possibility that there are three prominent-and-discrete audiences in US political life, to help explain some American political dynamics. </p>
                <p>Instead of thinking of America's electorate as right, left, and in the middle, it's better to think of a triangle with a major (equally-sized) constituency at each point.</p>
@@ -62,8 +62,8 @@ ui <- dashboardPage(
                <li>Factor 3: Free Market Capitalism -- Red, highly correlated with the Republican Party</li>
                </ul>
                <p>In terms of electoral votes, different coalitions offer promise of delivering majorities in different states. </p>
-               <p>In the 2008 election, the coalition was a 'green' coalition -- that is, a combination of the blue and yellow factor constituencies.
-               In 2016, the coalition was an 'orange' coalition -- that is, a combination of the red and yellow factor constituencies.</p>
+               <p>In the 2008 and 2012 elections, the winning coalitions were 'green' coalitions -- that is, combinations of the blue and yellow factor constituencies.
+               In 2016, the victorious coalition was an 'orange' coalition -- a combination of the red and yellow factor constituencies.</p>
                <p>A 'purple' coalition may also be possible, one that finds common ground between the Blue and Red constituencies at the expense of the Traditional Values factor.</p>
                <p>And of course, a new party could emerge that more cogently captures the values of the Traditional Values factor, which would introduce entirely new dynamics to the American political landscape, and appear a very viable possibility based on this analysis.</p>
               "),
@@ -230,7 +230,7 @@ ui <- dashboardPage(
           width = 12,
           HTML("<p>Here's the fit summary for a similar factor-based model constructed to explain the 2012 election:</p>"),
           verbatimTextOutput("factor2012mfitsummary"),
-          HTML("<p>The model isn't quite as tight as the factor-based model for 2016 but it's still a cleaner predictor of the election than a similar self-reported party-based model.</p>
+          HTML("<p>The model isn't quite as tight as the factor-based model for 2016 but it's still a cleaner predictor of the election than a similar self-reported party-based model. Compared to 2016, the biggest shift in coefficients is for Factor 2 -- whereas the Republican party had a 2+:1 advantage for Factor 2 in 2016, we recall a smaller Republican advantage for 2012, closer to 3:2.</p>
                <p>And the party-based model for 2012:</p>
                "),
           verbatimTextOutput("party2012mfitsummary")
@@ -241,12 +241,31 @@ ui <- dashboardPage(
         )),
         fluidRow(box(
           width = 12,
-          HTML("<p>And 2008:</p>"),
+          HTML("<p>And 2008, which is nearly identical to 2012:</p>"),
           verbatimTextOutput("factor2008mfitsummary")
         )),
         fluidRow(box(width = 12, plotOutput("factord2008plot", height = 700)
         )),
         fluidRow(box(width = 12, plotOutput("factorr2008plot", height = 700)
+        )),
+        fluidRow(box(
+          width = 12,
+          HTML("<p>A re-examination of the 2016 general election including the third party vote ('Other') shows the third party (O2016) has a positive, statistically-significant correlation with factors 1 and 3 -- stronger with the latter factor. In the hotly-contested 2016 campaign, it makes sense that voters in states dominated by either factor closely associated with a party (and thus where a candidate's victory was very likely), voters were more likely to express a third-party choice.</p>"),
+          verbatimTextOutput("factor20163mfitsummary")
+        )),
+        fluidRow(box(
+          width = 12,
+          HTML("<p>Related to the 2016 'Other' model, we also examined the 2016 Democratic Primary. The R^2 here is lower than with some of our other models and the residual spread is higher (primary elections spread out over many months are much more volatile compared to general elections held on a single day or voting period). But we still see statistically-significant results -- Clinton and Sanders appear to have approximately equal levels of support where Factor 1 is most prevalent; Clinton had an advantage in states where Factor 2 is most prevalent, and Sanders had an advantage in states where Factor 3 is most prevalent:</p>"),
+          verbatimTextOutput("factordp2016mfitsummary")
+        )),
+        fluidRow(box(width = 12, plotOutput("factorclintondp16plot", height = 700)
+        )),
+        fluidRow(box(width = 12, plotOutput("factorsandersdp16plot", height = 700)
+        )),
+        fluidRow(box(
+          width = 12,
+          HTML("<p>In contrast to the 2016 'Other' model, here's the 1992 election -- even though the election preceded the survey by 22 years, there's still statistically-significant factor-outcome correlations. We looked at 1992 because it was the last time a third-party candidate (Ross Perot) received significant support as a centrist rather than a fringe party. The coefficients here show a positive relationship between O1992 and all three factors, significant only for factors 1 and 3 (and strongest for the latter):</p>"),
+          verbatimTextOutput("factor19923mfitsummary")
         ))
         
         ),
@@ -336,7 +355,7 @@ ui <- dashboardPage(
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Disapprove</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
             ),
-            plotOutput("qc1_plot", height = 250),
+            plotOutput("q1c1_plot", height = 250),
             HTML(
               "
                   <p><strong>&nbsp;</strong></p>
@@ -2095,329 +2114,349 @@ ui <- dashboardPage(
                   <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Are you PROBABLY registered, but there is a chance your registration has lapsed [OR]</p>
                   <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Are you NOT registered to vote at your current address</p>
                   <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don&rsquo;t know/Refused</p>"
-            # ),
-            # plotOutput("reg_plot", height = 250),
-            # HTML(
-            #   "
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p><strong>ASK ALL:</strong></p>
-            #       <p>PARTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; In politics TODAY, do you consider yourself a Republican, Democrat, or independent?</p>
-            #       <p>&nbsp;</p>
-            #       <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Republican</p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Democrat</p>
-            #       <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Independent</p>
-            #       <p>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No preference <strong>(VOL.)</strong></p>
-            #       <p>5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Other party <strong>(VOL.)</strong></p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.) </strong></p>"
-            # ),
-            # plotOutput("party_plot", height = 250),
-            # HTML(
-            #   "
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p><strong>ASK IF INDEP/NO PREF/OTHER/DK/REF (PARTY=3,4,5,9):</strong></p>
-            #       <p>PARTYLN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; As of today do you lean more to the Republican Party or more to the Democratic Party?</p>
-            #       <p>&nbsp;</p>
-            #       <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Republican</p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Democrat</p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Other/Don't know/Refused <strong>(VOL.)</strong></p>"
-            # ),
-            # plotOutput("partyln_plot", height = 250),
-            # HTML(
-            #   "
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p><strong><br /> </strong></p>
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p><strong>ASK IF REPUBLICAN OR DEMOCRAT (PARTY=1,2): </strong></p>
-            #       <p>PARTYSTR&nbsp;&nbsp;&nbsp;&nbsp; Do you consider yourself a STRONG <strong>[</strong>Republican/Democrat<strong>]</strong> or NOT a strong <strong>[</strong>Republican/Democrat<strong>]</strong>?</p>
-            #       <p>&nbsp;</p>
-            #       <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Strong</p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Not strong</p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know<strong>/</strong>Refused&nbsp;<strong>(VOL.)</strong></p>"
-            # ),
-            # plotOutput("partystr_plot", height = 250),
-            # HTML(
-            #   "
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p><strong>ASK ALL:</strong></p>
-            #       <p>IDEO&nbsp; In general, would you describe your political views as... <strong>[READ]</strong></p>
-            #       <p>&nbsp;</p>
-            #       <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Very conservative</p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Conservative</p>
-            #       <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Moderate</p>
-            #       <p>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Liberal [OR]</p>
-            #       <p>5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Very liberal</p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don't know/Refused</p>"
-            # ),
-            # plotOutput("ideo_plot", height = 250),
-            # HTML(
-            #   "
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p><strong>RANDOMIZE ORDER OF Q.B140/Q.B140b AND Q.B141/Q.B141b IN BLOCKS</strong></p>
-            #       <p><strong>ASK IF NOT CURRENTLY DEMOCRAT (PARTY=1,3,4,5,9 AND REG=1):</strong></p>
-            #       <p>Q.B140&nbsp; Has there ever been a time when you have thought of yourself as a DEMOCRAT, or not?</p>
-            #       <p>&nbsp;</p>
-            #       <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes</p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No</p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
-            # ),
-            # plotOutput("qb140_plot", height = 250),
-            # HTML(
-            #   "
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p><strong>RANDOMIZE ORDER OF Q.B140/Q.B140b AND Q.B141/Q.B141b IN BLOCKS</strong></p>
-            #       <p><strong>ASK IF EVER THOUGHT OF SELF AS DEMOCRAT (Q.B140=1):</strong></p>
-            #       <p>Q.B140b&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; What about in the past ten years, have you thought of yourself as a Democrat in the past ten years, or not?</p>
-            #       <p>&nbsp;</p>
-            #       <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes</p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No</p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
-            # ),
-            # plotOutput("qb140b_plot", height = 250),
-            # HTML(
-            #   "
-            #       <p>&nbsp;</p>
-            #       <p><strong>RANDOMIZE ORDER OF Q.B140/Q.B140b AND Q.B141/Q.B141b IN BLOCKS</strong></p>
-            #       <p><strong>ASK NOT CURRENTLY REPUBLICAN (PARTY=2,3,4,5,9 AND REG=1):</strong></p>
-            #       <p>Q.B141&nbsp; Has there ever been a time when you have thought of yourself as a REPUBLICAN, or not? {9-10 mod filter} {QID:qid20140301qb141}</p>
-            #       <p>&nbsp;</p>
-            #       <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes</p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No</p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
-            # ),
-            # plotOutput("qb141_plot", height = 250),
-            # HTML(
-            #   "
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p><strong>RANDOMIZE ORDER OF Q.B140/Q.B140b AND Q.B141/Q.B141b IN BLOCKS</strong></p>
-            #       <p><strong>ASK IF EVER THOUGHT OF SELF AS REPUBLICAN (Q.B141=1):</strong></p>
-            #       <p>Q.B141b&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; What about in the past ten years, have you thought of yourself as a Republican in the past ten years, or not?</p>
-            #       <p>&nbsp;</p>
-            #       <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes</p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No</p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
-            # ),
-            # plotOutput("qb141b_plot", height = 250),
-            # HTML(
-            #   "
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p><strong><br /> </strong></p>
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p><strong>ASK ALL REGISTERED VOTERS (REG=1):</strong></p>
-            #       <p>Q.C142&nbsp; <strong>Thinking about the elections you have voted in over the past several years, including national and statewide elections. Would you say you</strong><strong> [READ IN ORDER; REVERSE ORDER FOR RANDOM HALF OF SAMPLE]</strong>?</p>
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Always<strong> vote Republican</strong></p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Usually vote Republican</strong></p>
-            #       <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Vote about equally for both parties</strong></p>
-            #       <p>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Usually vote Democratic [OR]</p>
-            #       <p>5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Always vote Democratic</p>
-            #       <p>7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Have never voted</p>
-            #       <p>8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don&rsquo;t vote for either party/vote for other parties</p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don't know/Refused</p>"
-            # ),
-            # plotOutput("qc142_plot", height = 250),
-            # HTML(
-            #   "
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p><strong>NO QUESTIONS 143-147</strong></p>
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p><strong>ASK ALL REGISTERED VOTERS (REG=1):</strong></p>
-            #       <p>Q.148 As you may know, primary elections, where parties select their nominees, take place in the months before general elections. Thinking about the primary elections for Congress this year, do you happen to know in what month your state&rsquo;s primary will be held? <strong>[OPEN END; SINGLE PUNCH; DO NOT READ, USE PRECODES, IF RESPONDENT IS NOT SURE, DO NOT PROBE, ENTER AS DON&rsquo;T KNOW] </strong></p>
-            #       <p>&nbsp;</p>
-            #       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>PRECODES</strong></p>
-            #       <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; January/February</p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; March</p>
-            #       <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; April</p>
-            #       <p>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; May</p>
-            #       <p>5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; June</p>
-            #       <p>6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; July</p>
-            #       <p>7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; August</p>
-            #       <p>8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; September</p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; October/November/December</p>
-            #       <p>99&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don't know/Refused</p>"
-            # ),
-            # plotOutput("q148_plot", height = 250),
-            # HTML(
-            #   "
-            #       <p>&nbsp;</p>
-            #       <p><strong>ASK ALL REGISTERED VOTERS (REG=1):</strong></p>
-            #       <p>Q.149 And how often would you say you vote in Congressional PRIMARY elections. Would you say you vote in Congressional primary elections <strong>[READ IN ORDER]</strong>?</p>
-            #       <p>&nbsp;</p>
-            #       <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Always</p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nearly always</p>
-            #       <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Part of the time [OR]</p>
-            #       <p>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Seldom or never</p>
-            #       <p>5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Not registered with a party/Can&rsquo;t vote in primaries</p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ]</strong> Don&rsquo;t know/Refused</p>"
-            # ),
-            # plotOutput("q149_plot", height = 250),
-            # HTML(
-            #   "
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p><strong>ASK ALL:</strong></p>
-            #       <p>TEAPARTY2&nbsp; From what you know, do you agree or disagree with the Tea Party movement, or don&rsquo;t you have an opinion either way?</p>
-            #       <p>&nbsp;</p>
-            #       <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Agree</p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Disagree</p>
-            #       <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No opinion either way</p>
-            #       <p>8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Haven&rsquo;t heard of <strong>(VOL.)</strong></p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Refused <strong>(VOL.)</strong></p>"
-            # ),
-            # plotOutput("teaparty2_plot", height = 250),
-            # HTML(
-            #   "
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p><strong><br /> </strong></p>
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p><strong>ASK PHASE A IF AGREE WITH TEA PARTY (TEAPARTY2=1):</strong></p>
-            #       <p>Q.150 Have you ever attended a Tea Party rally or meeting, or not? <strong>[IF YES:</strong> Was that in the last two years, or not?<strong>] </strong></p>
-            #       <p>&nbsp;</p>
-            #       <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes, within the 2 years</p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes, but NOT within the last 2 years</p>
-            #       <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes, but don&rsquo;t know if within last 2 years <strong>(VOL.)</strong></p>
-            #       <p>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No</p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
-            # ),
-            # plotOutput("q150_plot", height = 250),
-            # HTML(
-            #   "
-            #       <p>&nbsp;</p>
-            #       <p><strong>ASK ALL:</strong></p>
-            #       <p>HH1&nbsp;&nbsp;&nbsp; How many people, including yourself, live in your household?</p>
-            #       <p><strong>INTERVIEWER NOTE: HOUSEHOLD MEMBERS INCLUDE PEOPLE WHO THINK OF THIS HOUSEHOLD AS THEIR PRIMARY PLACE OF RESIDENCE, INCLUDING THOSE WHO ARE TEMPORARILY AWAY ON BUSINESS, VACATION, IN A HOSPITAL, OR AWAY AT SCHOOL</strong>. <strong>THIS INCLUDES INFANTS, CHILDREN AND ADULTS. </strong></p>
-            #       <p>&nbsp;</p>
-            #       <p>______&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Enter number 1-7</p>
-            #       <p>8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8 or more</p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don&rsquo;t know/Refused</p>"
-            # ),
-            # plotOutput("hh1_plot", height = 250),
-            # HTML(
-            #   "
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p><strong>ASK IF MORE THAN ONE PERSON IN HH (HH1&gt;1):</strong></p>
-            #       <p>HH3&nbsp;&nbsp;&nbsp; How many, including yourself, are adults, age 18 and older?</p>
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p>______&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Enter number 1-7</p>
-            #       <p>8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8 or more</p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don&rsquo;t know/Refused</p>"
-            # ),
-            # plotOutput("hh3_plot", height = 250),
-            # HTML(
-            #   "
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p><strong>ASK ALL LANDLINE SAMPLE:</strong></p>
-            #       <p>L1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Now thinking about your telephone use&hellip; Do you have a working cell phone?</p>
-            #       <p>&nbsp;</p>
-            #       <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes, have cell phone</p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No, do not</p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
-            # ),
-            # plotOutput("l1_plot", height = 250),
-            # HTML(
-            #   "
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p><strong>ASK IF NO CELL PHONE AND MULTI-PERSON HOUSEHOLD (L1=2,9 AND HH1&gt;1):</strong></p>
-            #       <p>L1a.&nbsp;&nbsp;&nbsp;&nbsp; Does anyone in your household have a working cell phone?</p>
-            #       <p>&nbsp;</p>
-            #       <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes, someone in household has cell phone</p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No</p>
-            #       <ul>
-            #       <li>Don't know/Refused <strong>(VOL.)</strong></li>"
-            # ),
-            # plotOutput("l1a_plot", height = 250),
-            # HTML(
-            #   "
-            #       </ul>
-            #       <p><strong>ASK ALL CELL PHONE SAMPLE:</strong></p>
-            #       <p>C1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Now thinking about your telephone use&hellip; Is there at least one telephone INSIDE your home that is currently working and is not a cell phone?</p>
-            #       <p>&nbsp;</p>
-            #       <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes home telephone</p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No, home telephone</p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
-            # ),
-            # plotOutput("c1_plot", height = 250),
-            # HTML(
-            #   "
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p><strong>ASK IF DUAL AND SINGLE-PERSON HOUSEHOLD ((L1=1 OR C1=1) AND HH1=1):</strong></p>
-            #       <p>LC2.&nbsp;&nbsp;&nbsp; Of all the telephone calls that you receive, do you get <strong>[READ AND RANDOMIZE OPTIONS 1 AND 3&mdash;KEEP 2 ALWAYS IN THE MIDDLE]</strong>?</p>
-            #       <p>&nbsp;</p>
-            #       <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; All or almost all calls on a cell phone</p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Some on a cell phone and some on a regular home phone</p>
-            #       <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; All or almost all calls on a regular home phone</p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don&rsquo;t know/Refused</p>"
-            # ),
-            # plotOutput("lc2_plot", height = 250),
-            # HTML(
-            #   "
-            #       <p>&nbsp;</p>
-            #       <p><strong>ASK IF DUAL AND MULTI-PERSON HOUSEHOLD ((L1=1 OR L1a=1 OR C1=1) AND HH1&gt;1):</strong></p>
-            #       <p>LC3.&nbsp;&nbsp;&nbsp; Now thinking about all the people in your household, including yourself, of all the telephone calls that your household receives, are <strong>[READ AND </strong><strong>RANDOMIZE OPTIONS 1 AND 3&mdash;KEEP 2 ALWAYS IN THE MIDDLE]</strong>?</p>
-            #       <p>&nbsp;</p>
-            #       <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; All or almost all calls on a cell phone</p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Some on a cell phone and some on a regular home phone</p>
-            #       <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; All or almost all calls on a regular home phone</p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don&rsquo;t know/Refused</p>"
-            # ),
-            # plotOutput("lc3_plot", height = 250),
-            # HTML(
-            #   "
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p><strong>ASK ALL:</strong></p>
-            #       <p>ZIPCODE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; What is your zipcode?</p>
-            #       <p>&nbsp;</p>
-            #       <p>_____&nbsp; Enter Zipcode</p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don&rsquo;t know/Refused</p>"
-            # ),
-            # # plotOutput("zipcode_plot", height = 250),
-            # HTML(
-            #   "
-            #       <p>&nbsp;</p>
-            #       <p><strong>ASK CELL PHONE SAMPLE:</strong></p>
-            #       <p>MONEY We&rsquo;d like to send you $5 for your time. Can I please have your name and a mailing address where we can send you the money? <strong>[INTERVIEWER NOTE:</strong> If R does not want to give full name, explain we only need it so we can send the $5 to them personally.<strong>]</strong></p>
-            #       <p>&nbsp;</p>
-            #       <p>1<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [ENTER FULL NAME] &ndash; INTERVIEWER: PLEASE VERIFY SPELLING, MAKE SURE TO GET BOTH FIRST AND LAST NAME</strong></p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[ENTER MAILING ADDRESS]</strong></p>
-            #       <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[City]</strong></p>
-            #       <p>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[State]</strong></p>
-            #       <p>5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>CONFIRM ZIP from above</strong></p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>(VOL.)</strong> Respondent does not want the money</p>
-            #       <p>&nbsp;</p>
-            #       <p><strong>INTERVIEWER ASK IF RESPONDENT GAVE FULL ADDRESS IN MONEY:</strong></p>
-            #       <p>POBOX1<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; INTERVIEWER: </strong>DID RESPONDENT GIVE A STREET ADDRESS OR A PO BOX?</p>
-            #       <p>&nbsp;</p>
-            #       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Street address</p>
-            #       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PO BOX</p>
-            #       <p>&nbsp;</p>
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p>Thank you very much for your time. This survey is being conducted by the Pew Research Center, which will be issuing a report on the results of this survey on their website, pewresearch <em>dot </em>ORG, in the coming weeks.</p>
-            #       <p>&nbsp;</p>
-            #       <p>I HEREBY ATTEST THAT THIS IS A TRUE AND HONEST INTERVIEW.</p>
-            #       <p>INTERVIEWER GENDER:</p>
-            #       <p>ISEX</p>
-            #       <p><strong>&nbsp;</strong></p>
-            #       <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Male</p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Female</p>
-            #       <p>&nbsp;</p>
-            #       <p>INTERVIEWER RACE:</p>
-            #       <p>IHISP1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Are you, yourself, of Hispanic origin or descent, such as Mexican, Puerto Rican, Cuban, or some other Spanish background?</p>
-            #       <p>&nbsp;</p>
-            #       <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes</p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No</p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>
-            #       <p>&nbsp;</p>
-            #       <p>&nbsp;</p>
-            #       <p>&nbsp;</p>
-            #       <p>IRACE1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Which of the following describes your race? You can select as many as apply.</p>
-            #       <p><strong>[READ LIST. RECORD UP TO FOUR RESPONSES IN ORDER MENTIONED] </strong></p>
-            #       <p>&nbsp;</p>
-            #       <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; White</p>
-            #       <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Black or African-American</p>
-            #       <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Asian or Asian-American</p>
-            #       <p>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Or some other race</p>
-            #       <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don't know/Refused</p>
-            #       <p>&nbsp;</p>
-            #       <p><strong>[PLEASE MAKE THE FOLLOWING TEXT AVAILABLE TO INTERVIEWERS ANYTIME A RESPONDENT ASKS ABOUT THE NATURE OF THE PEW RESEARCH CENTER]</strong>The Pew Research Center is an independent nonpartisan public opinion research organization that studies attitudes toward politics, the press and issues facing the nation. The Center has no connection to the government, political parties, or any campaigns. Reports about its surveys are made available free of charge on their website pewresearch <em>dot </em>ORG.</p>
-            #       <p><strong>&nbsp;</strong></p>
+            ),
+            plotOutput("reg_plot1", height = 250),
+            HTML(
+              "
+                  <p><strong>&nbsp;</strong></p>
+                  <p><strong>ASK ALL:</strong></p>
+                  <p>PARTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; In politics TODAY, do you consider yourself a Republican, Democrat, or independent?</p>
+                  <p>&nbsp;</p>
+                  <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Republican</p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Democrat</p>
+                  <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Independent</p>
+                  <p>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No preference <strong>(VOL.)</strong></p>
+                  <p>5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Other party <strong>(VOL.)</strong></p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.) </strong></p>"
+            ),
+            plotOutput("party_plot1", height = 250),
+            HTML(
+              "
+                  <p><strong>&nbsp;</strong></p>
+                  <p><strong>ASK IF INDEP/NO PREF/OTHER/DK/REF (PARTY=3,4,5,9):</strong></p>
+                  <p>PARTYLN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; As of today do you lean more to the Republican Party or more to the Democratic Party?</p>
+                  <p>&nbsp;</p>
+                  <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Republican</p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Democrat</p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Other/Don't know/Refused <strong>(VOL.)</strong></p>"
+            ),
+            plotOutput("partyln_plot1", height = 250),
+            HTML(
+              "
+                  <p><strong>&nbsp;</strong></p>
+                  <p><strong><br /> </strong></p>
+                  <p><strong>&nbsp;</strong></p>
+                  <p><strong>ASK IF REPUBLICAN OR DEMOCRAT (PARTY=1,2): </strong></p>
+                  <p>PARTYSTR&nbsp;&nbsp;&nbsp;&nbsp; Do you consider yourself a STRONG <strong>[</strong>Republican/Democrat<strong>]</strong> or NOT a strong <strong>[</strong>Republican/Democrat<strong>]</strong>?</p>
+                  <p>&nbsp;</p>
+                  <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Strong</p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Not strong</p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know<strong>/</strong>Refused&nbsp;<strong>(VOL.)</strong></p>"
+            ),
+            plotOutput("partystr_plot1", height = 250),
+            HTML(
+              "
+                  <p><strong>&nbsp;</strong></p>
+                  <p><strong>ASK ALL:</strong></p>
+                  <p>IDEO&nbsp; In general, would you describe your political views as... <strong>[READ]</strong></p>
+                  <p>&nbsp;</p>
+                  <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Very conservative</p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Conservative</p>
+                  <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Moderate</p>
+                  <p>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Liberal [OR]</p>
+                  <p>5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Very liberal</p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don't know/Refused</p>"
+            ),
+            plotOutput("ideo_plot1", height = 250),
+            HTML(
+              "
+                  <p><strong>&nbsp;</strong></p>
+                  <p><strong>RANDOMIZE ORDER OF Q.B140/Q.B140b AND Q.B141/Q.B141b IN BLOCKS</strong></p>
+                  <p><strong>ASK IF NOT CURRENTLY DEMOCRAT (PARTY=1,3,4,5,9 AND REG=1):</strong></p>
+                  <p>Q.B140&nbsp; Has there ever been a time when you have thought of yourself as a DEMOCRAT, or not?</p>
+                  <p>&nbsp;</p>
+                  <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes</p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No</p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
+            ),
+            plotOutput("qb140_plot", height = 250),
+            HTML(
+              "
+                  <p><strong>&nbsp;</strong></p>
+                  <p><strong>RANDOMIZE ORDER OF Q.B140/Q.B140b AND Q.B141/Q.B141b IN BLOCKS</strong></p>
+                  <p><strong>ASK IF EVER THOUGHT OF SELF AS DEMOCRAT (Q.B140=1):</strong></p>
+                  <p>Q.B140b&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; What about in the past ten years, have you thought of yourself as a Democrat in the past ten years, or not?</p>
+                  <p>&nbsp;</p>
+                  <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes</p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No</p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
+            ),
+            plotOutput("qb140b_plot", height = 250),
+            HTML(
+              "
+                  <p>&nbsp;</p>
+                  <p><strong>RANDOMIZE ORDER OF Q.B140/Q.B140b AND Q.B141/Q.B141b IN BLOCKS</strong></p>
+                  <p><strong>ASK NOT CURRENTLY REPUBLICAN (PARTY=2,3,4,5,9 AND REG=1):</strong></p>
+                  <p>Q.B141&nbsp; Has there ever been a time when you have thought of yourself as a REPUBLICAN, or not? {9-10 mod filter} {QID:qid20140301qb141}</p>
+                  <p>&nbsp;</p>
+                  <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes</p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No</p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
+            ),
+            plotOutput("qb141_plot", height = 250),
+            HTML(
+              "
+                  <p><strong>&nbsp;</strong></p>
+                  <p><strong>RANDOMIZE ORDER OF Q.B140/Q.B140b AND Q.B141/Q.B141b IN BLOCKS</strong></p>
+                  <p><strong>ASK IF EVER THOUGHT OF SELF AS REPUBLICAN (Q.B141=1):</strong></p>
+                  <p>Q.B141b&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; What about in the past ten years, have you thought of yourself as a Republican in the past ten years, or not?</p>
+                  <p>&nbsp;</p>
+                  <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes</p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No</p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
+            ),
+            plotOutput("qb141b_plot", height = 250),
+            HTML(
+              "
+                  <p><strong>&nbsp;</strong></p>
+                  <p><strong><br /> </strong></p>
+                  <p><strong>&nbsp;</strong></p>
+                  <p><strong>ASK ALL REGISTERED VOTERS (REG=1):</strong></p>
+                  <p>Q.C142&nbsp; <strong>Thinking about the elections you have voted in over the past several years, including national and statewide elections. Would you say you</strong><strong> [READ IN ORDER; REVERSE ORDER FOR RANDOM HALF OF SAMPLE]</strong>?</p>
+                  <p><strong>&nbsp;</strong></p>
+                  <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Always<strong> vote Republican</strong></p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Usually vote Republican</strong></p>
+                  <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Vote about equally for both parties</strong></p>
+                  <p>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Usually vote Democratic [OR]</p>
+                  <p>5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Always vote Democratic</p>
+                  <p>7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Have never voted</p>
+                  <p>8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don&rsquo;t vote for either party/vote for other parties</p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don't know/Refused</p>"
+            ),
+            plotOutput("qc142_plot", height = 500),
+            HTML(
+              "
+                  <p><strong>&nbsp;</strong></p>
+                  <p><strong>NO QUESTIONS 143-147</strong></p>
+                  <p><strong>&nbsp;</strong></p>
+                  <p><strong>ASK ALL REGISTERED VOTERS (REG=1):</strong></p>
+                  <p>Q.148 As you may know, primary elections, where parties select their nominees, take place in the months before general elections. Thinking about the primary elections for Congress this year, do you happen to know in what month your state&rsquo;s primary will be held? <strong>[OPEN END; SINGLE PUNCH; DO NOT READ, USE PRECODES, IF RESPONDENT IS NOT SURE, DO NOT PROBE, ENTER AS DON&rsquo;T KNOW] </strong></p>
+                  <p>&nbsp;</p>
+                  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>PRECODES</strong></p>
+                  <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; January/February</p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; March</p>
+                  <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; April</p>
+                  <p>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; May</p>
+                  <p>5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; June</p>
+                  <p>6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; July</p>
+                  <p>7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; August</p>
+                  <p>8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; September</p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; October/November/December</p>
+                  <p>99&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don't know/Refused</p>"
+            ),
+            plotOutput("q148_plot", height = 450),
+            plotOutput("q148correct_plot", height = 250),
+            HTML(
+              "
+                  <p>&nbsp;</p>
+                  <p><strong>ASK ALL REGISTERED VOTERS (REG=1):</strong></p>
+                  <p>Q.149 And how often would you say you vote in Congressional PRIMARY elections. Would you say you vote in Congressional primary elections <strong>[READ IN ORDER]</strong>?</p>
+                  <p>&nbsp;</p>
+                  <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Always</p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nearly always</p>
+                  <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Part of the time [OR]</p>
+                  <p>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Seldom or never</p>
+                  <p>5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Not registered with a party/Can&rsquo;t vote in primaries</p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ]</strong> Don&rsquo;t know/Refused</p>"
+            ),
+            plotOutput("q149_plot", height = 350),
+            HTML(
+              "
+                  <p><strong>&nbsp;</strong></p>
+                  <p><strong>ASK ALL:</strong></p>
+                  <p>TEAPARTY2&nbsp; From what you know, do you agree or disagree with the Tea Party movement, or don&rsquo;t you have an opinion either way?</p>
+                  <p>&nbsp;</p>
+                  <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Agree</p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Disagree</p>
+                  <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No opinion either way</p>
+                  <p>8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Haven&rsquo;t heard of <strong>(VOL.)</strong></p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Refused <strong>(VOL.)</strong></p>"
+            ),
+            plotOutput("teaparty2_plot", height = 450),
+            HTML(
+              "
+                  <p><strong>&nbsp;</strong></p>
+                  <p><strong><br /> </strong></p>
+                  <p><strong>&nbsp;</strong></p>
+                  <p><strong>ASK PHASE A IF AGREE WITH TEA PARTY (TEAPARTY2=1):</strong></p>
+                  <p>Q.150 Have you ever attended a Tea Party rally or meeting, or not? <strong>[IF YES:</strong> Was that in the last two years, or not?<strong>] </strong></p>
+                  <p>&nbsp;</p>
+                  <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes, within the 2 years</p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes, but NOT within the last 2 years</p>
+                  <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes, but don&rsquo;t know if within last 2 years <strong>(VOL.)</strong></p>
+                  <p>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No</p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
+            ),
+            plotOutput("q150_plot", height = 350),
+            HTML(
+              "
+                  <p>&nbsp;</p>
+                  <p><strong>ASK ALL:</strong></p>
+                  <p>HH1&nbsp;&nbsp;&nbsp; How many people, including yourself, live in your household?</p>
+                  <p><strong>INTERVIEWER NOTE: HOUSEHOLD MEMBERS INCLUDE PEOPLE WHO THINK OF THIS HOUSEHOLD AS THEIR PRIMARY PLACE OF RESIDENCE, INCLUDING THOSE WHO ARE TEMPORARILY AWAY ON BUSINESS, VACATION, IN A HOSPITAL, OR AWAY AT SCHOOL</strong>. <strong>THIS INCLUDES INFANTS, CHILDREN AND ADULTS. </strong></p>
+                  <p>&nbsp;</p>
+                  <p>______&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Enter number 1-7</p>
+                  <p>8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8 or more</p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don&rsquo;t know/Refused</p>"
+            ),
+            plotOutput("hh1_plot", height = 250),
+            HTML(
+              "
+                  <p><strong>&nbsp;</strong></p>
+                  <p><strong>ASK IF MORE THAN ONE PERSON IN HH (HH1&gt;1):</strong></p>
+                  <p>HH3&nbsp;&nbsp;&nbsp; How many, including yourself, are adults, age 18 and older?</p>
+                  <p><strong>&nbsp;</strong></p>
+                  <p>______&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Enter number 1-7</p>
+                  <p>8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8 or more</p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don&rsquo;t know/Refused</p>"
+            ),
+            plotOutput("hh3_plot", height = 250),
+            HTML(
+              "
+                  <p><strong>&nbsp;</strong></p>
+                  <p><strong>ASK ALL LANDLINE SAMPLE:</strong></p>
+                  <p>L1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Now thinking about your telephone use&hellip; Do you have a working cell phone?</p>
+                  <p>&nbsp;</p>
+                  <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes, have cell phone</p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No, do not</p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
+            ),
+            plotOutput("ql1_plot", height = 250),
+            HTML(
+              "
+                  <p><strong>&nbsp;</strong></p>
+                  <p><strong>ASK IF NO CELL PHONE AND MULTI-PERSON HOUSEHOLD (L1=2,9 AND HH1&gt;1):</strong></p>
+                  <p>L1a.&nbsp;&nbsp;&nbsp;&nbsp; Does anyone in your household have a working cell phone?</p>
+                  <p>&nbsp;</p>
+                  <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes, someone in household has cell phone</p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No</p>
+                  <ul>
+                  <li>Don't know/Refused <strong>(VOL.)</strong></li>"
+            ),
+            plotOutput("ql1a_plot", height = 250),
+            HTML(
+              "
+                  </ul>
+                  <p><strong>ASK ALL CELL PHONE SAMPLE:</strong></p>
+                  <p>C1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Now thinking about your telephone use&hellip; Is there at least one telephone INSIDE your home that is currently working and is not a cell phone?</p>
+                  <p>&nbsp;</p>
+                  <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes home telephone</p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No, home telephone</p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
+            ),
+            plotOutput("qc1_plot", height = 250),
+            HTML(
+              "
+                  <p><strong>&nbsp;</strong></p>
+                  <p><strong>ASK IF DUAL AND SINGLE-PERSON HOUSEHOLD ((L1=1 OR C1=1) AND HH1=1):</strong></p>
+                  <p>LC2.&nbsp;&nbsp;&nbsp; Of all the telephone calls that you receive, do you get <strong>[READ AND RANDOMIZE OPTIONS 1 AND 3&mdash;KEEP 2 ALWAYS IN THE MIDDLE]</strong>?</p>
+                  <p>&nbsp;</p>
+                  <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; All or almost all calls on a cell phone</p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Some on a cell phone and some on a regular home phone</p>
+                  <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; All or almost all calls on a regular home phone</p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don&rsquo;t know/Refused</p>"
+            ),
+            plotOutput("lc2_plot", height = 250),
+            HTML(
+              "
+                  <p>&nbsp;</p>
+                  <p><strong>ASK IF DUAL AND MULTI-PERSON HOUSEHOLD ((L1=1 OR L1a=1 OR C1=1) AND HH1&gt;1):</strong></p>
+                  <p>LC3.&nbsp;&nbsp;&nbsp; Now thinking about all the people in your household, including yourself, of all the telephone calls that your household receives, are <strong>[READ AND </strong><strong>RANDOMIZE OPTIONS 1 AND 3&mdash;KEEP 2 ALWAYS IN THE MIDDLE]</strong>?</p>
+                  <p>&nbsp;</p>
+                  <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; All or almost all calls on a cell phone</p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Some on a cell phone and some on a regular home phone</p>
+                  <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; All or almost all calls on a regular home phone</p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don&rsquo;t know/Refused</p>"
+            ),
+            plotOutput("lc3_plot", height = 250),
+            HTML(
+              "
+                  <p><strong>&nbsp;</strong></p>
+                  <p><strong>ASK ALL:</strong></p>
+                  <p>ZIPCODE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; What is your zipcode?</p>
+                  <p>&nbsp;</p>
+                  <p>_____&nbsp; Enter Zipcode</p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don&rsquo;t know/Refused</p>"
+            ),
+            plotOutput("qzip_plot", height = 250),
+            HTML(
+              "
+                  <p>&nbsp;</p>
+                  <p><strong>ASK CELL PHONE SAMPLE:</strong></p>
+                  <p>MONEY We&rsquo;d like to send you $5 for your time. Can I please have your name and a mailing address where we can send you the money? <strong>[INTERVIEWER NOTE:</strong> If R does not want to give full name, explain we only need it so we can send the $5 to them personally.<strong>]</strong></p>"
+            ),
+            plotOutput("money_plot", height = 250),
+            HTML(
+              "
+                  <p>&nbsp;</p>
+                  <p>1<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [ENTER FULL NAME] &ndash; INTERVIEWER: PLEASE VERIFY SPELLING, MAKE SURE TO GET BOTH FIRST AND LAST NAME</strong></p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[ENTER MAILING ADDRESS]</strong></p>
+                  <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[City]</strong></p>
+                  <p>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[State]</strong></p>
+                  <p>5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>CONFIRM ZIP from above</strong></p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>(VOL.)</strong> Respondent does not want the money</p>
+                  <p>&nbsp;</p>
+                  <p><strong>INTERVIEWER ASK IF RESPONDENT GAVE FULL ADDRESS IN MONEY:</strong></p>
+                  <p>POBOX1<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; INTERVIEWER: </strong>DID RESPONDENT GIVE A STREET ADDRESS OR A PO BOX?</p>
+                  <p>&nbsp;</p>
+                  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Street address</p>
+                  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PO BOX</p>
+                  <p>&nbsp;</p>
+                  <p><strong>&nbsp;</strong></p>
+                  <p>Thank you very much for your time. This survey is being conducted by the Pew Research Center, which will be issuing a report on the results of this survey on their website, pewresearch <em>dot </em>ORG, in the coming weeks.</p>
+                  <p>&nbsp;</p>
+                  <p>I HEREBY ATTEST THAT THIS IS A TRUE AND HONEST INTERVIEW.</p>
+                  <p>INTERVIEWER GENDER:</p>
+                  <p>ISEX</p>
+                  <p><strong>&nbsp;</strong></p>
+                  <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Male</p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Female</p>"
+            ),
+            plotOutput("isex_plot", height = 250),
+            HTML(
+              "
+                  <p>&nbsp;</p>
+                  <p>INTERVIEWER RACE:</p>
+                  <p>IHISP1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Are you, yourself, of Hispanic origin or descent, such as Mexican, Puerto Rican, Cuban, or some other Spanish background?</p>
+                  <p>&nbsp;</p>
+                  <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yes</p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No</p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't know/Refused <strong>(VOL.)</strong></p>"
+            ),
+            plotOutput("ihisp1_plot", height = 250),
+            HTML(
+              "
+                  <p>&nbsp;</p>
+                  <p>&nbsp;</p>
+                  <p>&nbsp;</p>
+                  <p>IRACE1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Which of the following describes your race? You can select as many as apply.</p>
+                  <p><strong>[READ LIST. RECORD UP TO FOUR RESPONSES IN ORDER MENTIONED] </strong></p>
+                  <p>&nbsp;</p>
+                  <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; White</p>
+                  <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Black or African-American</p>
+                  <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Asian or Asian-American</p>
+                  <p>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Or some other race</p>
+                  <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>[VOL. DO NOT READ] </strong>Don't know/Refused</p>"
+            ),
+            plotOutput("irace1m1_plot", height = 250),
+            plotOutput("irace1m2_plot", height = 250),
+            plotOutput("irace1m3_plot", height = 250),
+            plotOutput("irace1m4_plot", height = 250),
+            HTML(
+              "
+                  <p>&nbsp;</p>
+                  <p><strong>[PLEASE MAKE THE FOLLOWING TEXT AVAILABLE TO INTERVIEWERS ANYTIME A RESPONDENT ASKS ABOUT THE NATURE OF THE PEW RESEARCH CENTER]</strong>The Pew Research Center is an independent nonpartisan public opinion research organization that studies attitudes toward politics, the press and issues facing the nation. The Center has no connection to the government, political parties, or any campaigns. Reports about its surveys are made available free of charge on their website pewresearch <em>dot </em>ORG.</p>
+                  <p><strong>&nbsp;</strong></p>
                   # "
             )
           )

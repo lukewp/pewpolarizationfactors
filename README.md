@@ -23,8 +23,6 @@ A "purple" coalition may also be possible, one that finds common ground between 
 
 Explore these datasets by going through code in this package, or also look at the shinyapps.io page here (assuming I haven't used all my free hours this month!): https://lwp-viz.shinyapps.io/usfactors/
 
-TODO: Explain three-DV mlm models' fit
-
 TODO: Venn diagram for all voters
 
 TODO: Venn diagram for electoral votes
@@ -32,8 +30,6 @@ TODO: Venn diagram for electoral votes
 TODO: Choropleths for electoral votes
 
 TODO: Scenario-builder
-
-TODO: Decision tree for factor assignment by survey
 
 TODO: Decision tree for factor assignment by demographic
 

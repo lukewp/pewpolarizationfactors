@@ -193,6 +193,50 @@ shinyServer(function(input, output) {
       })
     })
     
+    output$factor20163mfitsummary <- renderPrint({summary(factor2016.3mfit)})
+    
+    output$factordp2016mfitsummary <- renderPrint({summary(factordp2016.mfit)})
+    
+    output$factorclintondp16plot <- renderPlot({
+      withProgress(message = '3-Factor-based Clinton Primary 2016 Explanation Plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        ggplot(statedisttable, aes(x=ClintonDP16, y=state)) +
+          geom_point(size = 3, col = "blue") + 
+          geom_errorbarh(aes(xmin = factorclintondp16min, xmax = factorclintondp16max), show.legend = TRUE) +
+          scale_x_continuous(labels = percent) +
+          labs(
+            x = "% Support Hillary Clinton 2016",
+            y = NULL,
+            title = "3-Factor-based Explanation of 2016 Clinton Support %"
+          ) + 
+          theme(legend.position="bottom")
+      })
+    })
+    
+    output$factorsandersdp16plot <- renderPlot({
+      withProgress(message = '3-Factor-based Sanders 2016 Explanation Plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        ggplot(statedisttable, aes(x=SandersDP16, y=state)) +
+          geom_point(size = 3, col = "red") + 
+          geom_errorbarh(aes(xmin = factorsandersdp2016min, xmax = factorsandersdp2016max), show.legend = TRUE) +
+          scale_x_continuous(labels = percent) +
+          labs(
+            x = "% Support Bernie Sanders 2016",
+            y = NULL,
+            title = "3-Factor-based Explanation of 2016 Sanders Support %"
+          ) + 
+          theme(legend.position="bottom")
+      })
+    })
+    
+    output$factor19923mfitsummary <- renderPrint({summary(factor1992.3mfit)})
+    
   })
   
   ## Tab demographics:
@@ -675,8 +719,8 @@ shinyServer(function(input, output) {
       withProgress(message = 'Voter Registration plot ...', value = 0, {
         for (i in 1:15) {
           incProgress(1/15)
-        } 
-        
+        }
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = reg)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -689,20 +733,20 @@ shinyServer(function(input, output) {
             y = NULL,
             fill = 'Voter Registration',
             title = 'Voter Registration by Factor'
-          ) + 
+          ) +
           theme(legend.position="bottom", legend.direction="vertical")
         gg_prop1 %+%
           regdist
       })
     })
     incProgress(1/16)
-    
+
     output$party_plot <- renderPlot({
       withProgress(message = 'Political Party plot ...', value = 0, {
         for (i in 1:15) {
           incProgress(1/15)
-        } 
-        
+        }
+
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = party)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -715,7 +759,7 @@ shinyServer(function(input, output) {
             y = NULL,
             fill = 'Party',
             title = 'Party by Factor'
-          ) + 
+          ) +
           theme(legend.position="bottom")
         gg_prop1 %+%
           partydist
@@ -862,14 +906,14 @@ shinyServer(function(input, output) {
     })
     incProgress(1/51)
     
-    output$qc1_plot <- renderPlot({
-      withProgress(message = 'Q.C1 plot ...', value = 0, {
+    output$q1c1_plot <- renderPlot({
+      withProgress(message = 'Q1.C1 plot ...', value = 0, {
         for (i in 1:15) {
           incProgress(1/15)
         } 
         
         gg_prop1 <- ggplot(data = data.frame(),
-                           aes(x = predict, y = prop, fill = qc1)) +
+                           aes(x = predict, y = prop, fill = q1c1)) +
           geom_bar(stat = 'identity', position = 'dodge') +
           geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
                     position = position_dodge(width = 0.9),
@@ -878,12 +922,12 @@ shinyServer(function(input, output) {
           labs(
             x = 'Factor',
             y = NULL,
-            fill = 'Q.C1',
-            title = 'Q.C1 by Factor'
+            fill = 'Q1.C1',
+            title = 'Q1.C1 by Factor'
           ) + 
           theme(legend.position="bottom")
         gg_prop1 %+%
-          qc1dist
+          q1c1dist
       })
     })
     incProgress(1/51)
@@ -5084,6 +5128,786 @@ shinyServer(function(input, output) {
           theme(legend.position="bottom")
         gg_prop1 %+%
           inchidist
+      })
+    })
+    incProgress(1/46)
+    
+    output$reg_plot1 <- renderPlot({
+      withProgress(message = 'Voter Registration plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = reg)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Voter Registration',
+            title = 'Voter Registration by Factor'
+          ) +
+          theme(legend.position="bottom", legend.direction="vertical")
+        gg_prop1 %+%
+          regdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$party_plot1 <- renderPlot({
+      withProgress(message = 'Political Party plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = party)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Party',
+            title = 'Party by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          partydist
+      })
+    })
+    incProgress(1/46)
+    
+    output$partyln_plot1 <- renderPlot({
+      withProgress(message = 'Political Party Leaner plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = partyln)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Party Lean',
+            title = '(IF OTHER PARTY): Party Lean by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          partylndist
+      })
+    })
+    incProgress(1/46)
+    
+    output$partystr_plot1 <- renderPlot({
+      withProgress(message = 'Political Party Strength plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = partystr)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Party Strength',
+            title = '(IF Dem/Rep PARTY): Party Strength by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          partystrdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$ideo_plot1 <- renderPlot({
+      withProgress(message = 'Political Ideology plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = ideo)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Ideology',
+            title = 'Ideology by Factor'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          ideodist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qb140_plot <- renderPlot({
+      withProgress(message = 'Q.B140 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qb140)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.B140',
+            title = 'Q.B140 by Factor'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qb140dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qb140b_plot <- renderPlot({
+      withProgress(message = 'Q.B140b plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qb140b)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.B140b',
+            title = 'Q.B140b by Factor'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qb140bdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qb141_plot <- renderPlot({
+      withProgress(message = 'Q.B141 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qb141)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.B141',
+            title = 'Q.B141 by Factor'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qb141dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qb141b_plot <- renderPlot({
+      withProgress(message = 'Q.B141b plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qb141b)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.B141b',
+            title = 'Q.B141b by Factor'
+          ) + 
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qb141bdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc142_plot <- renderPlot({
+      withProgress(message = 'Q.C142 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc142)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C142',
+            title = 'Q.C142 by Factor'
+          ) +
+          theme(legend.position="bottom", legend.direction="vertical")
+        gg_prop1 %+%
+          qc142dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q148_plot <- renderPlot({
+      withProgress(message = 'Q.148 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q148)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.148',
+            title = 'Q.148 by Factor'
+          ) +
+          theme(legend.position="bottom", legend.direction="vertical")
+        gg_prop1 %+%
+          q148dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q148correct_plot <- renderPlot({
+      withProgress(message = 'Q.148 correct plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q148correct)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.148 Correct',
+            title = 'Q.148 Correct by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          q148correctdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q149_plot <- renderPlot({
+      withProgress(message = 'Q.149 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q149)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.149',
+            title = 'Q.149 by Factor'
+          ) +
+          theme(legend.position="bottom", legend.direction="vertical")
+        gg_prop1 %+%
+          q149dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$teaparty2_plot <- renderPlot({
+      withProgress(message = 'Tea Party plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = teaparty2)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Tea Party',
+            title = 'Tea Party by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          teaparty2dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$q150_plot <- renderPlot({
+      withProgress(message = 'Q.150 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = q150)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.150',
+            title = 'Q.150 by Factor'
+          ) +
+          theme(legend.position="bottom", legend.direction="vertical")
+        gg_prop1 %+%
+          q150dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$hh1_plot <- renderPlot({
+      withProgress(message = 'HH1 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = hh1)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'HH1',
+            title = 'HH1 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          hh1dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$hh3_plot <- renderPlot({
+      withProgress(message = 'HH3 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = hh3)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'HH3',
+            title = 'HH3 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          hh3dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$ql1_plot <- renderPlot({
+      withProgress(message = 'Q.L1 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = ql1)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.L1',
+            title = 'Q.L1 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          ql1dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$ql1a_plot <- renderPlot({
+      withProgress(message = 'Q.L1a plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = ql1a)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.L1a',
+            title = 'Q.L1a by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          ql1adist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qc1_plot <- renderPlot({
+      withProgress(message = 'Q.C1 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qc1)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Q.C1',
+            title = 'Q.C1 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qc1dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$lc2_plot <- renderPlot({
+      withProgress(message = 'LC2 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = lc2)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'LC2',
+            title = 'LC2 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          lc2dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$lc3_plot <- renderPlot({
+      withProgress(message = 'LC3 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = lc3)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'LC3',
+            title = 'LC3 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          lc3dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$qzip_plot <- renderPlot({
+      withProgress(message = 'QZIP plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = qzip)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'QZIP',
+            title = 'QZIP by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          qzipdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$money_plot <- renderPlot({
+      withProgress(message = 'MONEY plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = money)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'MONEY',
+            title = 'MONEY by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          moneydist
+      })
+    })
+    incProgress(1/46)
+    
+    output$isex_plot <- renderPlot({
+      withProgress(message = 'Interviewer Sex plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = isex)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Interviewer Sex',
+            title = 'Interviewer Sex by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          isexdist
+      })
+    })
+    incProgress(1/46)
+    
+    output$ihisp1_plot <- renderPlot({
+      withProgress(message = 'Interviewer Race (Hispanic) plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = ihisp1)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Interviewer Race (Hispanic)',
+            title = 'Interviewer Race (Hispanic) by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          ihisp1dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$irace1m1_plot <- renderPlot({
+      withProgress(message = 'Interviewer Race 1 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = irace1m1)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Interviewer Race 1',
+            title = 'Interviewer Race 1 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          irace1m1dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$irace1m2_plot <- renderPlot({
+      withProgress(message = 'Interviewer Race 2 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = irace1m2)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Interviewer Race 2',
+            title = 'Interviewer Race 2 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          irace1m2dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$irace1m3_plot <- renderPlot({
+      withProgress(message = 'Interviewer Race 3 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = irace1m3)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Interviewer Race 3',
+            title = 'Interviewer Race 3 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          irace1m3dist
+      })
+    })
+    incProgress(1/46)
+    
+    output$irace1m4_plot <- renderPlot({
+      withProgress(message = 'Interviewer Race 4 plot ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        gg_prop1 <- ggplot(data = data.frame(),
+                           aes(x = predict, y = prop, fill = irace1m4)) +
+          geom_bar(stat = 'identity', position = 'dodge') +
+          geom_text(aes(label = paste(round(100.0 * prop, 0), '%')),
+                    position = position_dodge(width = 0.9),
+                    vjust = -0.25) +
+          scale_y_continuous(labels = percent) +
+          labs(
+            x = 'Factor',
+            y = NULL,
+            fill = 'Interviewer Race 4',
+            title = 'Interviewer Race 4 by Factor'
+          ) +
+          theme(legend.position="bottom")
+        gg_prop1 %+%
+          irace1m4dist
       })
     })
     incProgress(1/46)
