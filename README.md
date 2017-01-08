@@ -34,3 +34,13 @@ TODO: Scenario-builder
 TODO: Decision tree for factor assignment by demographic
 
 TODO: Interactive "what factor are you?" assignment form
+
+Steps to building this dashboard yourself:
+
+1. Clone this repository
+2. Acquire the Pew data, put "Polarization 2014.zip" file into ./data subdirectory and unzip so a file called 'Polarization 2014 public.sav' is in the ./data/Polarization 2014/ folder
+3. Run load_and_set_up_polarization2014.R to establish the survey object and recode some variables for NMF.
+4. Run NMFsetup.R to build the rawinput and factormatrix_clean objects that'll be referred to by subsequent scripts
+5. Run RunNMF.R: By default this will just load the .RData file containing the NMFfit object factormatrix_clean.3rank and assign it to the generic handle model.rank. But if you want to try creating new factorization models with other ranks or have a look at the NMF diagnostic process, dig into that code a bit. Whatever you end up doing, make sure there's an object of type NMFfit called 'model.rank' to drive subsequent steps.
+6. Run shinySetup.R to build the supporting tables for the Shiny dashboard
+7. In RStudio (https://www.rstudio.com/) open either server.R or ui.R and hit 'Run App' to launch the dashboard.
