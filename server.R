@@ -549,8 +549,8 @@ shinyServer(function(input, output) {
           labs(
             x = 'Factor',
             y = NULL,
-            fill = 'Citizenship Status',
-            title = 'Citizenship Status by Factor'
+            fill = 'If Not US-Born, Citizenship Status',
+            title = 'If Not US-Born, Citizenship Status by Factor'
           ) + 
           theme(legend.position="bottom")
         gg_prop1 %+%
@@ -4915,8 +4915,8 @@ shinyServer(function(input, output) {
           labs(
             x = 'Factor',
             y = NULL,
-            fill = 'Citizenship Status',
-            title = 'Citizenship Status by Factor'
+            fill = 'If Not US-Born, Citizenship Status',
+            title = 'If Not US-Born, Citizenship Status by Factor'
           ) + 
           theme(legend.position="bottom")
         gg_prop1 %+%
