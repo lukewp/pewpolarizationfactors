@@ -33,6 +33,9 @@ explanation <- merge(explanation, model.rank.basis, value=row.id, all.x=TRUE)
 ## For coefs table:
 model.rank.coefs <- data.frame(t(coef(model.rank)))
 model.rank.coefs <- merge(data.frame(predict(model.rank, prob=TRUE)), model.rank.coefs, by=0)
+model.rank.coefs <- merge(data.frame(read.csv("./data/coefQs.csv")), model.rank.coefs, by='Row.names')
+model.rank.coefs <- rename(model.rank.coefs, Variable = Row.names)
+model.rank.coefs$X <- NULL
 
 ## reportsetup object (built up over survey results, back-ends visualizations):
 reportsetup <- explanation %>%
@@ -280,37 +283,13 @@ table(predict(modrt, newdata=validation), validation$predict)
 # table(predict(modfit1, newdata=training), training$predict)
 # table(predict(modfit1, newdata=validation), validation$predict)
 
-## Choropleths:
 
-# tmpvars <- c("state","1")
-# tmpdf <- data.frame(statedisttable[tmpvars])
-# colnames(tmpdf) <- c("region.factor", "value")
-# tmpdf$region <- as.character(tmpdf$region.factor)
-# tmpdf$region.factor <- NULL
-# tmpdf$region <- tolower(tmpdf$region)
-# tmpdf$region[tmpdf$region=="washington dc"] <- "district of columbia"
-# state_choropleth(tmpdf)
-
-# ZIP plot: # Whoops -- no actual zip codes in the data
-# library(choroplethr)
-# library(ggplot2)
-# library(devtools)
-# install_github('arilamstein/choroplethrZip@v1.5.0', force = TRUE)
-# library(choroplethrZip)
-# 
-# statefactordist <- reportsetup[which(is.na(reportsetup$predict)==FALSE), ] %>%
-#   group_by(zipc, predict) %>%
-#   summarise(
-#     n=sum(weight) # weight variable
+# Looking at a crosstab within the data:
+# tmpdist <- reportsetup %>%
+#   group_by(predict, age.r, attend) %>%
+#   summarise(n = sum(weight) # weight variable
 #   ) %>%
 #   mutate(prop = prop.table(n))
-
-
-tmpdist <- reportsetup %>%
-  group_by(predict, age.r, attend) %>%
-  summarise(n = sum(weight) # weight variable
-  ) %>%
-  mutate(prop = prop.table(n))
 
 ### BUILD VARIABLE SUMMARIES BY PREDICTED FACTOR (all the histograms):
 ## For demographics tab:

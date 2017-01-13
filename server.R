@@ -5921,7 +5921,12 @@ shinyServer(function(input, output) {
       for (i in 1:15) {
         incProgress(1/15)
       } 
-      datatable(model.rank.coefs, options = list(pageLength = 100)) %>%
+      datatable(model.rank.coefs, 
+                rownames = FALSE,
+                options = list(
+                  pageLength = 100, 
+                  order = list(3, 'desc')
+                  )) %>%
         formatPercentage('prob', 1) %>%
         formatStyle('prob',
                     background = styleColorBar(range(model.rank.coefs['prob'], na.rm = TRUE), 'lightblue'),

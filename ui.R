@@ -173,9 +173,9 @@ ui <- dashboardPage(
         fluidRow(box(
           width = 12, 
           HTML("
-               <p>The 51 variables below, corresponding to survey questions, were used to determine factors. These were picked because they were asked of all respondents, but specifically don't ask about partisan identity or demographics -- as these survey questions were reserved as independent variables and not part of a complex DV distilled via factorization.</p>
-               <p>A row.name can be translated easily into a survey question -- for example, 'q25k.c1' = 'Q.25, sub-question K, statement #1'</p>
-               <p>A row.name ending in .ca or .cd indicate an agree/disagree question that was recoded into two variables with positive response ranges from 0.0-1.0 for inclusion in NMF.</p>
+               <p>The variables below, corresponding to survey questions, were used to determine factors. These were picked because they were asked of all respondents, but specifically don't ask about partisan identity or demographics -- as these survey questions were reserved as independent variables and not part of a complex DV distilled via factorization.</p>
+               <p>A variable can be translated easily into a survey question -- for example, 'q25k.c1' = 'Q.25, sub-question K, statement #1'</p>
+               <p>A variable ending in .ca or .cd indicate an agree/disagree question that was recoded into two variables with positive response ranges from 0.0-1.0 for inclusion in NMF.</p>
                <p>'predict' indicates the factor number predicted by a particular variable, and 'prob' indicates the probability of assignment to that factor for positive correlation to the variable.</p>
                <p>X1, X2, and X3 correspond to the factors 1, 2, and 3 respectively. A higher coefficient means a variable is highly-correlated. Some variables are related to multiple factors.</p>"),
           dataTableOutput("coefs_table")
