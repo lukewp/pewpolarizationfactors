@@ -5929,7 +5929,7 @@ shinyServer(function(input, output) {
                   )) %>%
         formatPercentage('prob', 1) %>%
         formatStyle('prob',
-                    background = styleColorBar(range(model.rank.coefs['prob'], na.rm = TRUE), 'lightblue'),
+                    background = styleColorBar(range(0:1), 'lightblue'),
                     backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center') %>%
         formatRound(c('X1', 'X2', 'X3'), 3) %>%
         formatStyle('X1',
