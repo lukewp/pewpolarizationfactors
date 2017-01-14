@@ -19,12 +19,17 @@ library(rpart.plot)
 model.rank.basis <- data.frame(basis(model.rank))
 model.rank.basis$row.id <- rownames(model.rank.basis)
 
+model.rank.basis.predictions <- data.frame(predict(model.rank, "features", prob=TRUE))
+model.rank.basis.predictions$row.id <- rownames(model.rank.basis.predictions)
+model.rank.basis <- merge(model.rank.basis, model.rank.basis.predictions, value=row.id, all.x=TRUE)
+
 model.rank.predictions <- data.frame(predict(model.rank, "rows", prob=TRUE))
 model.rank.predictions$row.id <- rownames(model.rank.predictions)
 
 ## Merging survey results w/ NMF output:
 explanation <- merge(rawinput, model.rank.predictions, value=row.id, all.x=TRUE)
 explanation <- merge(explanation, model.rank.basis, value=row.id, all.x=TRUE)
+
 
 ## To CSV:
 # write.csv(explanation, "./outputs/polarization_2014_explanation.csv", na="", row.names = FALSE)
@@ -290,6 +295,23 @@ table(predict(modrt, newdata=validation), validation$predict)
 #   summarise(n = sum(weight) # weight variable
 #   ) %>%
 #   mutate(prop = prop.table(n))
+
+## Ternary diagram of survey distribution:
+# library(ggtern)
+# ggtern(model.rank.basis, aes(X1, X2, X3)) +
+#   geom_point(size = .3, 
+#              aes(colour = predict)) +
+#   scale_color_manual(breaks = c("1", "2", "3"),
+#                      values = c("royalblue3", "yellow3", "red3")) +
+#   # theme_minimal(base_size = 12, base_family = "") +
+#   scale_alpha("prob") +
+#   Tarrowlab('Traditional Values') +
+#   Larrowlab('Equality and Human Rights') +
+#   Rarrowlab('Free Market Capitalism') +
+#   theme_showarrows() +
+#   theme_hidegrid() +
+#   theme_hidemask()
+
 
 ### BUILD VARIABLE SUMMARIES BY PREDICTED FACTOR (all the histograms):
 ## For demographics tab:

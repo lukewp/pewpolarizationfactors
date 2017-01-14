@@ -12,6 +12,7 @@ library(shinydashboard)
 library(DT)
 library(ggplot2)
 library(ggdendro)
+library(ggtern)
 library(dplyr)
 library(tidyr)
 library(ggthemes)
@@ -26,6 +27,63 @@ library(choroplethrMaps)
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
+  
+  ## Intro explanation:
+  withProgress(message = "Top-line plots ...", value = 0, {
+    
+    ## Tab coefs_table:
+    output$coefs_table1 <- renderDataTable({
+      withProgress(message = 'Coefficients Table ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        datatable(model.rank.coefs[c("Statement","X1","X2","X3")], 
+                  rownames = FALSE,
+                  options = list(
+                    pageLength = 5, 
+                    order = list(0, 'asc')
+                  )) %>%
+          formatRound(c('X1', 'X2', 'X3'), 3) %>%
+          formatStyle('X1',
+                      background = styleColorBar(range(model.rank.coefs['X1'], na.rm = TRUE), 'lightblue'),
+                      backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center') %>%
+          formatStyle('X2',
+                      background = styleColorBar(range(model.rank.coefs['X2'], na.rm = TRUE), 'yellow'),
+                      backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center') %>%
+          formatStyle('X3',
+                      background = styleColorBar(range(model.rank.coefs['X3'], na.rm = TRUE), '#ff6666'),
+                      backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center')
+        
+      })
+    })
+    
+    output$triplot <- renderPlot({
+      withProgress(message = 'Ternary Plot of Predicted Factors', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        }
+        
+        a<-ggtern(model.rank.basis, aes(X1, X2, X3)) +
+          geom_point(size = .3,
+                     aes(colour = predict)) +
+          scale_color_manual(breaks = c("1", "2", "3"),
+                             values = c("royalblue3", "yellow3", "red3")) +
+          theme_showarrows() +
+          theme_hidegrid() +
+          theme_hidemask() +
+          labs( x       = "X1",
+                xarrow  = "Equality and Human Rights",
+                y       = "X2",
+                yarrow  = "Traditional Values",
+                z       = "X3",
+                zarrow  = "Free Market Capitalism",
+                title   = "2014 Pew Respondents' Factor Distribution Plot"
+          )
+        print(a)
+      })
+    })
+    
+  })
   
   ## Model explanation:
   withProgress(message = "All model plots ...", value = 0, {
@@ -720,7 +778,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         }
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = reg)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -740,13 +798,13 @@ shinyServer(function(input, output) {
       })
     })
     incProgress(1/16)
-
+    
     output$party_plot <- renderPlot({
       withProgress(message = 'Political Party plot ...', value = 0, {
         for (i in 1:15) {
           incProgress(1/15)
         }
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = party)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -821,11 +879,11 @@ shinyServer(function(input, output) {
       tmpdf$region[tmpdf$region=="washington dc"] <- "district of columbia"
       
       gg_prop1 = StateChoropleth$new(tmpdf)
-        gg_prop1$set_num_colors(1)
-        gg_prop1$title = "Factor 1"
-        gg_prop1$legend = "Population %"
-        gg_prop1$ggplot_scale = scale_fill_gradient(name = "Concentration", low = "white", high = "royalblue3")
-        gg_prop1$render()
+      gg_prop1$set_num_colors(1)
+      gg_prop1$title = "Factor 1"
+      gg_prop1$legend = "Population %"
+      gg_prop1$ggplot_scale = scale_fill_gradient(name = "Concentration", low = "white", high = "royalblue3")
+      gg_prop1$render()
       
     })
   })
@@ -5372,7 +5430,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         }
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = qc142)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -5450,7 +5508,7 @@ shinyServer(function(input, output) {
         for (i in 1:15) {
           incProgress(1/15)
         }
-
+        
         gg_prop1 <- ggplot(data = data.frame(),
                            aes(x = predict, y = prop, fill = q149)) +
           geom_bar(stat = 'identity', position = 'dodge') +
@@ -5926,20 +5984,20 @@ shinyServer(function(input, output) {
                 options = list(
                   pageLength = 100, 
                   order = list(3, 'desc')
-                  )) %>%
+                )) %>%
         formatPercentage('prob', 1) %>%
         formatStyle('prob',
-                    background = styleColorBar(range(0:1), 'lightblue'),
+                    background = styleColorBar(range(0:1), 'lightgreen'),
                     backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center') %>%
         formatRound(c('X1', 'X2', 'X3'), 3) %>%
         formatStyle('X1',
-                    background = styleColorBar(range(model.rank.coefs['X1'], na.rm = TRUE), 'lightgreen'),
+                    background = styleColorBar(range(model.rank.coefs['X1'], na.rm = TRUE), 'lightblue'),
                     backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center') %>%
         formatStyle('X2',
-                    background = styleColorBar(range(model.rank.coefs['X2'], na.rm = TRUE), 'lightgreen'),
+                    background = styleColorBar(range(model.rank.coefs['X2'], na.rm = TRUE), 'yellow'),
                     backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center') %>%
         formatStyle('X3',
-                    background = styleColorBar(range(model.rank.coefs['X3'], na.rm = TRUE), 'lightgreen'),
+                    background = styleColorBar(range(model.rank.coefs['X3'], na.rm = TRUE), '#ff6666'),
                     backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center')
       
     })
@@ -5960,7 +6018,7 @@ shinyServer(function(input, output) {
         geom_text(data = ddata$labels, size = 5, vjust = 0, hjust = -0.25,
                   aes(x=x, y=y, label=label
                       # , colour = group
-                      )) +
+                  )) +
         # scale_colour_manual(values=c("blue","yellow","red")) +
         ggtitle("Factor Assignment Variables") +
         theme(plot.title = element_text(size = 20, face = "bold", hjust = 0.5)) +
@@ -5989,7 +6047,7 @@ shinyServer(function(input, output) {
         theme(plot.title = element_text(size = 20, face = "bold", hjust = 0.5)) +
         theme_dendro()
       
-        
+      
     })
   })
   

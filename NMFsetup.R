@@ -1,8 +1,8 @@
-install.packages("rgl")
+# install.packages("rgl")
 library(rgl)
 # If this fails on MacOS, install XQuartz.
 
-install.packages("clusterSim")
+# install.packages("clusterSim")
 library(clusterSim)
 # If this is erroring out on an X11 error, and you're on an ubuntu box, run the following:
 #!> sudo apt-get install r-cran-rgl

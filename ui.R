@@ -19,7 +19,7 @@ ui <- dashboardPage(
   dashboardSidebar(
     width = 150,
     sidebarMenu(
-      menuItem("Introduction", tabName = "intro", icon = icon("file-text"), selected = TRUE),
+      menuItem("Overview", tabName = "intro", icon = icon("file-text"), selected = TRUE),
       menuItem("Demographics", tabName = "demographics", icon = icon("bar-chart")),
       menuItem("States", tabName = "map", icon = icon("globe")),
       menuItem("Factor Coefs", tabName = "coefs_table", icon = icon("file-text")),
@@ -47,27 +47,43 @@ ui <- dashboardPage(
     tabItems(
       tabItem(
         tabName = "intro",
-        h2("Introduction"),
+        h2("Study of the 2014 Pew Political Polarization Survey"),
         fluidRow(box(
           width = 12,
-          tags$p("Study of the 2014 Pew Political Polarization Survey"),
+          tags$h3("Introduction"),
           tags$p("This visualization and analysis is based on the ", tags$a(href="http://www.people-press.org/2014/03/16/2014-political-polarization-survey/","Pew Political Polarization Dataset from 2014"), ". Of several attitudes-and-political-values surveys conducted, this research was selected for analysis because its large size (>10,000) provides fertile ground for more robust factor analysis."),
           HTML("
                <p>The analysis is meant to explore the possibility that there are three prominent-and-discrete audiences in US political life, to help explain some American political dynamics. </p>
                <p>Instead of thinking of America's electorate as right, left, and in the middle, it's better to think of a triangle with a major (equally-sized) constituency at each point.</p>
                <p>In order to build a majority coalition, any two of these points must align behind an issue or a candidate.</p>
                <ul>
-               <li>Factor 1: Human Rights and Equality -- Blue, highly correlated with the Democratic Party</li>
-               <li>Factor 2: Traditional Values -- Yellow, split between the two mainstream American political parties, like neither party is consistent with their values</li>
-               <li>Factor 3: Free Market Capitalism -- Red, highly correlated with the Republican Party</li>
+               <li>Group 1: Human Rights and Equality -- Blue, highly correlated with the Democratic Party</li>
+               <li>Group 2: Traditional Values -- Yellow, split between the two mainstream American political parties, like neither party is consistent with their values</li>
+               <li>Group 3: Free Market Capitalism -- Red, highly correlated with the Republican Party</li>
                </ul>
+               <p>The table below shows which statements from the Values survey are most-correlated with each group. The higher the number under X1 for Group 1, X2 for Group 2, etc., the more highly-associated each statement is with the group's overall values set. As you read through them, do you find yourself agreeing with statements more closely aligned to any one group?</p>"),
+          dataTableOutput("coefs_table1"))),
+        fluidRow(box(
+          width = 12,
+          tags$h3("Why factors, not clusters?"),
+          HTML("
+               <p>Political commentators often describe the U.S. as highly polarized. But it's important to recognize most Americans express characteristics of all three of these values groups. The individual responses to the survey were plotted against each of these 3 values groups' definitions in the chart below. People whose survey responses demonstrate group purity would be plotted in the corners of the triangle. But the vast majority of plotted survey responses are scattered throughout the middle of the triangle. Some peoples' values also hug the edges -- people who demonstrate zero similarity to the group in the opposing corner. For example, people along the bottom edge in this diagram are people whose values fall along the gradient between the Equality-focused (Blue) group and the Free Market-focused (Red) group, but demonstrate zero similarity to the Traditional Values (Yellow) group. I've described this project as a 'Factor Study' and not a 'Cluster Study,' because clusters imply a more clear-cut belonging to one group but not the others, and that's just not what's happening here. Most of us express our values through some blend of all the factors.</p>
+              "),
+          plotOutput("triplot", height = 350))),
+        fluidRow(box(
+          width = 12,
+          tags$h3("Values explain presidential elections better than partisanship"),
+          HTML("
                <p>In terms of electoral votes, different coalitions offer promise of delivering majorities in different states. </p>
-               <p>In the 2008 and 2012 elections, the winning coalitions were 'green' coalitions -- that is, combinations of the blue and yellow factor constituencies.
-               In 2016, the victorious coalition was an 'orange' coalition -- a combination of the red and yellow factor constituencies.</p>
+               <p>In the 2008 and 2012 elections, the winning coalitions were 'green' coalitions -- that is, a combination of the blue and yellow factor constituencies. The Traditional Values group appears to have split 50/50 for Obama in both elections.</p>
+               <p>In 2016, the victorious coalition was an 'orange' coalition -- a combination of the red and yellow factor constituencies. About 70% of the Traditional Values factor appears to have supported Trump.</p>
                <p>A 'purple' coalition may also be possible, one that finds common ground between the Blue and Red constituencies at the expense of the Traditional Values factor.</p>
                <p>And of course, a new party could emerge that more cogently captures the values of the Traditional Values factor, which would introduce entirely new dynamics to the American political landscape, and appear a very viable possibility based on this analysis.</p>
-              "),
-          tags$p("Explore the 2014 Pew survey in terms of these factors with this visualization, code for which ", tags$a(href="https://github.com/lukewp/pewpolarizationfactors", "is available here"),".")
+              "))),
+        fluidRow(box(
+          width = 12,
+          tags$h3("Recreate this open-source analysis yourself"),
+          tags$p("Explore the 2014 Pew survey in terms of these factors with this visualization, code for which ", tags$a(href="https://github.com/lukewp/pewpolarizationfactors", "is available here.")," If you find any errors or data discrepancies, feel free to open an issue ticket on Github or reach out to me directly.")
         ))),
       tabItem(
         tabName = "demographics",
