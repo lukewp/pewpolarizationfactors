@@ -45,7 +45,7 @@ shinyServer(function(input, output) {
                   )) %>%
           formatRound(c('X1', 'X2', 'X3'), 3) %>%
           formatStyle('X1',
-                      background = styleColorBar(range(model.rank.coefs['X1'], na.rm = TRUE), 'lightblue'),
+                      background = styleColorBar(range(model.rank.coefs['X1'], na.rm = TRUE), '#66a3ff'),
                       backgroundSize = '98% 88%', backgroundRepeat = 'no-repeat', backgroundPosition = 'center') %>%
           formatStyle('X2',
                       background = styleColorBar(range(model.rank.coefs['X2'], na.rm = TRUE), 'yellow'),
@@ -83,6 +83,77 @@ shinyServer(function(input, output) {
       })
     })
     
+    output$factor1map1 <- renderPlot({
+      withProgress(message = 'Factor 1 Choropleth ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        
+        tmpvars <- c("state","1")
+        tmpdf <- data.frame(statedisttable[tmpvars])
+        colnames(tmpdf) <- c("region.factor", "value")
+        tmpdf$region <- as.character(tmpdf$region.factor)
+        tmpdf$region.factor <- NULL
+        tmpdf$region <- tolower(tmpdf$region)
+        tmpdf$region[tmpdf$region=="washington dc"] <- "district of columbia"
+        
+        gg_prop1 = StateChoropleth$new(tmpdf)
+        gg_prop1$set_num_colors(1)
+        gg_prop1$title = "Factor 1"
+        gg_prop1$legend = "Population %"
+        gg_prop1$ggplot_scale = scale_fill_gradient(name = "Concentration", low = "white", high = "royalblue3")
+        gg_prop1$render()
+        
+      })
+    })
+    
+    output$factor2map1 <- renderPlot({
+      withProgress(message = 'Factor 2 Choropleth ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        
+        tmpvars <- c("state","2")
+        tmpdf <- data.frame(statedisttable[tmpvars])
+        colnames(tmpdf) <- c("region.factor", "value")
+        tmpdf$region <- as.character(tmpdf$region.factor)
+        tmpdf$region.factor <- NULL
+        tmpdf$region <- tolower(tmpdf$region)
+        tmpdf$region[tmpdf$region=="washington dc"] <- "district of columbia"
+        
+        gg_prop1 = StateChoropleth$new(tmpdf)
+        gg_prop1$set_num_colors(1)
+        gg_prop1$title = "Factor 2"
+        gg_prop1$legend = "Population %"
+        gg_prop1$ggplot_scale = scale_fill_gradient(name = "Concentration", low = "white", high = "yellow3")
+        gg_prop1$render()
+        
+      })
+    })
+    
+    output$factor3map1 <- renderPlot({
+      withProgress(message = 'Factor 3 Choropleth ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        
+        tmpvars <- c("state","3")
+        tmpdf <- data.frame(statedisttable[tmpvars])
+        colnames(tmpdf) <- c("region.factor", "value")
+        tmpdf$region <- as.character(tmpdf$region.factor)
+        tmpdf$region.factor <- NULL
+        tmpdf$region <- tolower(tmpdf$region)
+        tmpdf$region[tmpdf$region=="washington dc"] <- "district of columbia"
+        
+        gg_prop1 = StateChoropleth$new(tmpdf)
+        gg_prop1$set_num_colors(1)
+        gg_prop1$title = "Factor 3"
+        gg_prop1$legend = "Population %"
+        gg_prop1$ggplot_scale = scale_fill_gradient(name = "Concentration", low = "white", high = "red3")
+        gg_prop1$render()
+        
+      })
+    })
   })
   
   ## Model explanation:

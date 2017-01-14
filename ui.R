@@ -72,6 +72,23 @@ ui <- dashboardPage(
           plotOutput("triplot", height = 350))),
         fluidRow(box(
           width = 12,
+          tags$h3("So who are in these factors?"),
+          HTML("
+               <p><strong>Factor 1: Equality and Human Rights</strong></p>
+               <p>The Factor 1 audience lives in more dense areas like cities. They are majority-female (55%), and while their age distribution is broad, they are significantly more likely than the other two groups to be in their 20s and 30s. Education-wise, they look very much like Factor 3 in that they tend to have more formal schooling. Ethnically and racially, Factor 1 and Factor 2 are very similar -- both are significantly more diverse than the mostly-Caucasian Factor 3. They are more likely than the other two groups to have never been married. They are less likely than the other Factors to be Christians (though just as likely to be Catholic), more likely to be either Atheist or Agnostic, and they attend church less-frequently. Their income is more evenly-distributed than the other two factors: wealthier than Factor 2 but not Factor 3. They are unlikely to be Republicans, and more likely to be either Independents or Democrats -- significantly more likely to be Democrats than either of the other factors. Ideologically, they describe themselves as moderate-to-liberal.</p>"),
+          plotOutput("factor1map1"),
+          HTML("
+               <p><strong>Factor 2: Traditional Values</strong></p>
+               <p>The Factor 2 audience lives in less dense areas like rural communities. They are majority-female (54%), and while their age distribution is broad, they are slightly older than Factor 1 and slightly younger than Factor 3. They are much more likely than the other two factors to have only a high school diploma, and far less likely to have any collegiate or postgraduate schooling. Ethnically and racially, Factor 2 is very similar to Factor 1 -- both are significantly more diverse than the mostly-Caucasian Factor 3. They are more likely to be married than Factor 1 but much less likely than Factor 3. They are more likely than the other factors to be Christians, and they attend church more frequently than Factor 1, about as often as Factor 3. They span all income brackets but a larger percentage of Factor 2 makes less than $40,000 compared to the other two factors. They are just as likely to consider themselves Independents as the other two factors, but the remainder of Factor 2 is split between the Republican and Democratic parties, with a slight Democratic advantage. Ideologically, they describe themselves as moderate-to-conservative.</p>"),
+          plotOutput("factor2map1"),
+          HTML("
+               <p><strong>Factor 3: Free Market Capitalism</strong></p>
+               <p>The Factor 3 audience lives in medium-density areas like suburbs. They are majority-male (59%), and while their age distribution is broad, they are older than the other two factors -- their most populous cohort is in their 60s. Education-wise, they look very much like Factor 1 in that they tend to have more formal schooling. Ethnically and racially, Factor 3 is significantly less-diverse than the other two factors. They're more likely to be married than the other two factors. They are nearly as likely to be Christian as Factor 2, and are the factor attending church most often. Their income is much higher -- the vast majority of this factor earns over $50,000/year. They're much more likely than the other two groups to be registered to vote, and while they have just as many Independents as the other two factors, they are majority-Republican. Ideologically, they describe themselves as conservative-to-moderate.</p>
+              "),
+          plotOutput("factor3map1"),
+          HTML("<em>Note: on the above maps, projections of factor concentration for low-population states have high estimated error (especially ND, WY, and DC).</em>"))),
+        fluidRow(box(
+          width = 12,
           tags$h3("Values explain presidential elections better than partisanship"),
           HTML("
                <p>In terms of electoral votes, different coalitions offer promise of delivering majorities in different states. </p>
@@ -123,13 +140,13 @@ ui <- dashboardPage(
           width = 12, plotOutput("usborn_plot", height = 350)
         )),
         fluidRow(box(
+          width = 12, plotOutput("citizen_plot", height = 250)
+        )),
+        fluidRow(box(
           width = 12, plotOutput("marital_plot", height = 250)
         )),
         fluidRow(box(
           width = 12, plotOutput("parent_plot", height = 250)
-        )),
-        fluidRow(box(
-          width = 12, plotOutput("citizen_plot", height = 250)
         )),
         fluidRow(box(
           width = 12, plotOutput("relig_plot", height = 600)
