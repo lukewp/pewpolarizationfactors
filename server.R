@@ -71,6 +71,7 @@ shinyServer(function(input, output) {
           theme_showarrows() +
           theme_hidegrid() +
           theme_hidemask() +
+          theme(legend.position = "none") +
           labs( x       = "X1",
                 xarrow  = "Equality and Human Rights",
                 y       = "X2",
@@ -102,7 +103,7 @@ shinyServer(function(input, output) {
         gg_prop1$title = "Factor 1"
         gg_prop1$legend = "Population %"
         gg_prop1$ggplot_scale = scale_fill_gradient(name = "Concentration", low = "white", high = "royalblue3")
-        gg_prop1$render()
+        gg_prop1$render() + theme(legend.position = "none")
         
       })
     })
@@ -124,9 +125,9 @@ shinyServer(function(input, output) {
         gg_prop1 = StateChoropleth$new(tmpdf)
         gg_prop1$set_num_colors(1)
         gg_prop1$title = "Factor 2"
-        gg_prop1$legend = "Population %"
+        # gg_prop1$legend = "Population %"
         gg_prop1$ggplot_scale = scale_fill_gradient(name = "Concentration", low = "white", high = "yellow3")
-        gg_prop1$render()
+        gg_prop1$render() + theme(legend.position = "none")
         
       })
     })
@@ -150,9 +151,54 @@ shinyServer(function(input, output) {
         gg_prop1$title = "Factor 3"
         gg_prop1$legend = "Population %"
         gg_prop1$ggplot_scale = scale_fill_gradient(name = "Concentration", low = "white", high = "red3")
-        gg_prop1$render()
+        gg_prop1$render() + theme(legend.position = "none")
         
       })
+    })
+    
+    sliderValues <- reactive({
+      data.frame(
+        State = statedisttable$state,
+        Electoral_Votes = statedisttable$EVs201x,
+        Support_Center = (statedisttable$`1`*(input$f1)*.01 + statedisttable$`2`*(input$f2)*.01 + statedisttable$`3`*(input$f3)*.01)
+      )
+    })
+    
+    output$evs_banked <- renderText({
+      sum(sliderValues()$Electoral_Votes[which(sliderValues()$Support_Center > 0.55)])})
+
+    output$evs_inplay <- renderText({
+      sum(sliderValues()$Electoral_Votes[which(sliderValues()$Support_Center <= 0.55 & sliderValues()$Support_Center > 0.45)])})
+
+    output$dynamicmap <- renderPlot({
+        tmpvars <- c("State","Support_Center")
+        tmpdf <- data.frame(sliderValues()[tmpvars])
+        colnames(tmpdf) <- c("region.factor", "value")
+        tmpdf$region <- as.character(tmpdf$region.factor)
+        tmpdf$region.factor <- NULL
+        tmpdf$region <- tolower(tmpdf$region)
+        tmpdf$region[tmpdf$region=="washington dc"] <- "district of columbia"
+        
+        gg_prop1 = StateChoropleth$new(tmpdf)
+        gg_prop1$set_num_colors(1)
+        gg_prop1$ggplot_scale = scale_fill_gradientn(limits = c(0,1), values = c(0, 0.45, 0.54999, 0.55, 1), breaks = 0.5, colors = c("white", "white", "purple","red", "red"))
+        gg_prop1$render() + theme(legend.position = "none")
+        
+    })
+        
+    output$states <- renderDataTable({
+      datatable(data = sliderValues(),
+                rownames = FALSE,
+                options = list(
+                  pageLength = 10, 
+                  order = list(2, 'desc')
+                )) %>%
+        formatPercentage('Support_Center', 1) %>%
+        formatStyle('Support_Center',
+                    background = styleColorBar(0:1, 'lightblue'),
+                    backgroundSize = '98% 88%',
+                    backgroundRepeat = 'no-repeat',
+                    backgroundPosition = 'center')
     })
   })
   
