@@ -13,9 +13,10 @@ library(scales)
 
 ## Define UI
 ui <- dashboardPage(
+  title = "Three Americas Study",
   dashboardHeader(
-    title = "3-Factors Analysis of Pew Political Polarization Survey 2014",
-    titleWidth = 500),
+    title = "Three Americas Study",
+    titleWidth = 250),
   dashboardSidebar(
     width = 150,
     sidebarMenu(
@@ -47,32 +48,65 @@ ui <- dashboardPage(
     tabItems(
       tabItem(
         tabName = "intro",
-        h2("Study of the 2014 Pew Political Polarization Survey"),
+        h2("A Re-examination of the 2014 Pew Political Polarization Survey"),
         fluidRow(box(
           width = 12,
           status = "primary",
           title = "Introduction",
-          tags$p("This visualization and analysis is based on the ", tags$a(href="http://www.people-press.org/2014/03/16/2014-political-polarization-survey/","Pew Political Polarization Dataset from 2014"), ". Of several attitudes-and-political-values surveys conducted, this research was picked because its large size (>10,000) provides fertile ground for more robust factor analysis."),
+          tags$p("The following visualization and analysis is based on ", 
+                 tags$a(href="http://www.people-press.org/2014/03/16/2014-political-polarization-survey/",
+                        "Pew Research's 2014 Political Polarization Survey."), 
+                 " Of several public attitudes-and-political-values surveys conducted whose datasets are available 
+                 for download, Pew's research was chosen because its large size (>10,000) provides a fertile platform 
+                 for more robust factor analysis."),
           HTML("
-               <p>This project is meant to explore the possibility that there are three prominent-and-discrete audiences in US political life, to help explain some curious and confusing American political dynamics. </p>
-               <p>Instead of thinking of America's electorate as right, left, and undecided, it's better to think of a triangle with a major (equally-sized) constituency at each point, each constituency having firm and discrete (if occasionally overlapping) values.</p>
-               <p>Because none of these groups holds a majority (each describe roughly a third of Americans), in order to build a majority coalition, one must align any two of these groups behind an issue or a candidate:</p>
-               <ul>
-               <li>Group 1: Human Rights and Equality -- Blue, highly correlated with the Democratic Party</li>
-               <li>Group 2: Traditional Values -- Yellow, split between the two mainstream American political parties, like neither party is consistent with their values</li>
-               <li>Group 3: Free Market Capitalism -- Red, highly correlated with the Republican Party</li>
-               </ul>
-               <p>The table below shows which statements from the Values survey are most-correlated with each group. The higher the number under X1 for Group 1, X2 for Group 2, etc., the more highly-associated each statement is with the group's overall values set. As you read through them, do you find yourself agreeing with statements more closely aligned to any one group?</p>"),
+<p>At the end of Obama's presidential term, both major parties' identities are more malleable as they consider ways 
+to govern or form a coherent opposition. Consequences of changes made to party platforms today will play out on the 
+electoral map over the coming decades. This project is meant to explore the possibility that there are three 
+prominent-and-discrete audiences in US political life, to help explain some curious and confusing American political 
+dynamics. </p>
+<p>Instead of thinking of America's electorate as right, left, and undecided, it's better to think of a triangle with a 
+major (equally-sized) constituency at each point, each constituency having firm and discrete (if occasionally overlapping)
+values. Because none of these values groups holds a majority (each describe roughly a third of Americans), 
+in order to build a majority coalition, one must align any two of these groups behind an issue or a candidate:</p>
+<ul>
+<li>Group 1: Human Rights and Equality -- Blue, highly correlated with the Democratic Party</li>
+<li>Group 2: Traditional Values -- Yellow, split between the two mainstream American political parties, like neither
+party is consistent with their values</li>
+<li>Group 3: Free Market Capitalism -- Red, highly correlated with the Republican Party</li>
+</ul>
+<p>The table below shows which statements from the Values survey are most-correlated with each group. The higher the 
+number under X1 for Group 1, X2 for Group 2, etc., the more highly-associated each statement is with the group's 
+overall values set. As you read through them, do you find yourself agreeing with statements more closely aligned to 
+any one group?</p><br />
+               "),
           dataTableOutput("coefs_table1"))),
         fluidRow(box(
           width = 12,
           title = "Why factors?",
           status = "primary",
           HTML("
-               <p>Companies like Netflix, Amazon, and Spotify use a technique called Matrix Factorization to develop new ways to organize groups of movies, books, and songs, helping them make smarter recommendations for their customers. This technique helps uncover hidden connections in the data all their customers provide such as purchase history and ratings. So for example, a fan of Harry Potter films might be more likely to get a recommendation to watch Percy Jackson than they might The Highlander, even though all three films would've been on the same 'Fantasy' shelf at Blockbuster. Matrix Factorization is also great at identifying communities where dividing lines aren't so obvious, which is why it's appropriate for this project. These three groups were detected using a specific technique called Non-Negative Matrix Factorization or 'NMF' for short. NMF is used to uncover hidden connections and categories within big piles of information in applications from cybersecurity to genetics research.</p>"),
+<p>Companies like Netflix, Amazon, and Spotify use a technique called Collaborative Filtering to develop new ways 
+to organize groups of movies, books, and songs, helping them make smarter recommendations for their customers. 
+This technique helps uncover hidden connections in the data all their customers provide such as purchase history 
+and ratings. So for example, a fan of Harry Potter films might be more likely to get a recommendation to watch 
+Percy Jackson than they might The Highlander, even though all three films would've been on the same 'Fantasy' 
+shelf at Blockbuster. Collaborative Filtering is also great at identifying communities where dividing lines aren't 
+so obvious, which is why it's appropriate for this project. These three groups were detected using a specific 
+Collaborative Filtering technique called Non-Negative Matrix Factorization or 'NMF' for short. NMF is used to 
+uncover hidden connections and categories within big piles of information in applications from cybersecurity to 
+genetics research.</p>"),
           box(
             width=6,
-            HTML("<p>Political commentators often describe the U.S. as highly polarized. But it's important to recognize most Americans express characteristics of all three of these values groups. The individuals surveyed were plotted against each of these three values groups' definitions in the chart below. People whose survey responses demonstrate group purity would be plotted in the corners of the triangle. But the vast majority of plotted survey responses are scattered throughout the middle of the triangle. This project is described as a 'Factor Study' and not a 'Cluster Study,' because clusters imply a more clear-cut belonging to one group but not the others, and that's just not what's happening here. Americans express our values through some blend of all three factors.</p>
+            HTML("
+<p>Political commentators often describe the U.S. as highly polarized. But it's important to recognize most 
+Americans express characteristics of all three of these values groups. The surveyed individuals' responses are 
+plotted against each of these three values groups' definitions in the chart below. If Americans had highly-polarized 
+values, everyone would be grouped in the corners of the triangle. But instead we see the vast majority of survey 
+responses are scattered throughout the middle of the triangle, showing most Americans' values aren't so clear-cut. 
+This project is described as a 'Factor Study' and not a 'Cluster Study,' because clusters imply people who belong to
+one group have nothing in common with the others, and that's just not what's happening here. Americans express our
+values through some blend of all three values sets -- some combination of these three factors exist in each of us.</p>
               ")),
           box(
             width=6,
@@ -83,74 +117,264 @@ ui <- dashboardPage(
           title = "So who are in these factors?",
           status = "primary",
           HTML("
-               <p><strong>Factor 1: Equality and Human Rights</strong></p>
-               <p>The Factor 1 audience lives in more dense areas like cities. They are majority-female (55%), and while their age distribution is broad, they are more likely than the other two groups to be in their 20s and 30s. Education-wise, they look very much like Factor 3 in that they tend to have more formal schooling. Ethnically and racially, Factor 1 and Factor 2 are very similar -- both are more diverse than the mostly-Caucasian Factor 3. They are more likely than the other two groups to have never been married. They are less likely than the other Factors to be Christians (though just as likely to be Catholic), more likely to be either Atheist or Agnostic, and they attend church less-frequently. Their income is more evenly-distributed than the other two factors: wealthier than Factor 2 but not Factor 3. They are unlikely to be Republicans, and more likely to be either Independents or Democrats -- far more likely to be Democrats than either of the other factors. Ideologically, they describe themselves as moderate-to-liberal.</p>"),
+<p><strong>Factor 1: Equality and Human Rights</strong></p>
+<p>The Factor 1 audience lives in more dense areas like cities. They are majority-female (55%), and while their 
+age distribution is broad, they are more likely than the other two groups to be in their 20s and 30s. Education-wise, 
+they look very much like Factor 3 in that they tend to have more formal schooling. Ethnically and racially, Factor 1 
+and Factor 2 are very similar -- both are more diverse than the mostly-Caucasian Factor 3. Those associated more highly
+with Factor 1 are more likely than the other two groups to have never been married. They are less likely than members of
+the other Factors to be Christians (though just as likely to be Catholic), more likely to be either Atheist or Agnostic, 
+and they attend church less-frequently. Their income is more evenly-distributed than the other two factors: wealthier 
+than Factor 2 but not Factor 3. People who share Factor 1's values are unlikely to be Republicans, and more likely to be 
+either Independents or Democrats -- far more likely to be Democrats than either of the other factors. Ideologically, 
+they describe themselves as moderate-to-liberal.</p>
+               "),
           plotOutput("factor1map1"),
           HTML("
-               <p><strong>Factor 2: Traditional Values</strong></p>
-               <p>The Factor 2 audience lives in less dense areas like rural communities. They are majority-female (54%), and while their age distribution is broad, they are slightly older than Factor 1 and slightly younger than Factor 3. They are much more likely than the other two factors to have only a high school diploma, and far less likely to have any collegiate or postgraduate schooling. Ethnically and racially, Factor 2 is very similar to Factor 1 -- both are more diverse than the mostly-Caucasian Factor 3. They are more likely to be married than Factor 1 but much less likely than Factor 3. They are more likely than the other factors to be Christians, and they attend church more frequently than Factor 1, about as often as Factor 3. They span all income brackets but a larger percentage of Factor 2 makes less than $40,000 compared to the other two factors. They are just as likely to consider themselves Independents as the other two factors, but the remainder of Factor 2 is split between the Republican and Democratic parties, with a slight Democratic advantage. Ideologically, they describe themselves as moderate-to-conservative.</p>"),
+<p><strong>Factor 2: Traditional Values</strong></p>
+<p>The Factor 2 audience lives in less dense areas like rural communities. They are majority-female (54%), and while 
+their age distribution is broad, they are slightly older than Factor 1 and slightly younger than Factor 3. Those associated
+with Factor 2 are much more likely than those in the other two factors to have only a high school diploma, and far less 
+likely to have any collegiate or postgraduate schooling. Ethnically and racially, Factor 2 is very similar to Factor 1 -- 
+both are more diverse than the mostly-Caucasian Factor 3. They are more likely to be married than Factor 1 but much less 
+likely than Factor 3. Members of Factor 2 are more likely than the other factors to be Christians, and they attend church 
+much more frequently than Factor 1, about as often as Factor 3. They span all income brackets but a larger percentage of 
+those in Factor 2 make less than $40,000 compared to those in the other two factors. They are just as likely to consider 
+themselves Independents as the other two factors, but the remainder of Factor 2 is split between the Republican and 
+Democratic parties, with a slight Democratic advantage. Ideologically, they describe themselves as moderate-to-conservative.</p>
+               "),
           plotOutput("factor2map1"),
           HTML("
-               <p><strong>Factor 3: Free Market Capitalism</strong></p>
-               <p>The Factor 3 audience lives in medium-density areas like suburbs. They are majority-male (59%), and while their age distribution is broad, they are older than the other two factors -- their most populous cohort is in their 60s. Education-wise, they look very much like Factor 1 in that they tend to have more formal schooling. Ethnically and racially, Factor 3 is less ethnically-diverse than the other two factors. They're more likely to be married than the other two factors. They are nearly as likely to be Christian as Factor 2, and are the factor attending church most often. Their income is much higher -- the vast majority of this factor earns over $50,000/year. They're much more likely than the other two groups to be registered to vote, and while they have just as many Independents as the other two factors, they are majority-Republican. Ideologically, they describe themselves as conservative-to-moderate.</p>
+<p><strong>Factor 3: Free Market Capitalism</strong></p>
+<p>The Factor 3 audience lives in medium-density areas like suburbs. They are majority-male (59%), and while their age 
+distribution is broad, they are older than the other two factors -- their most populous cohort is in their 60s. 
+Education-wise, they look very much like Factor 1 in that they tend to have more formal schooling. Ethnically and racially, 
+Factor 3 is less ethnically-diverse than the other two factors. Those associated with Factor 3 are more likely to be married 
+than those associated with the other two factors. They are nearly as likely to be Christian as Factor 2, and are the factor 
+attending church most frequently. Their income is much higher -- the vast majority of this factor earns over $50,000/year. 
+They're much more likely than the other two groups to be registered to vote, and while Factor 3 has just as many Independents 
+as the other two factors, they are majority-Republican. Ideologically, they describe themselves as conservative-to-moderate.</p>
               "),
           plotOutput("factor3map1"),
-          HTML("<em>Note: on the above maps, projections of factor concentration for low-population states have high estimated error (especially ND, WY, and DC).</em>"))),
+          HTML("
+<em>Note: on the above maps, projections of factor concentration for 
+low-population states have high estimated error (especially ND, WY, and DC).</em>"))),
         fluidRow(box(
           width = 12,
           title = "Values explain presidential elections better than partisanship",
           status = "primary",
           HTML("
-               <p>In terms of electoral votes, different coalitions offer promise of delivering majorities in different states. </p>
-               <p>In the 2008 and 2012 elections, the winning coalitions were 'green' coalitions -- that is, a combination of the blue and yellow factor constituencies. The Traditional Values group appears to have split 50/50 for Obama in both elections.</p>
-               <p>In 2016, the victorious coalition was an 'orange' coalition -- a combination of the red and yellow factor constituencies. About 70% of the Traditional Values factor appears to have supported Trump.</p>
-               <p>A 'purple' coalition may also be possible, one that finds common ground between the Blue and Red constituencies at the expense of the Traditional Values factor.</p>
-               <p>And of course, a new party could emerge that more cogently captures the values of the Traditional Values factor, which would introduce entirely new dynamics to the American political landscape, and it appears this is a viable possibility based on this analysis.</p>
+<p>In terms of electoral votes, different coalitions offer promise of delivering majorities in different states. 
+Factor 1 controls 24 electoral votes, Factor 2 controls 3 electoral votes, and Factor 3 controls none. But any two 
+factors voting together easily deliver 270 votes to secure a presidential victory</p>
+<p>In the 2008 and 2012 elections, the winning coalitions were 'green' coalitions -- that is, a combination of the 
+blue and yellow factor constituencies. The Traditional Values group appears to have split 50/50 for Obama in both elections.</p>
+<p>In 2016, the victorious coalition was an 'orange' coalition -- a combination of the red and yellow factor 
+constituencies. About 70% of the Traditional Values factor appears to have supported Trump.</p>
+<p>A 'purple' coalition may also be possible, one that finds common ground between the Blue and Red constituencies at the 
+expense of the Traditional Values factor.</p>
+<p>And of course, a new party could emerge that more cogently captures the values of the Traditional Values factor, which 
+would introduce entirely new dynamics to the American political landscape, and it appears this is a viable possibility 
+based on this analysis.</p>
+<p>In redistricting, parties able to draw maps often try set up a political advantage that plays out in congressional
+and state legislative elections over the following decade. Data can help the map-drawers, predicting the range of likely 
+outcomes for subsequent elections based on the political makeup of each district. This factor analysis enables a similar 
+forecast of the expected impact on the electoral college resulting from any shift in platform or coalition construction.</p>
               "))),
         fluidRow(box(
           width = 12,
           title = "So what?",
           status = "primary",
           HTML("
-               <p>If one aspired to build a working political majority in the United States, the first thing to do is recognize there are three distinct groups and any coalition should strive to find mutual understanding between two of them. The following is a set of strategic scenarios for combining two groups to form a majority at the expense of the other:</p>
-               <h4>Group 1 + Group 2: The Green Coalition</h4>
-               <p>United in opposition to the third group, the Green Coalition has some common ground: It holds an unfavorable view of the Republican Party, and Congress, and a favorable view of Labor Unions, the Federal Reserve, and the EPA. It believes diplomacy is more effective than military strength for ensuring peace and that relying too much on military force can create hatred leading to increased terrorism. This coalition believes too much power is concentrated in the hands of a few large companies. It believes businesses make too much profit. It views MSNBC favorably. It thinks the Republican party doesn't care about the middle class, and is too willing to cut government programs even when they work. The Green Coalition believes the country should do whatever it takes to protect the environment, though the two groups don't agree on all the tradeoffs of environmental protection. This coalition thinks laws are sometimes necessary to protect people from themselves. This coalition thinks the American economic system unfairly favors powerful interests, and that Wall Street often hurts the economy as much as it helps. This coalition's members agree the police should not be able to stop and search people simply for appearing suspicious. This coalition believes in global warming, and attributes it to the burning of fossil fuels. It believes we should invest more in renewable energy than in expanding exploration of coal, oil, and natural gas. The Green Coalition supports Common Core education standards. While the two groups within it disagreed on Obamacare, the coalition's members think elected officials should do as much as possible to make the ACA work now that it's law. It thinks Affirmative Action programs on college campuses are a good thing. This Green Coalition is younger and more diverse than the rest of America.</p>
-               <h4>Group 3 + Group 2: The Orange Coalition</h4>
-               <p>United in opposition to the first group, the Orange Coalition has some common ground: It disapproved of President Obama's presidency and is dissatisfied by the way things are going in America today. It thinks America's best years are behind us. Members of this coalition would prefer to live in a small town or rural area before a city, favoring a community where the houses are larger and farther apart, with schools, stores, and restaurants several miles away. Living in a place with a mix of people from different racial and ethnic backgrounds, or near art museums and theaters is not important to this coalition. The Orange Coalition both view the Democratic Party and Congress unfavorably, but views the NRA favorably, and it thinks both the Democratic and Republican parties' policies are misguided and a threat to the nation's well-being. This coalition thinks government is almost always wasteful and inefficient, and that government regulation of business usually does more harm than good. The Orange Coalition's members are more likely to think poor people today have it easy because they get government benefits without having to do anything in return, and they don't think the government can afford to do much more to help the needy. The Orange Coalition thinks Black people who can't get ahead in this country are mostly responsible for their own condition. Coalition members believe society is better off if people would make marriage and children a priority. It thinks America has been successful because of its reliance on long-standing principles. Members say they'd be very unhappy if an immediate family member were engaged to marry an atheist. This coalition's members view Fox News favorably. The Orange Coalition think the Democratic Party doesn't care about the middle class, and too often sees Government as the only way to solve problems. It thinks America has made the changes needed to give blacks equal rights with whites. It thinks government is doing too many things better left to businesses and individuals. The Orange Coalition agrees that government aid to the poor does more harm than good because it makes people too dependent on government assistance. This Coalition's members think Islam is more likely than other religions to encourage violence among its followers. It thinks the Supreme Court should base its rulings on what the U.S. Constitution meant as originally written. Members oppose letting gays and lesbians marry. Members were united in their disapproval of Obamacare: they think the it's not the federal government's job to ensure all Americans have health coverage, and that instead health coverage should be provided through a mix of private insurance and government programs. The Orange Coalition thinks the government should protect individuals' rights to own guns. It believes abortion should be illegal. Members of the Orange Coalition attend religious services much more often, and more regularly than the rest of America.</p>
-               <h4>Group 1 + Group 3: The Purple Coalition</h4>
-               <p>United in opposition to the second group, the Purple Coalition has some common ground: Members have an overall-unfavorable opinion of Congress. The Purple Coalition believes immigrants strengthen our country because of their hard work and talents. It believes problems in the world would be even worse without U.S. involvement. Members think there are no real limits to growth in America today, and that as Americans we can always find ways to solve our problems and get what we want. The Purple Coalition believes homosexuals should be accepted by society. Members are generally satisfied with their personal financial situations and find paying the bills pretty problem-free. Members agree belief in God is not necessary to be moral and have good values. The Purple Coalition thinks the growing number of newcomers from other countries strengthens American society. Its members like elected officials who can compromise with those they disagree with. This coalition's members believe trade agreements between the US and other countries have been a good thing. Purple Coalition members are much more likely to have attended college than the rest of America.</p>
-               <h4>Standing in one corner, speaking to another</h4>
-               <p>One way to build a coalition is to communicate a platform of shared values like those outlined above. In practice, winning presidential candidates have tended instead to <em>be of one group and speak to another</em> while boxing his or her opponent into the third: President Barack Obama's personal story placed him firmly in Group 1, but his often-sermonlike campaign rhetoric often spoke directly to Group 2. Presidents George W. Bush and Donald Trump's backgrounds placed them in Group 3, but with narratives of compassionate conservativism and careful isolationism respectively, their campaign rhetoric were more aligned to the values of Group 2. One could argue this approach of being one thing and saying another has, over time, contributed to the resentment and disillusionment felt by those in Group 2 towards each major party and towards government as a whole.</p>
+<p>If one aspired to build a working political majority in the United States, the first thing to do is recognize there 
+are three distinct groups and any coalition should strive to find mutual understanding between two of them. No group standing 
+alone can claim more than a few electoral votes. The following is a set of strategic scenarios for combining two groups 
+to form a majority at the expense of the other:</p>
+               "),
+          box(width = 12, status = "success", solidHeader = TRUE,
+              title = "Group 1 + Group 2: The Green Coalition",
+              HTML("
+<p>United in opposition to the third group, the Green Coalition has some common ground: It holds an unfavorable view of 
+the Republican Party, and Congress, and a favorable view of Labor Unions, the Federal Reserve, and the EPA. It views MSNBC 
+favorably. It thinks the Republican party doesn't care about the middle class, and is too willing to cut government programs 
+even when they work.</p> 
+<p>It believes diplomacy is more effective than military strength for ensuring peace and that relying too much on military 
+force can create hatred leading to increased terrorism. </p>
+<p>The Green Coalition thinks laws are sometimes necessary to protect people from themselves. This coalition's members agree 
+the police should not be able to stop and search people simply for appearing suspicious. </p>
+<p>The Green Coalition believes the country should do whatever it takes to protect the environment, though the two groups 
+don't agree on all the tradeoffs of environmental protection. This coalition believes in global warming, and attributes it 
+to the burning of fossil fuels. The Green Coalition believes we should invest more in renewable energy than in expanding 
+exploration of coal, oil, and natural gas. </p>
+<p>This coalition believes too much power is concentrated in the hands of a few large companies. It believes businesses 
+make too much profit. This coalition thinks the American economic system unfairly favors powerful interests, and that 
+Wall Street often hurts the economy as much as it helps. </p>
+<p>The Green Coalition supports Common Core education standards. It thinks Affirmative Action programs on college campuses 
+are a good thing. While the two groups within it disagreed on Obamacare, the coalition's members think elected officials 
+should do as much as possible to make the ACA work now that it's law. This Green Coalition is younger and more diverse 
+than the rest of America. </p>
+<p>Electorally, this coalition is by far the strongest. Assuming 80% performance (combined turnout + support %s), 518 
+electoral votes' worth of states support the coalition at 55% or more of their population, while the other 20 electoral 
+votes are potentially winnable -- within the margin between 45% and 55%. </p>
+               "),
+          plotOutput("greenmap")),
+          box(width = 12, status = "warning", solidHeader = TRUE,
+              title = "Group 3 + Group 2: The Orange Coalition",
+          HTML("
+<p>United in opposition to the first group, the Orange Coalition has some common ground: It disapproved of President 
+Obama's presidency and is dissatisfied by the way things are going in America today. The Orange Coalition both view the 
+Democratic Party and Congress unfavorably, but views the NRA favorably, and it thinks both the Democratic and Republican 
+parties' policies are misguided and a threat to the nation's well-being. They view Fox News favorably. Members think 
+the Democratic Party doesn't care about the middle class, and too often sees Government as the only way to solve problems.</p>
+<p>The Orange Coalition thinks America's best years are behind us, and that America has been successful in the past because 
+of its reliance on long-standing principles. </p>
+<p>Members of this coalition would prefer to live in a small town or rural area before a city, favoring a community 
+where the houses are larger and farther apart, with schools, stores, and restaurants several miles away. Living in a place 
+with a mix of people from different racial and ethnic backgrounds, or near art museums and theaters is not important to 
+this coalition.</p>
+<p>The Orange Coalition thinks Black people who can't get ahead in this country are mostly responsible for their own 
+condition. It thinks America has made the changes needed to give blacks equal rights with whites. </p>
+<p>It thinks government is doing too many things better left to businesses and individuals. This coalition thinks government 
+is almost always wasteful and inefficient, and that government regulation of business usually does more harm than good. 
+The Orange Coalition's members are more likely to think poor people today have it easy because they get government benefits 
+without having to do anything in return, and they don't think the government can afford to do much more to help the needy. 
+The Orange Coalition believes government aid to the poor does more harm than good because it makes people too dependent on 
+government assistance. </p>
+<p> Orange Coalition members were united in their disapproval of Obamacare: they think it's not the federal government's job 
+to ensure all Americans have health coverage, and that instead health coverage should be provided through a mix of private 
+insurance and government programs. They believe abortion should be illegal. </p>
+<p>The Orange Coalition thinks the government should protect individuals' rights to own guns.</p> 
+<p>Coalition members believe society is better off if people would make marriage and children a priority, and members say 
+they'd be very unhappy if an immediate family member were engaged to marry an atheist. It thinks the Supreme Court should 
+base its rulings on what the U.S. Constitution meant as originally written. Members oppose letting gays and lesbians marry.</p>
+<p>This Coalition's members think Islam is more likely than other religions to encourage violence among its followers. </p>
+<p>Members of the Orange Coalition attend religious services much more often, and more regularly than the rest of America. </p>
+<p>Electorally, this coalition is by far the weakest. Assuming 80% performance (combined support + turnout %s), only 61 
+electoral votes' worth of states support the coalition at 55% or more of their population. But 272 more electoral votes 
+are in play between 45% and 55%. In practice, this coalition has fared well because members of Factor 3 vote far more 
+consistently than members of the other two -- an advantage to any coalition involving Factor 3.</p>
+               "),
+          plotOutput("orangemap")),
+          box(width = 12, status = "primary", solidHeader = TRUE,
+              title = "Group 1 + Group 3: The Purple Coalition",
+          HTML("
+<p>United in opposition to the second group, the Purple Coalition has some common ground: Members have an 
+overall-unfavorable opinion of Congress. </p>
+<p>The Purple Coalition believes immigrants strengthen our country because of their hard work and talents, and that the 
+growing number of newcomers from other countries strengthen American society. </p>
+<p>It believes problems in the world would be even worse without U.S. involvement. This coalition's members believe trade 
+agreements between the US and other countries have been a good thing. </p>
+<p>Members think there are no real limits to growth in America today, and that as Americans we can always find ways to 
+solve our problems and get what we want. Coalition members like elected officials who can compromise with others, even when
+they disagree. </p>
+<p>The Purple Coalition believes homosexuals should be accepted by society. </p>
+<p>Members are generally satisfied with their personal financial situations and find paying the bills pretty problem-free. 
+<p>Members agree belief in God is not necessary to be moral and have good values. Purple Coalition members are much more 
+likely to have attended college than the rest of America. </p>
+<p>Electorally, this is the second-strongest coalition. Assuming 80% performance (combined support + turnout %s), 104 
+electoral votes' worth of states support this coalition at 55% or more of their population. An additional 345 electoral 
+votes are in play between 45% and 55%.</p>
+               "),
+          plotOutput("purplemap")),
+          HTML("
+<h4>Standing in one corner, speaking to another</h4>
+<p>One way to build a coalition is to communicate a platform of shared values like those outlined above. In practice, 
+winning presidential candidates have tended instead to <em>be of one group and speak to another</em> while boxing his or 
+her opponent into the third: President Barack Obama's personal story placed him firmly in Group 1, but his often-sermonlike 
+campaign rhetoric often spoke directly to Group 2. Presidents George W. Bush and Donald Trump's backgrounds placed them in 
+Group 3, but with narratives of compassionate conservativism and careful isolationism respectively, their campaign rhetoric 
+were more aligned to the values of Group 2. One could argue this approach of being one thing and saying another has, over 
+time, contributed to the resentment and disillusionment felt by those in Group 2 towards each major party and towards 
+government as a whole.</p>
+<p>In the aftermath of the 2016 elections, America's major parties are more malleable than usual, both scrambling to
+define themselves in the wake of an election that has altered some long-held dynamics. Both parties have an opportunity 
+to make adjustments, allowing them to connect more effectively with the country in ways that will alter the electoral game 
+board and have consequences that will be felt for decades to come.</p>
                "))),
-        fluidRow(box(width = 12, title = "Electoral Forecaster", status = "primary",
+        fluidRow(box(width = 12, title = "Electoral Forecaster", status = "primary", solidHeader = TRUE,
           box(
             status = "warning",
             width = 4,
-            HTML("<p>The sliders below control the electoral scenarios to the right. The idea here is to understand how appealing to different combinations of factors might affect a Presidential election's outcome.</p>"),
+            HTML("
+<p>The sliders below control the electoral scenarios to the right. The idea here is to understand how a candidate or party 
+appealing to different combinations of factors might affect a Presidential election's outcome. At various levels of support,
+the states to the right colored red are base states; the states in shades of purple would be swing states. States in white
+would be out of reach for the coalition described by the sliders below.</p>
+                 "),
             sliderInput("f1", "Factor 1 Performance %:", 0, 100, 95, step = 1),
             sliderInput("f2", "Factor 2 Performance %:", 0, 100, 35, step = 1),
             sliderInput("f3", "Factor 3 Performance %:", 0, 100, 5, step = 1),
-            HTML("<p>Many dynamics affect an electoral map, and the simplistic model underlying the scenario forecaster is subject to some fuzziness (especially for small states). An electoral vote is considered banked if the model places the support center for a given state at 55% or above. Electoral votes are in play when support is forecasted at between 45 and 55%. Try it out and see what happens. On the map, a state will appear red if it's a sure win for the modeled coalition, and white if it's out of reach. Darkening shades of purple indicate growing theoretical winnability. One important thing to consider is that this map assumes 100% registration and participation. Barriers to voter registration and participation ranging from ID check laws to voter apathy have big effects on election outcomes.</p>")
-            
+            HTML("
+<p>Many dynamics affect an electoral map, and the simplistic model underlying the scenario forecaster is subject to some 
+fuzziness (especially for small states). An electoral vote is considered banked if the model places the support center for 
+a given state at 55% or above. Electoral votes are in play when support is forecasted at between 45 and 55%. Try it out and 
+see what happens. On the map, a state will appear red if it's a sure win for the modeled coalition, and white if it's out 
+of reach. Darkening shades of purple indicate growing theoretical winnability. One important thing to consider is that this 
+map assumes 100% registration and participation. Barriers to voter registration and participation ranging from voter ID laws 
+to voter apathy have big effects on election outcomes.</p>
+                 ")
           ),
           box(
             width = 8,
             status = "warning",
-            tags$h3(textOutput("evs_banked", inline = TRUE), " Electoral Votes Banked; ", textOutput("evs_inplay", inline = TRUE), " In Play"),
+            tags$h3(textOutput("evs_banked", inline = TRUE), " Electoral Votes Banked; ", 
+                    textOutput("evs_inplay", inline = TRUE), " In Play"),
             plotOutput("dynamicmap", height = 350),
             dataTableOutput("states")
           
           )
           )),
+        
         fluidRow(box(
           width = 12,
-          tags$h3("About the Author"),
-          tags$p("This study is a leisure-time project of Luke Peterson. Born in Chicago, but raised in Rural Iowa and Suburban Chicagoland, Luke worshipped and attended school alongside constituents of Factor 2 and Factor 3. He and his family now are part of the Factor 1 community in Washington, DC. Before entering the Civil Service, where he helps the U.S. Government understand and communicate with audiences abroad, Luke had a career performing analyses like this one for corporate clients including Ford, Oracle, and Bank of America. Luke's work helped his clients discover untapped customer markets and connect more effectively with their audiences. Before that, Luke worked on four presidential campaigns in over 30 US states. He holds no advanced academic degrees. You can ", tags$a(href="http://twitter.com/lwp", "follow him on Twitter"), " where he mostly posts job announcements, shares photos of his kids, and selfies from long runs and bike rides.")
+          status = "primary",
+          title = "Next Steps",
+          HTML("
+<p>While it's similar to studies the author has conducted for private sector clients driving product launch and advertising 
+budgets well into nine figures, this project was done in the author's free time, using proven techniques but a public domain, 
+limited-reach dataset conducted in 2014. A first next step would be to replicate the study on a more recent survey, delivered 
+to a larger respondent universe, asking a wider variety of values questions. While many of the broad-stroke trends identified 
+in this project would likely be confirmed by the follow-up, not only would this validation be important, but many more refined 
+connections and observations could be made from the effort.</p>
+<p>It's quite possible (though unlikely) the observations explored in this project stem from aberrations in the underlying 
+dataset or a wholesale misinterpretation or misreading of them (please dig through the Github-hosted source code and file 
+an issue if you see something). Most comparable values-studies performed with open data (such as World Values Survey, or 
+American National Election Studies) have substantially smaller respondent counts, making them less-suitable for 
+factorization-based community-detection techniques.</p>
+<p>Further validation could come in the form of other research means such as jury panels and focus groups, testing whether in
+fact people who share values but perceive themselves to be in opposite ends of the political spectrum, could unite over their
+commonly-held beliefs and principles. The working assumption is that people with similar values can be brought together in
+politics, as they can in the consumer space -- that assumption may be entirely false.</p>
+               ")
         )),
         fluidRow(box(
           width = 12,
-          tags$h3("Recreate this open-source analysis yourself"),
-          tags$p("Explore the 2014 Pew survey in terms of these factors with this visualization, code for which ", tags$a(href="https://github.com/lukewp/pewpolarizationfactors", "is available here.")," If you find any errors or data discrepancies, feel free to open an issue ticket on Github or reach out to the author directly.")
+          status = "primary",
+          title = "About the Author",
+          tags$p("This study is a leisure-time project of Luke Peterson. Born in Chicago, but raised in rural Iowa and 
+                 suburban Chicagoland, Luke worshipped and attended school alongside constituents of Factor 2 and 
+                 Factor 3. He and his family now are part of the Factor 1 community in Washington, DC. He thinks his 
+                 friends, family, and colleagues from all three factors have much more in common with one another than 
+                 they do driving them apart. He engineered this study to explore why so many Americans might be so 
+                 dissatisfied with their political system."),
+          tags$p("
+                 Before entering the U.S. Civil Service, where he helps the Government understand and communicate with 
+                 audiences abroad, Luke had a career performing analyses like this one for corporate clients including Ford, 
+                 Oracle, and Bank of America. Luke's work helped his clients discover untapped customer markets and connect 
+                 more effectively with their audiences. Before that, Luke worked on four presidential campaigns in over 30 
+                 U.S. states. He holds no advanced academic degrees. You can ", 
+                 tags$a(href="http://twitter.com/lwp", "follow him on Twitter"), 
+                 " where he mostly posts job announcements, shares photos of his kids, and selfies from long runs and bike 
+                 rides.")
+        )),
+        fluidRow(box(
+          width = 12,
+          status = "primary",
+          title = "Recreate this open-source analysis yourself",
+          tags$p("Explore the 2014 Pew survey in terms of these factors with this visualization, code for which ", 
+                 tags$a(href="https://github.com/lukewp/pewpolarizationfactors", "is available here."),
+                 " If you find any errors or data discrepancies, feel free to open an issue ticket on Github or reach 
+                 out to the author directly.")
         ))),
       tabItem(
         tabName = "demographics",

@@ -1,1 +1,52 @@
-,Row.names,Statement1,q100.ca,"Yes, I have contributed money to a candidate running for public office or to a group working to elect a candidate"2,q100.cd,"No, I have not contributed money to a candidate running for public office or to a group working to elect a candidate"3,q105a.ca,"Yes, I have worked or volunteered for a political campaign or candidate"4,q105a.cd,"No, I have not worked or volunteered for a political campaign or candidate"5,q105b.ca,"Yes, I have contacted any elected official"6,q105b.cd,"No, I have not contacted any elected official"7,q126.ca,"Overall, I approve of the government&rsquo;s collection of telephone and internet data as part of anti-terrorism efforts."8,q126.cd,"Overall, I disapprove of the government&rsquo;s collection of telephone and internet data as part of anti-terrorism efforts."9,q25a.c1,Government is almost always wasteful and inefficient10,q25a.c2,Government often does a better job than people give it credit for11,q25b.c1,Government regulation of business is necessary to protect the public interest12,q25b.c2,Government regulation of business usually does more harm than good13,q25c.c1,Poor people today have it easy because they can get government benefits without doing anything in return14,q25c.c2,Poor people have hard lives because government benefits don't go far enough to help them live decently15,q25d.c1,"The government should do more to help needy Americans, even if it means going deeper into debt"16,q25d.c2,The government today can't afford to do much more to help the needy17,q25f.c1,Racial discrimination is the main reason why many black people can't get ahead these days18,q25f.c2,Blacks who can't get ahead in this country are mostly responsible for their own condition19,q25g.c1,Immigrants today strengthen our country because of their hard work and talents20,q25g.c2,"Immigrants today are a burden on our country because they take our jobs, housing and health care"21,q25h.c1,Society is better off if people make marriage and having children a priority22,q25h.c2,Society is just as well off if people have priorities other than marriage and children23,q25i.c1,The best way to ensure peace is through military strength24,q25i.c2,Good diplomacy is the best way to ensure peace25,q25j.c1,U.S. efforts to solve problems around the world usually end up making things worse26,q25j.c2,Problems in the world would be even worse without U.S. involvement27,q25k.c1,Most people who want to get ahead can make it if they're willing to work hard28,q25k.c2,Hard work and determination are no guarantee of success for most people29,q25l.c1,Success in life is pretty much determined by forces outside of our control30,q25l.c2,Everyone has it in their own power to succeed31,q25m.c1,Too much power is concentrated in the hands of a few large companies32,q25m.c2,The largest companies do NOT have too much power33,q25n.c1,Business corporations make too much profit34,q25n.c2,Most corporations make a fair and reasonable amount of profit35,q40.c,I do follow what's going on in government and public affairs36,q50aa.c1,It IS NOT necessary to believe in God in order to be moral and have good values37,q50aa.c2,It IS necessary to believe in God in order to be moral and have good values38,q50bb.c1,Using overwhelming military force is the best way to defeat terrorism around the world39,q50bb.c2,Relying too much on military force to defeat terrorism creates hatred that leads to more terrorism40,q50dd.c1,The growing number of newcomers from other countries threatens traditional American customs and values41,q50dd.c2,The growing number of newcomers from other countries strengthens American society42,q50ee.c1,It&rsquo;s best for the future of our country to be active in world affairs43,q50ee.c2,We should pay less attention to problems overseas and concentrate on problems here at home44,q50q.c1,This country should do whatever it takes to protect the environment45,q50q.c2,This country has gone too far in its efforts to protect the environment46,q50r.c1,Stricter environmental laws and regulations cost too many jobs and hurt the economy47,q50r.c2,Stricter environmental laws and regulations are worth the cost48,q50u.c1,Homosexuality should be accepted by society49,q50u.c2,Homosexuality should be discouraged by society50,q51kk.c1,"Government aid to the poor does more harm than good, by making people too dependent on government assistance"51,q51kk.c2,"Government aid to the poor does more good than harm, because people can&rsquo;t get out of poverty until their basic needs are met"
+,Row.names,Statement
+1,q100.ca,"Yes, I have contributed money to a candidate running for public office or to a group working to elect a candidate"
+2,q100.cd,"No, I have not contributed money to a candidate running for public office or to a group working to elect a candidate"
+3,q105a.ca,"Yes, I have worked or volunteered for a political campaign or candidate"
+4,q105a.cd,"No, I have not worked or volunteered for a political campaign or candidate"
+5,q105b.ca,"Yes, I have contacted any elected official"
+6,q105b.cd,"No, I have not contacted any elected official"
+7,q126.ca,"Overall, I approve of the government's collection of telephone and internet data as part of anti-terrorism efforts."
+8,q126.cd,"Overall, I disapprove of the government's collection of telephone and internet data as part of anti-terrorism efforts."
+9,q25a.c1,"Government is almost always wasteful and inefficient"
+10,q25a.c2,"Government often does a better job than people give it credit for"
+11,q25b.c1,"Government regulation of business is necessary to protect the public interest"
+12,q25b.c2,"Government regulation of business usually does more harm than good"
+13,q25c.c1,"Poor people today have it easy because they can get government benefits without doing anything in return"
+14,q25c.c2,"Poor people have hard lives because government benefits don't go far enough to help them live decently"
+15,q25d.c1,"The government should do more to help needy Americans, even if it means going deeper into debt"
+16,q25d.c2,"The government today can't afford to do much more to help the needy"
+17,q25f.c1,"Racial discrimination is the main reason why many black people can't get ahead these days"
+18,q25f.c2,"Blacks who can't get ahead in this country are mostly responsible for their own condition"
+19,q25g.c1,"Immigrants today strengthen our country because of their hard work and talents"
+20,q25g.c2,"Immigrants today are a burden on our country because they take our jobs, housing and health care"
+21,q25h.c1,"Society is better off if people make marriage and having children a priority"
+22,q25h.c2,"Society is just as well off if people have priorities other than marriage and children"
+23,q25i.c1,"The best way to ensure peace is through military strength"
+24,q25i.c2,"Good diplomacy is the best way to ensure peace"
+25,q25j.c1,"U.S. efforts to solve problems around the world usually end up making things worse"
+26,q25j.c2,"Problems in the world would be even worse without U.S. involvement"
+27,q25k.c1,"Most people who want to get ahead can make it if they're willing to work hard"
+28,q25k.c2,"Hard work and determination are no guarantee of success for most people"
+29,q25l.c1,"Success in life is pretty much determined by forces outside of our control"
+30,q25l.c2,"Everyone has it in their own power to succeed"
+31,q25m.c1,"Too much power is concentrated in the hands of a few large companies"
+32,q25m.c2,"The largest companies do NOT have too much power"
+33,q25n.c1,"Business corporations make too much profit"
+34,q25n.c2,"Most corporations make a fair and reasonable amount of profit"
+35,q40.c,"I do follow what's going on in government and public affairs"
+36,q50aa.c1,"It IS NOT necessary to believe in God in order to be moral and have good values"
+37,q50aa.c2,"It IS necessary to believe in God in order to be moral and have good values"
+38,q50bb.c1,"Using overwhelming military force is the best way to defeat terrorism around the world"
+39,q50bb.c2,"Relying too much on military force to defeat terrorism creates hatred that leads to more terrorism"
+40,q50dd.c1,"The growing number of newcomers from other countries threatens traditional American customs and values"
+41,q50dd.c2,"The growing number of newcomers from other countries strengthens American society"
+42,q50ee.c1,"It's best for the future of our country to be active in world affairs"
+43,q50ee.c2,"We should pay less attention to problems overseas and concentrate on problems here at home"
+44,q50q.c1,"This country should do whatever it takes to protect the environment"
+45,q50q.c2,"This country has gone too far in its efforts to protect the environment"
+46,q50r.c1,"Stricter environmental laws and regulations cost too many jobs and hurt the economy"
+47,q50r.c2,"Stricter environmental laws and regulations are worth the cost"
+48,q50u.c1,"Homosexuality should be accepted by society"
+49,q50u.c2,"Homosexuality should be discouraged by society"
+50,q51kk.c1,"Government aid to the poor does more harm than good, by making people too dependent on government assistance"
+51,q51kk.c2,"Government aid to the poor does more good than harm, because people can't get out of poverty until their basic needs are met"

@@ -156,6 +156,84 @@ shinyServer(function(input, output) {
       })
     })
     
+    output$greenmap <- renderPlot({
+      withProgress(message = 'Green Coalition Choropleth ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        
+        tmpdf <- data.frame(
+          region.factor = statedisttable$state, 
+          value = (statedisttable$`1`*.8 + statedisttable$`2`*.8)
+          )
+        tmpdf$region <- as.character(tmpdf$region.factor)
+        tmpdf$region.factor <- NULL
+        tmpdf$region <- tolower(tmpdf$region)
+        tmpdf$region[tmpdf$region=="washington dc"] <- "district of columbia"
+        
+        gg_prop1 = StateChoropleth$new(tmpdf)
+        gg_prop1$set_num_colors(1)
+        gg_prop1$title = "Green Coalition at 80% Support: 518 Electoral Votes from States with 55%+ 18+ Population"
+        gg_prop1$ggplot_scale = scale_fill_gradientn(limits = c(0,1), values = c(0, 0.45, 0.54999, 0.55, 1), breaks = 0.5, colors = c("white", "white", "white", "green", "green"))
+        gg_prop1$render() + theme(legend.position = "none")
+        
+      })
+    })
+    
+    output$orangemap <- renderPlot({
+      withProgress(message = 'Orange Coalition Choropleth ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        
+        tmpdf <- data.frame(
+          region.factor = statedisttable$state, 
+          value = (statedisttable$`3`*.8 + statedisttable$`2`*.8)
+        )
+        tmpdf$region <- as.character(tmpdf$region.factor)
+        tmpdf$region.factor <- NULL
+        tmpdf$region <- tolower(tmpdf$region)
+        tmpdf$region[tmpdf$region=="washington dc"] <- "district of columbia"
+        
+        gg_prop1 = StateChoropleth$new(tmpdf)
+        gg_prop1$set_num_colors(1)
+        gg_prop1$title = "Orange Coalition at 80% Support: 61 Electoral Votes from States with 55%+ 18+ Population"
+        gg_prop1$ggplot_scale = scale_fill_gradientn(limits = c(0,1), 
+                                                     values = c(0, 0.45, 0.54999, 0.55, 1), 
+                                                     breaks = 0.5, 
+                                                     colors = c("white", "white", "white", "orange", "orange"))
+        gg_prop1$render() + theme(legend.position = "none")
+        
+      })
+    })
+    
+    output$purplemap <- renderPlot({
+      withProgress(message = 'Purple Coalition Choropleth ...', value = 0, {
+        for (i in 1:15) {
+          incProgress(1/15)
+        } 
+        
+        tmpdf <- data.frame(
+          region.factor = statedisttable$state, 
+          value = (statedisttable$`3`*.8 + statedisttable$`1`*.8)
+        )
+        tmpdf$region <- as.character(tmpdf$region.factor)
+        tmpdf$region.factor <- NULL
+        tmpdf$region <- tolower(tmpdf$region)
+        tmpdf$region[tmpdf$region=="washington dc"] <- "district of columbia"
+        
+        gg_prop1 = StateChoropleth$new(tmpdf)
+        gg_prop1$set_num_colors(1)
+        gg_prop1$title = "Purple Coalition at 80% Support: 104 Electoral Votes from States with 55%+ 18+ Population"
+        gg_prop1$ggplot_scale = scale_fill_gradientn(limits = c(0,1), 
+                                                     values = c(0, 0.45, 0.54999, 0.55, 1), 
+                                                     breaks = 0.5, 
+                                                     colors = c("white", "white", "white", "purple", "purple"))
+        gg_prop1$render() + theme(legend.position = "none")
+        
+      })
+    })
+    
     sliderValues <- reactive({
       data.frame(
         State = statedisttable$state,
