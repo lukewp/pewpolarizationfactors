@@ -1,3 +1,5 @@
+## Run fourth: This script loads into memory all the objects required for the shiny dashboard.
+
 library(dplyr)
 library(tidyr)
 library(scales)

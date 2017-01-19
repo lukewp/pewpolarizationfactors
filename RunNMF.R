@@ -1,3 +1,6 @@
+## This is the third script to run -- must be tweaked (uncommented here and there) to create a 
+## new NMF object. By default, it'll just load the .RData file described at the bottom.
+
 # Factorizing the matrix:
 # Libraries:
 # install.packages("foreach")

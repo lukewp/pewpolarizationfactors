@@ -1,9 +1,12 @@
-install.packages("car")
+## Run this first!
+
+# install.packages("car")
 
 library(foreign)
 library(car)
 
-## This is the SPSS-format data output file, available for download from Pew:
+## This is the SPSS-format data output file, available for download from Pew here:
+# http://www.people-press.org/2014/03/16/2014-political-polarization-survey/:
 survey <- read.spss("./data/Polarization 2014/Polarization 2014 public.sav", to.data.frame=TRUE)
 
 # Hard-code Rownums into an index:

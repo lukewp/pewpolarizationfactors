@@ -1,9 +1,11 @@
+## Run this one second!
+
 # install.packages("rgl")
 library(rgl)
 # If this fails on MacOS, install XQuartz.
 
 # install.packages("clusterSim")
-library(clusterSim)
+library(clusterSim) # TODO: can probably replace the one thing I'm using this package for with rescale() ...
 # If this is erroring out on an X11 error, and you're on an ubuntu box, run the following:
 #!> sudo apt-get install r-cran-rgl
 # you may also need to use X11 forwarding ...
