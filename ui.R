@@ -15,10 +15,11 @@ library(scales)
 ui <- dashboardPage(
   title = "Three Americas Study",
   dashboardHeader(
-    title = "Three Americas Study",
-    titleWidth = 250),
+    title = "Three Americas Study"
+    # , titleWidth = 250
+    ),
   dashboardSidebar(
-    width = 150,
+    # width = 150,
     sidebarMenu(
       menuItem("Overview", tabName = "intro", icon = icon("file-text"), selected = TRUE),
       menuItem("Demographics", tabName = "demographics", icon = icon("bar-chart")),
@@ -37,14 +38,14 @@ ui <- dashboardPage(
     
     # Add some custom CSS to make the title background area the same
     # color as the rest of the header.
-    tags$head(tags$style(HTML('
-                              .skin-blue .main-header .logo {
-                              background-color: #3c8dbc;
-                              }
-                              .skin-blue .main-header .logo:hover {
-                              background-color: #3c8dbc;
-                              }
-                              '))),
+    # tags$head(tags$style(HTML('
+    #                           .skin-blue .main-header .logo {
+    #                           background-color: #3c8dbc;
+    #                           }
+    #                           .skin-blue .main-header .logo:hover {
+    #                           background-color: #3c8dbc;
+    #                           }
+    #                           '))),
     tabItems(
       tabItem(
         tabName = "intro",
