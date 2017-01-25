@@ -13,7 +13,7 @@ library(scales)
 
 ## Define UI
 ui <- dashboardPage(
-  title = "Three Americas Study",
+  title = "DRAFT: Three Americas Study",
   dashboardHeader(
     title = "Three Americas Study"
     # , titleWidth = 250
@@ -49,7 +49,7 @@ ui <- dashboardPage(
     tabItems(
       tabItem(
         tabName = "intro",
-        h2("A Re-examination of the 2014 Pew Political Polarization Survey"),
+        h2("DRAFT: A Re-examination of the 2014 Pew Political Polarization Survey"),
         fluidRow(box(
           width = 12,
           status = "primary",
@@ -169,14 +169,21 @@ low-population states have high estimated error (especially ND, WY, and DC).</em
 Factor 1 controls 24 electoral votes, Factor 2 controls 3 electoral votes, and Factor 3 controls none. But any two 
 factors voting together easily deliver 270 votes to secure a presidential victory</p>
 <p>In the 2008 and 2012 elections, the winning coalitions were 'green' coalitions -- that is, a combination of the 
-blue and yellow factor constituencies. The Traditional Values group appears to have split 50/50 for Obama in both elections.</p>
+blue and yellow factor constituencies, low-to-mid-income Americans aligned along economic lines against the 
+wealthiest Americans. The Traditional Values group appears to have split 50/50 for Obama in both elections, joining 
+with 100% of the Equality and Human Rights group to tip the scales.</p>
 <p>In 2016, the victorious coalition was an 'orange' coalition -- a combination of the red and yellow factor 
-constituencies. About 70% of the Traditional Values factor appears to have supported Trump.</p>
+constituencies, who may be threatened by changes to traditional American cultural power structures and institutions, 
+aligned against those interested in disruption of the status quo of those institutions. About 70% of the Traditional 
+Values group appears to have joined with nearly 100% of the Free Market Capitalism group in support of Trump in 2016.</p>
 <p>A 'purple' coalition may also be possible, one that finds common ground between the Blue and Red constituencies at the 
-expense of the Traditional Values factor.</p>
+expense of the Traditional Values factor. This group would be a majority alignment of more highly-educated Americans 
+against those with high school degrees or below. It is possible to build in theory but hasn't been exercised recently.</p>
 <p>And of course, a new party could emerge that more cogently captures the values of the Traditional Values factor, which 
-would introduce entirely new dynamics to the American political landscape, and it appears this is a viable possibility 
-based on this analysis.</p>
+would introduce entirely new dynamics to the American political landscape. Based on this project's exploratory findings, 
+It appears this might be a viable possibility, and while the Tea Party movement birthed in the late 200x's may have 
+been seen to appeal to this group, they seem to have drawn more sympathy from the Free Market Capitalism corner. No 
+recent third party seems to have captured this group's values.</p>
 <p>In redistricting, parties able to draw maps often try set up a political advantage that plays out in congressional
 and state legislative elections over the following decade. Data can help the map-drawers, predicting the range of likely 
 outcomes for subsequent elections based on the political makeup of each district. This factor analysis enables a similar 
@@ -193,7 +200,7 @@ alone can claim more than a few electoral votes. The following is a set of strat
 to form a majority at the expense of the other:</p>
                "),
           box(width = 12, status = "success", solidHeader = TRUE,
-              title = "Group 1 + Group 2: The Green Coalition",
+              title = "Group 1 + Group 2: The Green Coalition of the Middle Class",
               HTML("
 <p>United in opposition to the third group, the Green Coalition has some common ground: It holds an unfavorable view of 
 the Republican Party, and Congress, and a favorable view of Labor Unions, the Federal Reserve, and the EPA. It views MSNBC 
@@ -220,7 +227,7 @@ votes are potentially winnable -- within the margin between 45% and 55%. </p>
                "),
           plotOutput("greenmap")),
           box(width = 12, status = "warning", solidHeader = TRUE,
-              title = "Group 3 + Group 2: The Orange Coalition",
+              title = "Group 3 + Group 2: The Orange Coalition of Cultural Inertia",
           HTML("
 <p>United in opposition to the first group, the Orange Coalition has some common ground: It disapproved of President 
 Obama's presidency and is dissatisfied by the way things are going in America today. The Orange Coalition both view the 
@@ -257,7 +264,7 @@ consistently than members of the other two -- an advantage to any coalition invo
                "),
           plotOutput("orangemap")),
           box(width = 12, status = "primary", solidHeader = TRUE,
-              title = "Group 1 + Group 3: The Purple Coalition",
+              title = "Group 1 + Group 3: The Purple Coalition of the Intelligentsia",
           HTML("
 <p>United in opposition to the second group, the Purple Coalition has some common ground: Members have an 
 overall-unfavorable opinion of Congress. </p>
