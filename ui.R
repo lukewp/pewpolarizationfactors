@@ -72,7 +72,7 @@ values. Because none of these values groups holds a majority (each describe roug
 in order to build a majority coalition, one must align any two of these groups behind an issue or a candidate:</p>
 <ul>
 <li>Group 1: Human Rights and Equality -- Blue, highly correlated with the Democratic Party</li>
-<li>Group 2: Traditional Values -- Yellow, split between the two mainstream American political parties, like neither
+<li>Group 2: Traditional Values -- Yellow or Gold, split between the two mainstream American political parties, like neither
 party is consistent with their values</li>
 <li>Group 3: Free Market Capitalism -- Red, highly correlated with the Republican Party</li>
 </ul>
@@ -169,10 +169,10 @@ low-population states have high estimated error (especially ND, WY, and DC).</em
 Factor 1 controls 24 electoral votes, Factor 2 controls 3 electoral votes, and Factor 3 controls none. But any two 
 factors voting together easily deliver 270 votes to secure a presidential victory</p>
 <p>In the 2008 and 2012 elections, the winning coalitions were 'green' coalitions -- that is, a combination of the 
-blue and yellow factor constituencies, low-to-mid-income Americans aligned along economic lines against the 
+blue and gold factor constituencies, low-to-mid-income Americans aligned along economic lines against the 
 wealthiest Americans. The Traditional Values group appears to have split 50/50 for Obama in both elections, joining 
 with 100% of the Equality and Human Rights group to tip the scales.</p>
-<p>In 2016, the victorious coalition was an 'orange' coalition -- a combination of the red and yellow factor 
+<p>In 2016, the victorious coalition was an 'orange' coalition -- a combination of the red and gold factor 
 constituencies, who may be threatened by changes to traditional American cultural power structures and institutions, 
 aligned against those interested in disruption of the status quo of those institutions. About 70% of the Traditional 
 Values group appears to have joined with nearly 100% of the Free Market Capitalism group in support of Trump in 2016.</p>
