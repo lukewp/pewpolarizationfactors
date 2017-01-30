@@ -11,13 +11,13 @@ Instead of thinking of America's electorate as right, left, and in the middle, i
 In order to build a majority coalition, any two of these points must align behind an issue or a candidate.
 
 - Factor 1: Human Rights and Equality -- Blue, highly correlated with the Democratic Party
-- Factor 2: Traditional Values -- Yellow, split between the two mainstream American political parties, like neither party is consistent with their values
+- Factor 2: Traditional Values -- Yellow or Gold, split between the two mainstream American political parties, like neither party is consistent with their values
 - Factor 3: Free Market Capitalism -- Red, highly correlated with the Republican Party
 
 In terms of electoral votes, different coalitions offer promise of delivering majorities in different states. 
 
-In the 2008 election, the coalition was a "green" coalition -- that is, a combination of the blue and yellow factor constituencies.
-In 2016, the coalition was an "orange" coalition -- that is, a combination of the red and yellow factor constituencies.
+In the 2008 election, the coalition was a "green" coalition -- that is, a combination of the blue and gold factor constituencies.
+In 2016, the coalition was an "orange" coalition -- that is, a combination of the red and gold factor constituencies.
 
 A "purple" coalition may also be possible, one that finds common ground between the Blue and Red constituencies at the expense of the Traditional Values factor.
 
