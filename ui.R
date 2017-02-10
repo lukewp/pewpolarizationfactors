@@ -366,7 +366,7 @@ politics, as they can in the consumer space -- that assumption may be entirely f
                  they do driving them apart. He engineered this study to explore why so many Americans might be so 
                  dissatisfied with their political system."),
           tags$p("
-                 Before entering the U.S. Civil Service, where he helps the Government understand and communicate with 
+                 Before entering the civil service, where he helps the Government understand and communicate with 
                  audiences abroad, Luke had a career performing analyses like this one for corporate clients including Ford, 
                  Oracle, and Bank of America. Luke's work helped his clients discover untapped customer markets and connect 
                  more effectively with their audiences. Before that, Luke worked on four presidential campaigns in over 30 
