@@ -13,6 +13,7 @@ library(scales)
 
 ## Define UI
 ui <- dashboardPage(
+  tags$head(includeScript("google-analytics.js"))
   title = "DRAFT: Three Americas Study",
   dashboardHeader(
     title = "Three Americas Study"
