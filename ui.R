@@ -35,7 +35,9 @@ ui <- dashboardPage(
     )
   ),
   dashboardBody(
-    tags$head(includeScript("google-analytics.js")),
+    tags$head(includeScript("google-analytics.js"), 
+              ## git clone https://github.com/googleanalytics/autotrack.git
+              includeScript("autotrack/autotrack.js")),
     # Add some custom CSS to make the title background area the same
     # color as the rest of the header.
     # tags$head(tags$style(HTML('
@@ -56,7 +58,7 @@ ui <- dashboardPage(
           title = "Introduction",
           tags$p("The following visualization and analysis is based on ", 
                  tags$a(href="http://www.people-press.org/2014/03/16/2014-political-polarization-survey/",
-                        onclick="ga('send', 'event', 'click', 'link', 'pew', 1)",
+                        # onclick="ga('send', 'event', 'click', 'link', 'pew', 1)",
                         target="_blank",
                         "Pew Research's 2014 Political Polarization Survey."), 
                  " Of several public attitudes-and-political-values surveys conducted whose datasets are available 
@@ -374,7 +376,7 @@ politics, as they can in the consumer space -- that assumption may be entirely f
                  more effectively with their audiences. Before that, Luke worked on four presidential campaigns in over 30 
                  U.S. states. He holds no advanced academic degrees. You can ", 
                  tags$a(href="http://twitter.com/lwp", 
-                        onclick="ga('send', 'event', 'click', 'link', 'twitter', 1)",
+                        # onclick="ga('send', 'event', 'click', 'link', 'twitter', 1)",
                         target="_blank", 
                         "follow him on Twitter"), 
                  " where he mostly posts job announcements, shares photos of his kids, and selfies from long runs and bike 
@@ -386,7 +388,7 @@ politics, as they can in the consumer space -- that assumption may be entirely f
           title = "Recreate this open-source analysis yourself",
           tags$p("Explore the 2014 Pew survey in terms of these factors with this visualization, code for which ", 
                  tags$a(href="https://github.com/lukewp/pewpolarizationfactors", 
-                        onclick="ga('send', 'event', 'click', 'link', 'github', 1)",
+                        # onclick="ga('send', 'event', 'click', 'link', 'github', 1)",
                         target="_blank", 
                         "is available here."),
                  " If you find any errors or data discrepancies, feel free to open an issue ticket on Github or reach 
