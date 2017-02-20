@@ -13,7 +13,6 @@ library(scales)
 
 ## Define UI
 ui <- dashboardPage(
-  tags$head(includeScript("google-analytics.js"))
   title = "DRAFT: Three Americas Study",
   dashboardHeader(
     title = "Three Americas Study"
@@ -36,7 +35,7 @@ ui <- dashboardPage(
     )
   ),
   dashboardBody(
-    
+    tags$head(includeScript("google-analytics.js")),
     # Add some custom CSS to make the title background area the same
     # color as the rest of the header.
     # tags$head(tags$style(HTML('
