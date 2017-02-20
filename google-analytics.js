@@ -8,15 +8,20 @@
   m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
 ga('create', 'UA-92302344-1', 'auto');
-ga('send', 'pageview');
 
 // Sets appName so it doesn't need to be passed in the UI on screenview calls:
 ga('set', 'appName', 'USFactors');
 
 // Loads autotrack.js plugins:
+ga('require', 'autotrack');
 ga('require', 'eventTracker');
 ga('require', 'outboundLinkTracker');
 ga('require', 'urlChangeTracker');
+ga('require', 'maxScrollTracker');
+ga('require', 'pageVisibilityTracker');
 
 //// Updates the tracker to use `navigator.sendBeacon` if available.
 //ga('set', 'transport', 'beacon');
+
+// End script:
+ga('send', 'pageview');
