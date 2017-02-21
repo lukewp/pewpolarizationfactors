@@ -37,19 +37,12 @@ ui <- dashboardPage(
   dashboardBody(
     tags$head(includeScript("google-analytics.js")), 
     
+    ## Undocumented feature of Shiny: src has to go into the ./www/ subdirectory.
+    ##
     ## mkdir www;cd www
     ## git clone https://github.com/googleanalytics/autotrack.git
     tags$head(HTML("<script async src='autotrack/autotrack.js'></script>")),
-    # Add some custom CSS to make the title background area the same
-    # color as the rest of the header.
-    # tags$head(tags$style(HTML('
-    #                           .skin-blue .main-header .logo {
-    #                           background-color: #3c8dbc;
-    #                           }
-    #                           .skin-blue .main-header .logo:hover {
-    #                           background-color: #3c8dbc;
-    #                           }
-    #                           '))),
+
     tabItems(
       tabItem(
         tabName = "intro",
