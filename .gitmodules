@@ -1,0 +1,3 @@
+[submodule "www/autotrack"]
+	path = www/autotrack
+	url = https://github.com/googleanalytics/autotrack.git
