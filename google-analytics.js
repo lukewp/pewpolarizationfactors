@@ -13,15 +13,18 @@ ga('create', 'UA-92302344-1', 'auto');
 ga('set', 'appName', 'USFactors');
 
 // Loads autotrack.js plugins:
-ga('require', 'autotrack');
 ga('require', 'eventTracker');
+ga('require', 'maxScrollTracker', {
+  sessionTimeout: 30,
+});
 ga('require', 'outboundLinkTracker');
+ga('require', 'pageVisibilityTracker', {
+  sessionTimeout: 30,
+});
 ga('require', 'urlChangeTracker');
-ga('require', 'maxScrollTracker');
-ga('require', 'pageVisibilityTracker');
 
 //// Updates the tracker to use `navigator.sendBeacon` if available.
-//ga('set', 'transport', 'beacon');
+ga('set', 'transport', 'beacon');
 
-// End script:
+// End script by sending GA a pageview:
 ga('send', 'pageview');

@@ -37,8 +37,9 @@ ui <- dashboardPage(
   dashboardBody(
     tags$head(includeScript("google-analytics.js")), 
     
+    ## mkdir www;cd www
     ## git clone https://github.com/googleanalytics/autotrack.git
-    tags$head(includeScript("./autotrack/autotrack.js")),
+    tags$head(HTML("<script async src='autotrack/autotrack.js'></script>")),
     # Add some custom CSS to make the title background area the same
     # color as the rest of the header.
     # tags$head(tags$style(HTML('
