@@ -19,6 +19,11 @@ ui <- dashboardPage(
     # , titleWidth = 250
     ),
   dashboardSidebar(
+    HTML(
+        '<!-- Google Tag Manager (noscript) -->
+         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PJ54BTC"
+         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+         <!-- End Google Tag Manager (noscript) -->'),
     # width = 150,
     sidebarMenu(
       menuItem("Overview", tabName = "intro", icon = icon("file-text"), selected = TRUE),
@@ -35,6 +40,7 @@ ui <- dashboardPage(
     )
   ),
   dashboardBody(
+    
     tags$head(includeScript("google-analytics.js")), 
     
     ## Undocumented feature of Shiny: src has to go into the ./www/ subdirectory.
@@ -42,6 +48,7 @@ ui <- dashboardPage(
     ## mkdir www;cd www
     ## git clone https://github.com/googleanalytics/autotrack.git
     tags$head(HTML("<script async src='autotrack/autotrack.js'></script>")),
+    
 
     tabItems(
       tabItem(
